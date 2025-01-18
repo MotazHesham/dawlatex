@@ -52,30 +52,32 @@
     @endif
 </div>
 @if(get_setting('vendor_system_activation') == 1)
-    <div class="">
-        @if (count($shops) > 0)
-            <div class="px-2 py-1 text-uppercase fs-10 text-right text-muted bg-soft-secondary">{{translate('Shops')}}</div>
-            <ul class="list-group list-group-raw">
-                @foreach ($shops as $key => $shop)
-                    <li class="list-group-item">
-                        <a class="text-reset" href="{{ route('shop.visit', $shop->slug) }}">
-                            <div class="d-flex search-product align-items-center">
-                                <div class="mr-3">
-                                    <img class="size-40px img-fit rounded" src="{{ uploaded_asset($shop->logo) }}">
-                                </div>
-                                <div class="flex-grow-1 overflow--hidden">
-                                    <div class="product-name text-truncate fs-14 mb-5px">
-                                        {{ $shop->name }}
+    @if(get_setting('view_shop_info') == 1)
+        <div class="">
+            @if (count($shops) > 0)
+                <div class="px-2 py-1 text-uppercase fs-10 text-right text-muted bg-soft-secondary">{{translate('Shops')}}</div>
+                <ul class="list-group list-group-raw">
+                    @foreach ($shops as $key => $shop)
+                        <li class="list-group-item">
+                            <a class="text-reset" href="{{ route('shop.visit', $shop->slug) }}">
+                                <div class="d-flex search-product align-items-center">
+                                    <div class="mr-3">
+                                        <img class="size-40px img-fit rounded" src="{{ uploaded_asset($shop->logo) }}">
                                     </div>
-                                    <div class="opacity-60">
-                                        {{ $shop->address }}
+                                    <div class="flex-grow-1 overflow--hidden">
+                                        <div class="product-name text-truncate fs-14 mb-5px">
+                                            {{ $shop->name }}
+                                        </div>
+                                        <div class="opacity-60">
+                                            {{ $shop->address }}
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </a>
-                    </li>
-                @endforeach
-            </ul>
-        @endif
-    </div>
+                            </a>
+                        </li>
+                    @endforeach
+                </ul>
+            @endif
+        </div>
+    @endif
 @endif

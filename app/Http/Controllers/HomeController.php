@@ -321,7 +321,7 @@ class HomeController extends Controller
 
     public function shop($slug)
     {
-        if (get_setting('vendor_system_activation') != 1) {
+        if (get_setting('vendor_system_activation') != 1 || get_setting('view_shop_info') != 1) {
             return redirect()->route('home');
         }
         $shop  = Shop::where('slug', $slug)->first();
@@ -340,7 +340,7 @@ class HomeController extends Controller
 
     public function filter_shop(Request $request, $slug, $type)
     {
-        if (get_setting('vendor_system_activation') != 1) {
+        if (get_setting('vendor_system_activation') != 1 || get_setting('view_shop_info') != 1) {
             return redirect()->route('home');
         }
         $shop  = Shop::where('slug', $slug)->first();
@@ -712,7 +712,7 @@ class HomeController extends Controller
 
     public function all_seller(Request $request)
     {
-        if (get_setting('vendor_system_activation') != 1) {
+        if (get_setting('vendor_system_activation') != 1 || get_setting('view_shop_info') != 1) {
             return redirect()->route('home');
         }
         $shops = Shop::whereIn('user_id', verified_sellers_id())

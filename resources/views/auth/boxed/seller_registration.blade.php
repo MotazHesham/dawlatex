@@ -101,6 +101,16 @@
                                                     @endif
                                                 </div>
 
+                                                <div class="form-group">
+                                                    <label for="phone" class="fs-12 fw-700 text-soft-dark">{{  translate('Phone') }}</label>
+                                                    <input type="text" class="form-control rounded-0{{ $errors->has('phone') ? ' is-invalid' : '' }}" value="{{ old('phone') }}" placeholder="{{  translate('Phone') }}" name="phone" required>
+                                                    @if ($errors->has('phone'))
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $errors->first('phone') }}</strong>
+                                                        </span>
+                                                    @endif
+                                                </div>
+
                                                 <!-- Recaptcha -->
                                                 @if(get_setting('google_recaptcha') == 1)
                                                     <div class="form-group">

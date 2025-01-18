@@ -345,6 +345,23 @@
                 </div>
             </div>
         </div>
+
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="mb-0 h6 text-center">{{ translate('View Shop Info') }}</h3>
+                </div>
+                <div class="card-body text-center">
+                    <label class="aiz-switch aiz-switch-success mb-0">
+                        <input type="checkbox" onchange="updateSettings(this, 'view_shop_info')"
+                            <?php if (get_setting('view_shop_info') == 1) {
+                                echo 'checked';
+                            } ?>>
+                        <span class="slider round"></span>
+                    </label> 
+                </div>
+            </div>
+        </div>
     </div>
 
     <h4 class="text-center text-muted mt-4">{{ translate('Social Media Login') }}</h4>

@@ -44,7 +44,7 @@
     @foreach ($seller_products as $key => $seller_product)
         <div class="card @if($loop->last) mb-0 @else mb-3 @endif border-left-0 border-top-0 border-right-0 @if($loop->last) border-bottom-0 @else border-bottom @endif rounded-0 shadow-none">
             <div class="card-header py-3 px-0 border-left-0 border-top-0 border-right-0 border-bottom border-dashed">
-                <h5 class="fs-16 fw-700 text-dark mb-0">{{ get_shop_by_user_id($key)->name }} {{ translate('Products') }} ({{ sprintf("%02d", count($seller_product)) }})</h5>
+                <h5 class="fs-16 fw-700 text-dark mb-0">{{ get_setting('view_shop_info') == 1 ? get_shop_by_user_id($key)->name : '' }} {{ translate('Products') }} ({{ sprintf("%02d", count($seller_product)) }})</h5>
             </div>
             <div class="card-body p-0">
                 @include('frontend.partials.cart.delivery_info_details', ['products' => $seller_product, 'product_variation' => $seller_product_variation, 'owner_id' => $key ])

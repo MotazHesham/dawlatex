@@ -132,19 +132,23 @@
                                     <div class="d-flex">
                                         <!-- Shop Logo -->
                                         @if ($detailedProduct->added_by == 'seller' && get_setting('vendor_system_activation') == 1)
-                                        <a href="{{ route('shop.visit', $detailedProduct->user->shop->slug) }}" class="size-40px rounded-content mr-2 overflow-hidden border">
-                                            <img class="lazyload img-fit h-100 mx-auto"
-                                                src="{{ static_asset('assets/img/placeholder.jpg') }}"
-                                                data-src="{{ uploaded_asset($detailedProduct->user->shop->logo) }}"
-                                                onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';">
-                                        </a>
+                                            @if(get_setting('view_shop_info') == 1)
+                                                <a href="{{ route('shop.visit', $detailedProduct->user->shop->slug) }}" class="size-40px rounded-content mr-2 overflow-hidden border">
+                                                    <img class="lazyload img-fit h-100 mx-auto"
+                                                        src="{{ static_asset('assets/img/placeholder.jpg') }}"
+                                                        data-src="{{ uploaded_asset($detailedProduct->user->shop->logo) }}"
+                                                        onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';">
+                                                </a>
+                                            @endif
                                         @endif
                                         <!-- Shop Name -->
                                         <div>
                                             <span class="opacity-60 fw-400">{{ translate('Sold by') }}</span><br>
                                             @if ($detailedProduct->added_by == 'seller' && get_setting('vendor_system_activation') == 1)
-                                                <a href="{{ route('shop.visit', $detailedProduct->user->shop->slug) }}"
-                                                    class="text-reset hov-text-primary">{{ $detailedProduct->user->shop->name }}</a>
+                                                @if(get_setting('view_shop_info') == 1)
+                                                    <a href="{{ route('shop.visit', $detailedProduct->user->shop->slug) }}"
+                                                        class="text-reset hov-text-primary">{{ $detailedProduct->user->shop->name }}</a>
+                                                @endif
                                             @else
                                                 {{ translate('Inhouse product') }}
                                             @endif
@@ -391,90 +395,96 @@
 
                     <!-- Seller Info -->
                     @if ($detailedProduct->added_by == 'seller' && $detailedProduct->user->shop != null)
-                        <div class="border mb-4" style="background: #fcfcfd;">
-                            <div class="position-relative p-4 text-left">
-                                @if ($detailedProduct->user->shop->verification_status)
-                                    <div class="absolute-top-right mr-4 bg-white z-1">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="31.999" height="48.001" viewBox="0 0 31.999 48.001">
-                                            <g id="Group_24169" data-name="Group 24169" transform="translate(-532 -1033.999)">
-                                              <path id="Union_3" data-name="Union 3" d="M1937,12304h16v14Zm-16,0h16l-16,14Zm0,0v-34h32v34Z" transform="translate(-1389 -11236)" fill="#85b567"/>
-                                              <path id="Union_5" data-name="Union 5" d="M1921,12280a10,10,0,1,1,10,10A10,10,0,0,1,1921,12280Zm1,0a9,9,0,1,0,9-9A9.011,9.011,0,0,0,1922,12280Zm1,0a8,8,0,1,1,8,8A8.009,8.009,0,0,1,1923,12280Zm4.26-1.033a.891.891,0,0,0-.262.636.877.877,0,0,0,.262.632l2.551,2.551a.9.9,0,0,0,.635.266.894.894,0,0,0,.639-.266l4.247-4.244a.9.9,0,0,0-.639-1.542.893.893,0,0,0-.635.266l-3.612,3.608-1.912-1.906a.89.89,0,0,0-1.274,0Z" transform="translate(-1383 -11226)" fill="#fff"/>
-                                            </g>
-                                        </svg>
-                                    </div>
-                                @endif
-                                <div class="opacity-60 fs-12">{{ translate('Seller')}}</div>
-                                <div class="d-flex mt-1">
-                                    <!-- Shop Logo -->
-                                    @if ($detailedProduct->added_by == 'seller' && get_setting('vendor_system_activation') == 1)
-                                    <a href="{{ route('shop.visit', $detailedProduct->user->shop->slug) }}" class="h-60px w-70px rounded-content mr-2 overflow-hidden border">
-                                        <img class="lazyload img-fit h-100 mx-auto"
-                                            src="{{ static_asset('assets/img/placeholder.jpg') }}"
-                                            data-src="{{ uploaded_asset($detailedProduct->user->shop->logo) }}"
-                                            onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';">
-                                    </a>
+                        @if(get_setting('view_shop_info') == 1)
+                            <div class="border mb-4" style="background: #fcfcfd;">
+                                <div class="position-relative p-4 text-left">
+                                    @if ($detailedProduct->user->shop->verification_status)
+                                        <div class="absolute-top-right mr-4 bg-white z-1">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="31.999" height="48.001" viewBox="0 0 31.999 48.001">
+                                                <g id="Group_24169" data-name="Group 24169" transform="translate(-532 -1033.999)">
+                                                <path id="Union_3" data-name="Union 3" d="M1937,12304h16v14Zm-16,0h16l-16,14Zm0,0v-34h32v34Z" transform="translate(-1389 -11236)" fill="#85b567"/>
+                                                <path id="Union_5" data-name="Union 5" d="M1921,12280a10,10,0,1,1,10,10A10,10,0,0,1,1921,12280Zm1,0a9,9,0,1,0,9-9A9.011,9.011,0,0,0,1922,12280Zm1,0a8,8,0,1,1,8,8A8.009,8.009,0,0,1,1923,12280Zm4.26-1.033a.891.891,0,0,0-.262.636.877.877,0,0,0,.262.632l2.551,2.551a.9.9,0,0,0,.635.266.894.894,0,0,0,.639-.266l4.247-4.244a.9.9,0,0,0-.639-1.542.893.893,0,0,0-.635.266l-3.612,3.608-1.912-1.906a.89.89,0,0,0-1.274,0Z" transform="translate(-1383 -11226)" fill="#fff"/>
+                                                </g>
+                                            </svg>
+                                        </div>
                                     @endif
-                                    <!-- Shop Name -->
-                                    <div>
-                                        <a href="{{ route('shop.visit', $detailedProduct->user->shop->slug) }}" class="text-reset d-block fw-700">
-                                            {{ $detailedProduct->user->shop->name }}
-                                            @if ($detailedProduct->user->shop->verification_status == 1)
-                                                <span class="ml-2"><i class="fa fa-check-circle" style="color:green"></i></span>
-                                            @else
-                                                <span class="ml-2"><i class="fa fa-times-circle" style="color:red"></i></span>
+                                    <div class="opacity-60 fs-12">{{ translate('Seller')}}</div>
+                                    <div class="d-flex mt-1">
+                                        <!-- Shop Logo -->
+                                        @if ($detailedProduct->added_by == 'seller' && get_setting('vendor_system_activation') == 1)
+                                            @if(get_setting('view_shop_info') == 1)
+                                                <a href="{{ route('shop.visit', $detailedProduct->user->shop->slug) }}" class="h-60px w-70px rounded-content mr-2 overflow-hidden border">
+                                                    <img class="lazyload img-fit h-100 mx-auto"
+                                                        src="{{ static_asset('assets/img/placeholder.jpg') }}"
+                                                        data-src="{{ uploaded_asset($detailedProduct->user->shop->logo) }}"
+                                                        onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';">
+                                                </a>
                                             @endif
-                                        </a>
-                                        <div class="location opacity-70">{{ $detailedProduct->user->shop->address }}</div>
-                                    </div>
-                                </div>
-                                <!-- Ratting -->
-                                <div class="mt-3">
-                                    <div class="rating rating-mr-2">
-                                        @if ($total > 0)
-                                            {{ renderStarRating($detailedProduct->user->shop->rating) }}
-                                        @else
-                                            {{ renderStarRating(0) }}
                                         @endif
+                                        <!-- Shop Name -->
+                                        <div>
+                                            <a href="{{ route('shop.visit', $detailedProduct->user->shop->slug) }}" class="text-reset d-block fw-700">
+                                                @if(get_setting('view_shop_info') == 1)
+                                                    {{ $detailedProduct->user->shop->name }}
+                                                    @if ($detailedProduct->user->shop->verification_status == 1)
+                                                        <span class="ml-2"><i class="fa fa-check-circle" style="color:green"></i></span>
+                                                    @else
+                                                        <span class="ml-2"><i class="fa fa-times-circle" style="color:red"></i></span>
+                                                    @endif
+                                                @endif
+                                            </a>
+                                            <div class="location opacity-70">{{ $detailedProduct->user->shop->address }}</div>
+                                        </div>
                                     </div>
-                                    <div class="opacity-60 fs-12">({{ $total }}
-                                        {{ translate('customer reviews') }})</div>
-                                </div>
-                                <!-- Social Links -->
-                                <div class="mt-3">
-                                    <ul class="social list-inline mb-0">
-                                        <li class="list-inline-item mr-2">
-                                            <a href="{{ $detailedProduct->user->shop->facebook }}" class="facebook"
-                                                target="_blank">
-                                                <i class="lab la-facebook-f opacity-60"></i>
-                                            </a>
-                                        </li>
-                                        <li class="list-inline-item mr-2">
-                                            <a href="{{ $detailedProduct->user->shop->google }}" class="google"
-                                                target="_blank">
-                                                <i class="lab la-google opacity-60"></i>
-                                            </a>
-                                        </li>
-                                        <li class="list-inline-item mr-2">
-                                            <a href="{{ $detailedProduct->user->shop->twitter }}" class="twitter"
-                                                target="_blank">
-                                                <i class="lab la-twitter opacity-60"></i>
-                                            </a>
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <a href="{{ $detailedProduct->user->shop->youtube }}" class="youtube"
-                                                target="_blank">
-                                                <i class="lab la-youtube opacity-60"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <!-- shop link button -->
-                                <div class="mt-3">
-                                    <a href="{{ route('shop.visit', $detailedProduct->user->shop->slug) }}"
-                                        class="btn btn-block btn-secondary-base text-white fs-14 fw-700 rounded-0">{{ translate('Visit Store') }}</a>
+                                    <!-- Ratting -->
+                                    <div class="mt-3">
+                                        <div class="rating rating-mr-2">
+                                            @if ($total > 0)
+                                                {{ renderStarRating($detailedProduct->user->shop->rating) }}
+                                            @else
+                                                {{ renderStarRating(0) }}
+                                            @endif
+                                        </div>
+                                        <div class="opacity-60 fs-12">({{ $total }}
+                                            {{ translate('customer reviews') }})</div>
+                                    </div>
+                                    <!-- Social Links -->
+                                    <div class="mt-3">
+                                        <ul class="social list-inline mb-0">
+                                            <li class="list-inline-item mr-2">
+                                                <a href="{{ $detailedProduct->user->shop->facebook }}" class="facebook"
+                                                    target="_blank">
+                                                    <i class="lab la-facebook-f opacity-60"></i>
+                                                </a>
+                                            </li>
+                                            <li class="list-inline-item mr-2">
+                                                <a href="{{ $detailedProduct->user->shop->google }}" class="google"
+                                                    target="_blank">
+                                                    <i class="lab la-google opacity-60"></i>
+                                                </a>
+                                            </li>
+                                            <li class="list-inline-item mr-2">
+                                                <a href="{{ $detailedProduct->user->shop->twitter }}" class="twitter"
+                                                    target="_blank">
+                                                    <i class="lab la-twitter opacity-60"></i>
+                                                </a>
+                                            </li>
+                                            <li class="list-inline-item">
+                                                <a href="{{ $detailedProduct->user->shop->youtube }}" class="youtube"
+                                                    target="_blank">
+                                                    <i class="lab la-youtube opacity-60"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <!-- shop link button -->
+                                    <div class="mt-3">
+                                        <a href="{{ route('shop.visit', $detailedProduct->user->shop->slug) }}"
+                                            class="btn btn-block btn-secondary-base text-white fs-14 fw-700 rounded-0">{{ translate('Visit Store') }}</a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        @endif
                     @endif
 
                     <!-- Top Selling Products -->

@@ -110,9 +110,11 @@
         <div class="d-flex align-items-center mr-4">
             <!-- Shop Name -->
             @if ($detailedProduct->added_by == 'seller' && get_setting('vendor_system_activation') == 1)
-                <span class="text-secondary fs-14 fw-400 mr-4 w-80px">{{ translate('Sold by') }}</span>
-                <a href="{{ route('shop.visit', $detailedProduct->user->shop->slug) }}"
-                    class="text-reset hov-text-primary fs-14 fw-700">{{ $detailedProduct->user->shop->name }}</a>
+                @if (get_setting('view_shop_info') == 1)
+                    <span class="text-secondary fs-14 fw-400 mr-4 w-80px">{{ translate('Sold by') }}</span>
+                    <a href="{{ route('shop.visit', $detailedProduct->user->shop->slug) }}"
+                        class="text-reset hov-text-primary fs-14 fw-700">{{ $detailedProduct->user->shop->name }}</a>
+                @endif
             @else
                 <p class="mb-0 fs-14 fw-700">{{ translate('Inhouse product') }}</p>
             @endif

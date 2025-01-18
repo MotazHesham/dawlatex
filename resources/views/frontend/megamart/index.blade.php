@@ -342,62 +342,64 @@
                     @endif
 
                     <!-- Top Sellers -->
-                    <div class="col mb-2 mb-md-3 mt-2 mt-md-3">
-                        <div class="h-100" id="section_top_sellers">
-                            <div class="border px-3 py-2rem">
-                                <!-- Top Section -->
-                                <div class="d-flex mb-3 mb-md-4 align-items-baseline justify-content-between">
-                                    <!-- Title -->
-                                    <h3 class="fs-16 fs-md-20 fw-700 mb-2 mb-sm-0">
-                                        <span class="pb-3">{{ translate('Top Sellers') }}</span>
-                                    </h3>
-                                    <!-- Links -->
-                                    <div class="d-flex">
-                                        <a class="text-blue fs-10 fs-md-12 fw-700 hov-text-primary animate-underline-primary"
-                                            href="{{ route('sellers') }}">{{ translate('View All Sellers') }}</a>
+                    
+                    @if (get_setting('view_shop_info') == 1)
+                        <div class="col mb-2 mb-md-3 mt-2 mt-md-3">
+                            <div class="h-100" id="section_top_sellers">
+                                <div class="border px-3 py-2rem">
+                                    <!-- Top Section -->
+                                    <div class="d-flex mb-3 mb-md-4 align-items-baseline justify-content-between">
+                                        <!-- Title -->
+                                        <h3 class="fs-16 fs-md-20 fw-700 mb-2 mb-sm-0">
+                                            <span class="pb-3">{{ translate('Top Sellers') }}</span>
+                                        </h3>
+                                        <!-- Links -->
+                                        <div class="d-flex">
+                                            <a class="text-blue fs-10 fs-md-12 fw-700 hov-text-primary animate-underline-primary"
+                                                href="{{ route('sellers') }}">{{ translate('View All Sellers') }}</a>
+                                        </div>
                                     </div>
-                                </div>
-                                <!-- Sellers Section -->
-                                <div class="aiz-carousel arrow-x-0 arrow-inactive-none" data-rows="{{ $data_rows }}" data-items="{{ $xxl_items }}" data-xxl-items="{{ $xxl_items }}"
-                                    data-xl-items="{{ $xl_items }}" data-lg-items="{{ $lg_items }}" data-md-items="{{ $md_items }}" data-sm-items="2" data-xs-items="1.4"
-                                    data-arrows="true" data-dots="false">
-                                    @foreach ($best_selers as $key => $seller)
-                                        @if ($seller->user != null)
-                                            <div
-                                                class="carousel-box h-100 position-relative text-center has-transition hov-animate-outline">
-                                                <div class="position-relative px-3 px-xl-2 py-3">
-                                                    <!-- Shop logo & Verification Status -->
-                                                    <div class="mx-auto size-100px">
-                                                        <a href="{{ route('shop.visit', $seller->slug) }}"
-                                                            class="d-flex mx-auto justify-content-center align-item-center size-100px border overflow-hidden hov-scale-img"
-                                                            tabindex="0"
-                                                            style="border: 1px solid #e5e5e5; border-radius: 50%; box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.06);">
-                                                            <img src="{{ static_asset('assets/img/placeholder-rect.jpg') }}"
-                                                                data-src="{{ uploaded_asset($seller->logo) }}" alt="{{ $seller->name }}"
-                                                                class="img-fit lazyload has-transition"
-                                                                onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder-rect.jpg') }}';">
-                                                        </a>
-                                                    </div>
-                                                    <!-- Shop name -->
-                                                    <h2 class="fs-14 fw-700 text-dark text-truncate-2 h-40px mt-3 mt-md-4 mb-0 mb-md-3">
-                                                        <a href="{{ route('shop.visit', $seller->slug) }}"
-                                                            class="text-reset hov-text-primary" tabindex="0">{{ $seller->name }}</a>
-                                                    </h2>
-                                                    <!-- Shop Rating -->
-                                                    <div class="rating rating-mr-2 text-dark mb-3">
-                                                        {{ renderStarRating($seller->rating) }} <br>
-                                                        <span class="opacity-60 fs-14">({{ $seller->num_of_reviews }}
-                                                            {{ translate('Reviews') }})</span>
+                                    <!-- Sellers Section -->
+                                    <div class="aiz-carousel arrow-x-0 arrow-inactive-none" data-rows="{{ $data_rows }}" data-items="{{ $xxl_items }}" data-xxl-items="{{ $xxl_items }}"
+                                        data-xl-items="{{ $xl_items }}" data-lg-items="{{ $lg_items }}" data-md-items="{{ $md_items }}" data-sm-items="2" data-xs-items="1.4"
+                                        data-arrows="true" data-dots="false">
+                                        @foreach ($best_selers as $key => $seller)
+                                            @if ($seller->user != null)
+                                                <div
+                                                    class="carousel-box h-100 position-relative text-center has-transition hov-animate-outline">
+                                                    <div class="position-relative px-3 px-xl-2 py-3">
+                                                        <!-- Shop logo & Verification Status -->
+                                                        <div class="mx-auto size-100px">
+                                                            <a href="{{ route('shop.visit', $seller->slug) }}"
+                                                                class="d-flex mx-auto justify-content-center align-item-center size-100px border overflow-hidden hov-scale-img"
+                                                                tabindex="0"
+                                                                style="border: 1px solid #e5e5e5; border-radius: 50%; box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.06);">
+                                                                <img src="{{ static_asset('assets/img/placeholder-rect.jpg') }}"
+                                                                    data-src="{{ uploaded_asset($seller->logo) }}" alt="{{ $seller->name }}"
+                                                                    class="img-fit lazyload has-transition"
+                                                                    onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder-rect.jpg') }}';">
+                                                            </a>
+                                                        </div>
+                                                        <!-- Shop name -->
+                                                        <h2 class="fs-14 fw-700 text-dark text-truncate-2 h-40px mt-3 mt-md-4 mb-0 mb-md-3">
+                                                            <a href="{{ route('shop.visit', $seller->slug) }}"
+                                                                class="text-reset hov-text-primary" tabindex="0">{{ $seller->name }}</a>
+                                                        </h2>
+                                                        <!-- Shop Rating -->
+                                                        <div class="rating rating-mr-2 text-dark mb-3">
+                                                            {{ renderStarRating($seller->rating) }} <br>
+                                                            <span class="opacity-60 fs-14">({{ $seller->num_of_reviews }}
+                                                                {{ translate('Reviews') }})</span>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        @endif
-                                    @endforeach
+                                            @endif
+                                        @endforeach
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-
+                    @endif
                 </div>
             </div>
         </section>

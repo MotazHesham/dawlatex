@@ -89,6 +89,15 @@
                                     </span>
                                 @endif
                             </div>
+                            <div class="form-group">
+                                <label>{{ translate('Phone')}} <span class="text-primary">*</span></label>
+                                <input type="text" class="form-control mb-3 rounded-0{{ $errors->has('phone') ? ' is-invalid' : '' }}" value="{{ old('phone') }}" placeholder="{{ translate('Phone')}}" name="phone" required>
+                                @if ($errors->has('phone'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('phone') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
                         </div>
                     </div>
 

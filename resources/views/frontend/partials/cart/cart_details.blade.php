@@ -183,7 +183,7 @@
                                             <label class="aiz-checkbox d-block">
                                                 <input type="checkbox" class="check-one check-seller" value="seller-{{ $key }}"  @if($all_seller_products) checked @endif>
                                                 <span class="fs-16 fw-700 text-dark ml-3 pb-3 d-block border-left-0 border-top-0 border-right-0 border-bottom border-dashed">
-                                                    {{ get_shop_by_user_id($key)->name }} {{ translate('Products') }} ({{ count($seller_product) }})
+                                                    {{ get_setting('view_shop_info') == 1 ? get_shop_by_user_id($key)->name : '' }} {{ translate('Products') }} ({{ count($seller_product) }})
                                                 </span>
                                                 <span class="aiz-square-check"></span>
                                             </label>
