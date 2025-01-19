@@ -43,6 +43,9 @@ class WholesaleService
         if(get_setting('category_in_sequance') == 1){ 
             $collection['category_id'] = $data['category_ids'][0];
         }
+        if(get_setting('product_publish_days_active') == 1){ 
+            $collection['publish_days'] = $data['publish_days'];
+        }
         
         $data = $collection->toArray();
 
@@ -75,6 +78,9 @@ class WholesaleService
     {
         $product                    = Product::findOrFail($id);
         $product->category_id       = get_setting('category_in_sequance') == 1 ? $request->category_ids[0] :$request->category_id;
+        if(get_setting('product_publish_days_active') == 1){ 
+            $product->publish_days = $request->publish_days;
+        }
         $product->brand_id          = $request->brand_id;
         $product->barcode           = $request->barcode;
         $product->cash_on_delivery = 0;

@@ -137,12 +137,25 @@
                                             </div>
                                         </div>
                                         <!-- Unit -->
-                                        <div class="form-group row">
+                                        <div class="form-group row"  @if(get_setting('product_view_unit') != 1) style="display: none" @endif>
                                             <label class="col-xxl-3 col-from-label fs-13">{{translate('Unit')}} <span class="text-danger">*</span></label>
                                             <div class="col-xxl-9">
                                                 <input type="text" class="form-control @error('unit') is-invalid @enderror" name="unit" placeholder="{{ translate('Unit (e.g. KG, Pc etc)') }}" value="{{$product->getTranslation('unit', $lang)}}">
                                             </div>
                                         </div>
+                                        @if(get_setting('product_publish_days_active'))
+                                            <div class="form-group row" id="publish_days">
+                                                <label class="col-md-3 col-from-label">{{translate('Publish Days')}} <span class="text-danger">*</span></label>
+                                                <div class="col-md-9">
+                                                    <select class="form-control aiz-selectpicker" name="publish_days" id="publish_days" required>
+                                                        <option value="">{{ translate('Select Publish Days') }}</option>
+                                                        @for ($i = 1 ; $i <= get_setting('product_publish_days') ; $i++)
+                                                            <option value="{{ $i }}" @if($product->publish_days == $i) selected @endif>{{ $i }}</option>
+                                                        @endfor
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        @endif
                                         <!-- Weight -->
                                         <div class="form-group row">
                                             <label class="col-xxl-3 col-from-label fs-13">{{translate('Weight')}} <small>({{ translate('In Kg') }})</small></label>

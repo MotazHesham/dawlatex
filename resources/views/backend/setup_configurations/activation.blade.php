@@ -51,6 +51,87 @@
         </div>
     </div>
 
+    <h4 class="text-center text-muted mt-4">{{ translate('Product Settings') }}</h4>
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="mb-0 h6 text-center">{{ translate('Unit Setting') }}</h3>
+                </div>
+                
+                <form action="{{ route('business_settings.update') }}" method="POST" enctype="multipart/form-data">
+                    <div class="card-body">
+                        @csrf
+                        <div class="form-group row">
+                            <div class="col-md-4">
+                                <label class="control-label">{{translate('View Unit')}}</label>
+                            </div>
+                            <div class="col-md-8">
+                                <label class="aiz-switch aiz-switch-success mb-0">
+                                    <input type="hidden" name="types[]" value="product_view_unit">
+                                    <input value="1" name="product_view_unit" type="checkbox" @if (get_setting('product_view_unit') == 1)
+                                        checked
+                                    @endif>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <input type="hidden" name="types[]" value="product_unit_value">
+                            <div class="col-md-4">
+                                <label class="control-label">{{translate('Unit Default Value')}}</label>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="text"  class="form-control" name="product_unit_value" value="{{ get_setting('product_unit_value') }}" placeholder="{{ translate('Unit Default Value') }}" required>
+                            </div>
+                        </div>
+                        <div class="form-group mb-0 text-right">
+                            <button type="submit" class="btn btn-sm btn-primary">{{translate('Save')}}</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="mb-0 h6 text-center">{{ translate('Publish Days Setting') }}</h3>
+                </div>
+                
+                <form action="{{ route('business_settings.update') }}" method="POST" enctype="multipart/form-data">
+                    <div class="card-body">
+                        @csrf
+                        <div class="form-group row">
+                            <div class="col-md-4">
+                                <label class="control-label">{{translate('Publish Days Active')}}</label>
+                            </div>
+                            <div class="col-md-8">
+                                <label class="aiz-switch aiz-switch-success mb-0">
+                                    <input type="hidden" name="types[]" value="product_publish_days_active">
+                                    <input value="1" name="product_publish_days_active" type="checkbox" @if (get_setting('product_publish_days_active') == 1)
+                                        checked
+                                    @endif>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <input type="hidden" name="types[]" value="product_publish_days">
+                            <div class="col-md-4">
+                                <label class="control-label">{{translate('Publish Days')}}</label>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="text"  class="form-control" name="product_publish_days" value="{{ get_setting('product_publish_days') }}" placeholder="{{ translate('Publish Days') }}" required>
+                            </div>
+                        </div>
+                        <div class="form-group mb-0 text-right">
+                            <button type="submit" class="btn btn-sm btn-primary">{{translate('Save')}}</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <h4 class="text-center text-muted mt-4">{{ translate('Business Related') }}</h4>
     <div class="row">

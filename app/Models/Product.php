@@ -14,6 +14,9 @@ class Product extends Model
     
     protected $guarded = ['choice_attributes'];
 
+    protected $casts = [
+        'published_at' => 'datetime',
+    ];
     protected $with = ['product_translations', 'taxes', 'thumbnail'];
 
     public function getTranslation($field = '', $lang = false)
