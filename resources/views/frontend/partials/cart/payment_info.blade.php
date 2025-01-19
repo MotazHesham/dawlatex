@@ -85,14 +85,14 @@
                         @if ($method->bank_info != null)
                             <ul>
                                 @foreach (json_decode($method->bank_info) as $key => $info)
-                                    <li>{{ translate('Bank Name') }} -
-                                        {{ $info->bank_name }},
-                                        {{ translate('Account Name') }} -
-                                        {{ $info->account_name }},
-                                        {{ translate('Account Number') }} -
-                                        {{ $info->account_number }},
-                                        {{ translate('Routing Number') }} -
-                                        {{ $info->routing_number }}</li>
+                                    <li>({{ translate('Bank Name') }} -
+                                        {{ $info->bank_name }}),
+                                        ({{ translate('Account Name') }} -
+                                        {{ $info->account_name }}),
+                                        ({{ translate('Account Number') }} -
+                                        {{ $info->account_number }}),
+                                        ({{ translate('Routing Number') }} -
+                                        {{ $info->routing_number }})</li>
                                 @endforeach
                             </ul>
                         @endif
