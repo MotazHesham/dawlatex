@@ -30,6 +30,7 @@
     <style>
         body {
             font-size: 12px;
+            font-family: system-ui;
         }
         #map{
             width: 100%;

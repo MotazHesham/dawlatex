@@ -59,10 +59,10 @@
             --secondary-base: #f1416c;
             --hov-secondary-base: #c73459;
             --soft-secondary-base: rgb(241, 65, 108, 0.15);
-        }
+        } 
         body {
             font-size: 12px;
-            font-family: 'Public Sans', sans-serif;
+            font-family: system-ui;
         }
         /* .bootstrap-select .btn,
         .btn:not(.btn-circle),

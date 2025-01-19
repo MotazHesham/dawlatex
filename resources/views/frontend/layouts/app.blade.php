@@ -126,7 +126,7 @@
             --soft-primary: {{ hex2rgba(get_setting('base_color', '#d43533'), 0.15) }};
         }
         body{
-            font-family: 'Public Sans', sans-serif;
+            font-family: system-ui;
             font-weight: 400;
         }
 
