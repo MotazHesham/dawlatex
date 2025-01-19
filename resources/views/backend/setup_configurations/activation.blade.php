@@ -121,7 +121,41 @@
                                 <label class="control-label">{{translate('Publish Days')}}</label>
                             </div>
                             <div class="col-md-8">
-                                <input type="text"  class="form-control" name="product_publish_days" value="{{ get_setting('product_publish_days') }}" placeholder="{{ translate('Publish Days') }}" required>
+                                <input type="number"  class="form-control" name="product_publish_days" value="{{ get_setting('product_publish_days') }}" placeholder="{{ translate('Publish Days') }}" required>
+                            </div>
+                        </div>
+                        <div class="form-group mb-0 text-right">
+                            <button type="submit" class="btn btn-sm btn-primary">{{translate('Save')}}</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="mb-0 h6 text-center">{{ translate('Edit Price') }}</h3>
+                </div>
+                
+                <form action="{{ route('business_settings.update') }}" method="POST" enctype="multipart/form-data">
+                    <div class="card-body">
+                        @csrf 
+                        <div class="form-group row">
+                            <input type="hidden" name="types[]" value="product_num_edit_price">
+                            <div class="col-md-4">
+                                <label class="control-label">{{translate('Num Of Edit Price')}}</label>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="number"  class="form-control" name="product_num_edit_price" value="{{ get_setting('product_num_edit_price') }}" placeholder="{{ translate('Num Of Edit Price') }}" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <input type="hidden" name="types[]" value="product_edit_price_text">
+                            <div class="col-md-4">
+                                <label class="control-label">{{translate('Edit Price Text')}}</label>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="text"  class="form-control" name="product_edit_price_text" value="{{ get_setting('product_edit_price_text') }}" placeholder="{{ translate('Edit Price Text') }}" required>
                             </div>
                         </div>
                         <div class="form-group mb-0 text-right">

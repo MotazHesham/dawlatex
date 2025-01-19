@@ -76,6 +76,8 @@ class WholesaleService
 
     public function update(Request $request , $id)
     {
+        $priceChanged = false;
+
         $product                    = Product::findOrFail($id);
         $product->category_id       = get_setting('category_in_sequance') == 1 ? $request->category_ids[0] :$request->category_id;
         if(get_setting('product_publish_days_active') == 1){ 
@@ -87,6 +89,10 @@ class WholesaleService
         $product->featured = 0;
         $product->todays_deal = 0;
         $product->is_quantity_multiplied = 0;
+        
+        if($product->unit_price != $request->unit_price){
+            $priceChanged = true; 
+        }
 
         if (addon_is_activated('refund_request')) {
             if ($request->refundable != null) {
@@ -130,6 +136,7 @@ class WholesaleService
         $product->unit_price     = $request->unit_price;
         $product->discount       = $request->discount;
         $product->discount_type     = $request->discount_type;
+        
 
         if ($request->date_range != null) {
             $date_var               = explode(" to ", $request->date_range);
@@ -209,9 +216,55 @@ class WholesaleService
         $product->warranty_id = $request->warranty_id;
         $product->warranty_note_id = $request->warranty_note_id;
 
+
+        $existingWholesalePrices = $product->stocks->first()->wholesalePrices;
+        // Prepare the old and new arrays
+        $oldData = [];
+        $newData = [];
+        // Populate the old data array
+        foreach ($existingWholesalePrices as $existingPrice) {
+            $oldData[] = [
+                'price' => $existingPrice->price,
+                'min_qty' => $existingPrice->min_qty,
+                'max_qty' => $existingPrice->max_qty,
+            ];
+        }
+        
+        // Populate the new data array from the request
+        if ($request->has('wholesale_price')) {
+            foreach ($request->wholesale_price as $key => $price) {
+                $newData[] = [
+                    'price' => $price,
+                    'min_qty' => $request->wholesale_min_qty[$key],
+                    'max_qty' => $request->wholesale_max_qty[$key],
+                ];
+            }
+        } 
+        
+        if(count($oldData) != count($newData)){
+            $priceChanged = true;
+        }else{
+            foreach ($oldData as $index => $old) {
+                // Check if the new array has a corresponding entry
+                $new = $newData[$index] ?? null; 
+                if (!$new || $old['price'] != $new['price'] || $old['min_qty'] != $new['min_qty'] || $old['max_qty'] != $new['max_qty']) {
+                    $priceChanged = true;
+                } 
+            }
+        }
+        
+        if($priceChanged){
+            $product->price_change_count = $product->price_change_count + 1;  
+            if($product->price_change_count > (int) get_setting('product_num_edit_price',1)){
+                if(auth()->user()->user_type == 'seller'){
+                    $product->approved = 0;
+                }
+            }
+        }
+        
         $product->save();
 
-        foreach ($product->stocks->first()->wholesalePrices as $key => $wholesalePrice) {
+        foreach ($existingWholesalePrices as $key => $wholesalePrice) {
             $wholesalePrice->delete();
         }
 

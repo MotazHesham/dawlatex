@@ -503,6 +503,7 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($request->id);
         $product->approved = $request->approved;
+        $product->price_change_count = 0;
         $product->published_at = date('Y-m-d');
 
         if ($product->added_by == 'seller' && addon_is_activated('seller_subscription')) {
