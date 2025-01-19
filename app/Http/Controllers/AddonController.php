@@ -26,6 +26,7 @@ class AddonController extends Controller
      */
     public function index()
     {
+        return 'unactive';
         $addons = Addon::query()->orderBy('name', 'asc')->get();
         return view('backend.addons.index', compact('addons'));
     }

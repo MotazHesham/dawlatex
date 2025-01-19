@@ -1,7 +1,7 @@
 @extends('backend.layouts.app')
 
 @section('content')
-	<div class="row">
+	{{-- <div class="row">
 		<div class="col-lg-8 col-xxl-6 mx-auto">
 			<div class="card">
 				<div class="card-header d-block d-md-flex">
@@ -65,5 +65,5 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> --}}
 @endsection
