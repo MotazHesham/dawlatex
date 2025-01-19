@@ -1688,7 +1688,7 @@
 
                 <!-- System Update & Server Status -->
                 @canany(['system_update','server_status'])
-                    <li class="aiz-side-nav-item">
+                    {{-- <li class="aiz-side-nav-item">
                         <a href="#" class="aiz-side-nav-link">
                             <div class="aiz-side-nav-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
@@ -1743,12 +1743,12 @@
                             </li>
                             @endcan
                         </ul>
-                    </li>
+                    </li> --}}
                 @endcanany
 
                 <!-- Addon Manager -->
                 @can('manage_addons')
-                    <li class="aiz-side-nav-item">
+                    {{-- <li class="aiz-side-nav-item">
                         <a href="{{route('addons.index')}}" class="aiz-side-nav-link {{ areActiveRoutes(['addons.index', 'addons.create'])}}">
                             <div class="aiz-side-nav-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
@@ -1757,7 +1757,7 @@
                             </div>
                             <span class="aiz-side-nav-text">{{translate('Addon Manager')}}</span>
                         </a>
-                    </li>
+                    </li> --}}
                 @endcan
             </ul><!-- .aiz-side-nav -->
         </div><!-- .aiz-side-nav-wrap -->
