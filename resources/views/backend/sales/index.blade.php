@@ -2,6 +2,8 @@
 
 @section('content')
 
+    {{-- <a href="{{ route('orders.create') }}" class="btn btn-success mb-2">{{ Translate('Add New Order') }}</a> --}}
+
     <div class="card">
         <form class="" action="" id="sort_orders" method="GET">
             <div class="card-header row gutters-5">

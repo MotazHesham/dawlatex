@@ -180,103 +180,198 @@
                 </div>
             </div>
             <hr class="new-section-sm bord-no">
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title fs-5" id="exampleModalLabel">{{ translate('Add New Product To Order') }}</h4>
+                            <button type="button" class="btn btn-close" data-dismiss="modal" aria-label="Close">x</button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="{{ route('orders.store_order_detail') }}" method="POST">
+                                @csrf 
+                                <input type="hidden" name="order_id" value="{{ $order->id }}" id="">
+                                <div class="form-group row">
+                                    <label class="col-xxl-3 col-from-label fs-13">{{translate('Product')}}</label>
+                                    <div class="col-xxl-9">
+                                        <select class="form-control aiz-selectpicker" name="product_id" id="product_id" data-live-search="true" required>
+                                            <option value="">{{ translate('Select Product') }}</option>
+                                            @foreach (\App\Models\Product::where('published',1)->where('approved',1)->get() as $product)
+                                                <option value="{{ $product->id }}" @selected(old('product_id') == $product->id)>{{ $product->id }} - {{ $product->getTranslation('name') }}</option>
+                                            @endforeach
+                                        </select> 
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-xxl-3 col-from-label fs-13">{{translate('Variation')}}</label>
+                                    <div class="col-xxl-9">
+                                        <input type="text" class="form-control" name="variation" value="{{ old('variation') }}" placeholder="Variation (e.g. LG, XL etc)" required>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-xxl-3 col-from-label fs-13">{{translate('Price')}}</label>
+                                    <div class="col-xxl-9">
+                                        <input type="number" class="form-control" name="price" value="{{ old('price') ?? 0.00 }}"  step="0.01" placeholder="0.00" required>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-xxl-3 col-from-label fs-13">{{translate('Quantity')}}</label>
+                                    <div class="col-xxl-9">
+                                        <input type="number" class="form-control" name="quantity" value="{{ old('quantity') ?? 0.00 }}"  step="0.01" placeholder="0.00" required>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-xxl-3 col-from-label fs-13">{{translate('Tax')}}</label>
+                                    <div class="col-xxl-9">
+                                        <input type="number" class="form-control" name="tax" value="{{ old('tax') ?? 0.00 }}"  step="0.01" placeholder="0.00" required>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-xxl-3 col-from-label fs-13">{{translate('Shipping Cost')}}</label>
+                                    <div class="col-xxl-9">
+                                        <input type="number" class="form-control" name="shipping_cost" value="{{ old('shipping_cost') ?? 0.00 }}"  step="0.01" placeholder="0.00" required>
+                                    </div>
+                                </div>
+                                <hr> 
+                                <button type="sumbit" class="btn btn-success">{{ translate('Add') }}</button> 
+                            </form>
+                        </div> 
+                    </div>
+                </div>
+            </div>
+            
             <div class="row">
                 <div class="col-lg-12 table-responsive">
-                    <table class="table-bordered aiz-table invoice-summary table">
-                        <thead>
-                            <tr class="bg-trans-dark">
-                                <th data-breakpoints="lg" class="min-col">#</th>
-                                <th width="10%">{{ translate('Photo') }}</th>
-                                <th class="text-uppercase">{{ translate('Description') }}</th>
-                                <th data-breakpoints="lg" class="text-uppercase">{{ translate('Delivery Type') }}</th>
-                                <th data-breakpoints="lg" class="min-col text-uppercase text-center">
-                                    {{ translate('Qty') }}
-                                </th>
-                                <th data-breakpoints="lg" class="min-col text-uppercase text-center">
-                                    {{ translate('Price') }}</th>
-                                <th data-breakpoints="lg" class="min-col text-uppercase text-right">
-                                    {{ translate('Total') }}</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($order->orderDetails as $key => $orderDetail)
-                                <tr>
-                                    <td>{{ $key + 1 }}</td>
-                                    <td>
-                                        @if ($orderDetail->product != null && $orderDetail->product->auction_product == 0)
-                                            <a href="{{ route('product', $orderDetail->product->slug) }}" target="_blank">
-                                                <img height="50" src="{{ uploaded_asset($orderDetail->product->thumbnail_img) }}">
-                                            </a>
-                                        @elseif ($orderDetail->product != null && $orderDetail->product->auction_product == 1)
-                                            <a href="{{ route('auction-product', $orderDetail->product->slug) }}" target="_blank">
-                                                <img height="50" src="{{ uploaded_asset($orderDetail->product->thumbnail_img) }}">
-                                            </a>
-                                        @else
-                                            <strong>{{ translate('N/A') }}</strong>
-                                        @endif
-                                    </td>
-                                    <td>
-                                        @if ($orderDetail->product != null && $orderDetail->product->auction_product == 0)
-                                            <strong>
-                                                <a href="{{ route('product', $orderDetail->product->slug) }}" target="_blank"
-                                                    class="text-muted">
-                                                    {{ $orderDetail->product->getTranslation('name') }}
-                                                </a>
-                                            </strong>
-                                            <small>
-                                                {{ $orderDetail->variation }}
-                                            </small>
-                                            <br>
-                                            <small>
-                                                @php
-                                                    $product_stock = $orderDetail->product->stocks->where('variant', $orderDetail->variation)->first();
-                                                @endphp
-                                                {{translate('SKU')}}: {{ $product_stock['sku'] ?? '' }}
-                                            </small>
-                                        @elseif ($orderDetail->product != null && $orderDetail->product->auction_product == 1)
-                                            <strong>
-                                                <a href="{{ route('auction-product', $orderDetail->product->slug) }}" target="_blank"
-                                                    class="text-muted">
-                                                    {{ $orderDetail->product->getTranslation('name') }}
-                                                </a>
-                                            </strong>
-                                        @else
-                                            <strong>{{ translate('Product Unavailable') }}</strong>
-                                        @endif
-                                    </td>
-                                    <td>
-                                        @if ($order->shipping_type != null && $order->shipping_type == 'home_delivery')
-                                            {{ translate('Home Delivery') }}
-                                        @elseif ($order->shipping_type == 'pickup_point')
-                                            @if ($order->pickup_point != null)
-                                                {{ $order->pickup_point->getTranslation('name') }}
-                                                ({{ translate('Pickup Point') }})
-                                            @else
-                                                {{ translate('Pickup Point') }}
-                                            @endif
-                                        @elseif($order->shipping_type == 'carrier')
-                                            @if ($order->carrier != null)
-                                                {{ $order->carrier->name }} ({{ translate('Carrier') }})
-                                                <br>
-                                                {{ translate('Transit Time').' - '.$order->carrier->transit_time }}
-                                            @else
-                                                {{ translate('Carrier') }}
-                                            @endif
-                                        @endif
-                                    </td>
-                                    <td class="text-center">
-                                        {{ $orderDetail->quantity }}
-                                    </td>
-                                    <td class="text-center">
-                                        {{ single_price($orderDetail->price / $orderDetail->quantity) }}
-                                    </td>
-                                    <td class="text-center">
-                                        {{ single_price($orderDetail->price) }}
-                                    </td>
+                    @if(!in_array($order->delivery_status,orderStatusRestrictions()))
+                        <button class="btn btn-success mb-2" style="float: right;" data-toggle="modal" data-target="#exampleModal">{{ translate('Add New') }}</button>
+                    @endif
+                    <form action="{{ route('orders.update_order_detail') }}" method="POST">
+                        @csrf 
+                        <input type="hidden" name="order_id" value="{{ $order->id }}" id="">
+
+                        <table class="table-bordered aiz-table invoice-summary table">
+                            <thead>
+                                <tr class="bg-trans-dark">
+                                    <th data-breakpoints="lg" class="min-col">#</th>
+                                    <th width="10%">{{ translate('Photo') }}</th>
+                                    <th class="text-uppercase">{{ translate('Description') }}</th>
+                                    <th data-breakpoints="lg" class="text-uppercase">{{ translate('Delivery Type') }}</th>
+                                    <th data-breakpoints="lg" class="min-col text-uppercase text-center">
+                                        {{ translate('Qty') }}
+                                    </th>
+                                    <th data-breakpoints="lg" class="min-col text-uppercase text-center">
+                                        {{ translate('Price') }}</th>
+                                    <th data-breakpoints="lg" class="min-col text-uppercase text-center">
+                                        {{ translate('Tax') }}</th>
+                                    <th data-breakpoints="lg" class="min-col text-uppercase text-center">
+                                        {{ translate('Shipping Cost') }}</th>
+                                    <th data-breakpoints="lg" class="min-col text-uppercase text-right">
+                                        {{ translate('Total') }}</th>
+                                    <th></th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @foreach ($order->orderDetails as $key => $orderDetail) 
+                                    <tr>
+                                        <td>{{ $key + 1 }}</td>
+                                        <td>
+                                            @if ($orderDetail->product != null && $orderDetail->product->auction_product == 0)
+                                                <a href="{{ route('product', $orderDetail->product->slug) }}" target="_blank">
+                                                    <img height="50" src="{{ uploaded_asset($orderDetail->product->thumbnail_img) }}">
+                                                </a>
+                                            @elseif ($orderDetail->product != null && $orderDetail->product->auction_product == 1)
+                                                <a href="{{ route('auction-product', $orderDetail->product->slug) }}" target="_blank">
+                                                    <img height="50" src="{{ uploaded_asset($orderDetail->product->thumbnail_img) }}">
+                                                </a>
+                                            @else
+                                                <strong>{{ translate('N/A') }}</strong>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if ($orderDetail->product != null && $orderDetail->product->auction_product == 0)
+                                                <strong>
+                                                    <a href="{{ route('product', $orderDetail->product->slug) }}" target="_blank"
+                                                        class="text-muted">
+                                                        {{ $orderDetail->product->getTranslation('name') }}
+                                                    </a>
+                                                </strong>
+                                                <small>
+                                                    {{-- {{ $orderDetail->variation }} --}}
+                                                    @if ($orderDetail->variation != null)
+                                                        <input type="text" name="order_detail[{{$orderDetail->id}}][variation]" value="{{$orderDetail->variation}}" class="form-control" id="">
+                                                    @endif
+                                                </small>
+                                                <br>
+                                                <small>
+                                                    @php
+                                                        $product_stock = $orderDetail->product->stocks->where('variant', $orderDetail->variation)->first();
+                                                    @endphp
+                                                    {{translate('SKU')}}: {{ $product_stock['sku'] ?? '' }}
+                                                </small>
+                                            @elseif ($orderDetail->product != null && $orderDetail->product->auction_product == 1)
+                                                <strong>
+                                                    <a href="{{ route('auction-product', $orderDetail->product->slug) }}" target="_blank"
+                                                        class="text-muted">
+                                                        {{ $orderDetail->product->getTranslation('name') }}
+                                                    </a>
+                                                </strong>
+                                            @else
+                                                <strong>{{ translate('Product Unavailable') }}</strong>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if ($order->shipping_type != null && $order->shipping_type == 'home_delivery')
+                                                {{ translate('Home Delivery') }}
+                                            @elseif ($order->shipping_type == 'pickup_point')
+                                                @if ($order->pickup_point != null)
+                                                    {{ $order->pickup_point->getTranslation('name') }}
+                                                    ({{ translate('Pickup Point') }})
+                                                @else
+                                                    {{ translate('Pickup Point') }}
+                                                @endif
+                                            @elseif($order->shipping_type == 'carrier')
+                                                @if ($order->carrier != null)
+                                                    {{ $order->carrier->name }} ({{ translate('Carrier') }})
+                                                    <br>
+                                                    {{ translate('Transit Time').' - '.$order->carrier->transit_time }}
+                                                @else
+                                                    {{ translate('Carrier') }}
+                                                @endif
+                                            @endif
+                                        </td>
+                                        <td class="text-center">
+                                            {{-- {{ $orderDetail->quantity }} --}}
+                                            <input type="number" name="order_detail[{{$orderDetail->id}}][quantity]" value="{{$orderDetail->quantity}}" class="form-control" id="">
+                                        </td>
+                                        <td class="text-center">
+                                            {{-- {{ single_price($orderDetail->price / $orderDetail->quantity) }} --}}
+                                            <input type="number" name="order_detail[{{$orderDetail->id}}][price]" value="{{$orderDetail->price / $orderDetail->quantity}}" class="form-control" id="">
+                                        </td>
+                                        <td class="text-center"> 
+                                            <input type="number" name="order_detail[{{$orderDetail->id}}][tax]" value="{{$orderDetail->tax}}" class="form-control" id="">
+                                        </td>
+                                        <td class="text-center"> 
+                                            <input type="number" name="order_detail[{{$orderDetail->id}}][shipping_cost]" value="{{$orderDetail->shipping_cost}}" class="form-control" id="">
+                                        </td>
+                                        <td class="text-center">
+                                            {{ single_price($orderDetail->price + $orderDetail->tax + $orderDetail->shipping_cost ) }}
+                                        </td>
+                                        <td> 
+                                            @if(!in_array($order->delivery_status,orderStatusRestrictions()))
+                                                <a class="btn btn-danger" onclick="return confirm('هل انت متأكد من حذف المنتج')" href="{{ route('orders.delete_order_detail',$orderDetail->id) }}">{{ translate('Delete') }}</a>
+                                            @endif
+                                        </td>
+                                    </tr> 
+                                @endforeach
+                            </tbody>
+                        </table> 
+                        @if(!in_array($order->delivery_status,orderStatusRestrictions()))
+                            <button class="btn btn-info mb-2" style="float: right;" type="submit">{{ translate('Update') }}</button>
+                            <div style="clear: both"></div>
+                        @endif
+                    </form>
                 </div>
             </div>
             <div class="clearfix float-right">

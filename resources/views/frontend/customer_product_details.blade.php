@@ -230,7 +230,7 @@
                                     <div class="p-md-3 p-2 text-center">
                                         <h3 class="fw-400 fs-14 text-truncate-2 lh-1-4 mb-0 h-35px">
                                             <a href="{{ route('customer.product', $product->slug) }}"
-                                                class="d-block text-reset hov-text-primary">{{ $product->getTranslation('name') }}</a>
+                                                class="d-block text-reset hov-text-primary">{{ $product->prefix() }} {{ $product->getTranslation('name') }}</a>
                                         </h3>
                                         <div class="fs-15 mt-2">
                                             <span class="fw-700 text-primary">{{ single_price($product->unit_price) }}</span>

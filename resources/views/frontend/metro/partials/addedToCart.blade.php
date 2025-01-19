@@ -17,7 +17,7 @@
             class="mr-4 lazyload size-90px img-fit rounded-0" alt="Product Image" onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';">
         <div class="media-body mt-2 text-left d-flex flex-column justify-content-between">
             <h6 class="fs-14 fw-700 text-truncate-2">
-                {{  $product->getTranslation('name')  }}
+                {{ $product->prefix() }} {{  $product->getTranslation('name')  }}
             </h6>
             <div class="row mt-2">
                 <div class="col-sm-3 fs-14 fw-400 text-secondary">

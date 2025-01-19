@@ -581,7 +581,7 @@
                                 </div>
                                 <h3 class="fw-600 fs-13 text-truncate-2 lh-1-4 mb-0">
                                     <a href="{{ route('product', $product->slug) }}"
-                                        class="d-block text-reset">{{ $product->getTranslation('name') }}</a>
+                                        class="d-block text-reset">{{ $product->prefix() }} {{ $product->getTranslation('name') }}</a>
                                 </h3>
                             </div>
                         </div>

@@ -50,7 +50,7 @@
                                             </div>
                                             <div class="col p-2 ">
                                                 <h3 class="fw-400 fs-14 text-truncate-2 lh-1-4 mb-0 h-35px mb-3 d-none d-md-block">
-                                                    <a href="{{ route('auction-product', $product->slug) }}" class="d-block text-reset hov-text-primary">{{  $product->getTranslation('name')  }}</a>
+                                                    <a href="{{ route('auction-product', $product->slug) }}" class="d-block text-reset hov-text-primary">{{ $product->prefix() }} {{  $product->getTranslation('name')  }}</a>
                                                 </h3>
                                                 <div class="fs-14">
                                                     <span class="text-secondary">{{ translate('Starting Bid') }}</span><br>

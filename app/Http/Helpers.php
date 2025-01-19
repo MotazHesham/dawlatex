@@ -59,6 +59,19 @@ use App\Models\UserCoupon;
 use App\Models\NotificationType;
 use App\Utility\EmailUtility;
 
+//Order Status Resterictions
+if (!function_exists('orderStatusRestrictions')) {
+    function orderStatusRestrictions()
+    {
+        return [
+            'picked_up',
+            'on_the_way',
+            'delivered',
+            'cancelled', 
+        ];
+    }
+}
+
 //sensSMS function for OTP
 if (!function_exists('sendSMS')) {
     function sendSMS($to, $from, $text, $template_id)

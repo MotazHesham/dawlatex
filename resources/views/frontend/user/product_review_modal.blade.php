@@ -12,7 +12,7 @@
         <div class="modal-body">
             <div class="form-group">
                 <label class="opacity-60">{{ translate('Product')}}</label>
-                <p>{{ $product->getTranslation('name') }}</p>
+                <p>{{ $product->prefix() }} {{ $product->getTranslation('name') }}</p>
             </div>
             <!-- Rating -->
             <div class="form-group">

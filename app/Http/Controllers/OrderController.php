@@ -40,9 +40,7 @@ class OrderController extends Controller
 
     // All Orders
     public function all_orders(Request $request)
-    {
-        CoreComponentRepository::instantiateShopRepository();
-
+    {  
         $date = $request->date;
         $sort_search = null;
         $delivery_status = null;
@@ -129,15 +127,14 @@ class OrderController extends Controller
 
         return view('backend.sales.show', compact('order', 'delivery_boys'));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function create()
     {
-        //
+        return view('backend.sales.create');
+    }
+
+    public function store_manual_order(Request $request){
+        return $request->all();
     }
 
     /**
@@ -368,6 +365,69 @@ class OrderController extends Controller
         return 1;
     }
 
+    public function store_order_detail(Request $request)
+    { 
+        $order = Order::findOrFail($request->order_id);
+        if(!in_array($order->delivery_status,orderStatusRestrictions())){ 
+            $product = Product::findOrFail($request->product_id);
+            
+            $orderDetail = new OrderDetail();
+            $orderDetail->order_id = $request->order_id;
+            $orderDetail->seller_id = $product->user_id;
+            $orderDetail->product_id = $request->product_id;
+            $orderDetail->variation = $request->variation;
+            $orderDetail->price = $request->price;
+            $orderDetail->tax = $request->tax;
+            $orderDetail->shipping_cost = $request->shipping_cost;
+            $orderDetail->quantity = $request->quantity;
+            $orderDetail->shipping_type = 'home_delivery';
+            $orderDetail->save(); 
+
+            $order->grand_total = $order->orderDetails->sum('price')
+                                    + $order->orderDetails->sum('tax')
+                                    + $order->orderDetails->sum('shipping_cost')
+                                    - $order->coupon_discount;
+            $order->save();
+        }
+        return redirect()->back();
+    }
+    public function update_order_detail(Request $request)
+    { 
+        $order = Order::findOrFail($request->order_id);
+        if(!in_array($order->delivery_status,orderStatusRestrictions())){ 
+            foreach($request->order_detail as $id => $newOrderDetail){
+                $orderDetail = OrderDetail::findOrFail($id);
+                $orderDetail->quantity = $newOrderDetail['quantity'];
+                $orderDetail->shipping_cost = $newOrderDetail['shipping_cost'];
+                $orderDetail->tax = $newOrderDetail['tax'];
+                $orderDetail->price = $newOrderDetail['price'] * $newOrderDetail['quantity'];
+                $orderDetail->save();
+            } 
+            $order->grand_total = $order->orderDetails->sum('price')
+                                    + $order->orderDetails->sum('tax')
+                                    + $order->orderDetails->sum('shipping_cost')
+                                    - $order->coupon_discount;
+            $order->save();
+        }
+        
+        return redirect()->back();
+    }
+
+    public function delete_order_detail($id){
+        $orderDetail = OrderDetail::findOrFail($id);
+        $order = Order::findOrFail($orderDetail->order_id);
+        if(!in_array($order->delivery_status,orderStatusRestrictions())){ 
+
+            $orderDetail->delete(); 
+
+            $order->grand_total = $order->orderDetails->sum('price')
+                                    + $order->orderDetails->sum('tax')
+                                    + $order->orderDetails->sum('shipping_cost')
+                                    - $order->coupon_discount;
+            $order->save();
+        }
+        return redirect()->back();
+    }
     public function order_details(Request $request)
     {
         $order = Order::findOrFail($request->order_id);

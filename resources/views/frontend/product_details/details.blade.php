@@ -1,7 +1,7 @@
 <div class="text-left">
     <!-- Product Name -->
     <h2 class="mb-4 fs-16 fw-700 text-dark">
-        {{ $detailedProduct->getTranslation('name') }}
+        {{ $detailedProduct->prefix() }} {{ $detailedProduct->getTranslation('name') }}
     </h2>
 
     <div class="row align-items-center mb-3">

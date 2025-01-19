@@ -55,7 +55,7 @@
         <div class="col-lg-6">
             <div class="text-left">
                 <h2 class="mb-2 fs-20 fw-600">
-                    {{  $product->getTranslation('name')  }}
+                    {{ $product->prefix() }} {{  $product->getTranslation('name')  }}
                 </h2>
                 <div class="row no-gutters mt-3">
                     <div class="col-2">

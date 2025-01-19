@@ -106,7 +106,7 @@
                                                         onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';">
                                                 </span>
                                                 <span>
-                                                    <span class="fs-14 fw-400 text-dark text-truncate-2 mb-2">{{ $product->getTranslation('name') }}</span>
+                                                    <span class="fs-14 fw-400 text-dark text-truncate-2 mb-2">{{ $product->prefix() }} {{ $product->getTranslation('name') }}</span>
                                                     @if ($admin_product_variation[$key] != '')
                                                         <span class="fs-12 text-secondary">{{ translate('Variation') }}: {{ $admin_product_variation[$key] }}</span>
                                                     @endif
@@ -216,7 +216,7 @@
                                                             onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';">
                                                     </span>
                                                     <span>
-                                                        <span class="fs-14 fw-400 text-dark text-truncate-2 mb-2">{{ $product->getTranslation('name') }}</span>
+                                                        <span class="fs-14 fw-400 text-dark text-truncate-2 mb-2">{{ $product->prefix() }} {{ $product->getTranslation('name') }}</span>
                                                         @if ($seller_product_variation[$key2] != '')
                                                             <span class="fs-12 text-secondary">{{ translate('Variation') }}: {{ $seller_product_variation[$key2] }}</span>
                                                         @endif

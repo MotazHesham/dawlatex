@@ -58,7 +58,7 @@
             <div class="text-left">
                 <!-- Product name -->
                 <h2 class="mb-2 fs-16 fw-700 text-dark">
-                    {{  $product->getTranslation('name')  }}
+                    {{ $product->prefix() }} {{  $product->getTranslation('name')  }}
                 </h2>
 
                 <!-- Product Price & Club Point -->

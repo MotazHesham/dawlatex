@@ -26,7 +26,7 @@
                                 onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';">
                         </span>
                         <span class="fs-14 fw-400 text-dark">
-                            <span class="text-truncate-2">{{ $product->getTranslation('name') }}</span>
+                            <span class="text-truncate-2">{{ $product->prefix() }} {{ $product->getTranslation('name') }}</span>
                             @if ($product_variation[$key] != '')
                                 <span class="fs-12 text-secondary">{{ translate('Variation') }}: {{ $product_variation[$key] }}</span>
                             @endif

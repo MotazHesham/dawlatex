@@ -99,6 +99,7 @@
                         @else
                             <th data-breakpoints="lg">#</th>
                         @endif
+                        <th>{{translate('Code')}}</th>
                         <th>{{translate('Name')}}</th>
                         @if($type == 'Seller' || $type == 'All')
                             <th data-breakpoints="lg">{{translate('Added By')}}</th>
@@ -129,6 +130,7 @@
                         @else
                             <td>{{ ($key+1) + ($products->currentPage() - 1)*$products->perPage() }}</td>
                         @endif
+                        <td>{{ $product->id }}</td>
                         <td>
                             <div class="row gutters-5 w-200px w-md-300px mw-100">
                                 <div class="col-auto">

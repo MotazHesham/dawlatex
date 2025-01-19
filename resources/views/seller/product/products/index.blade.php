@@ -117,7 +117,7 @@
                                 </td>
                                 <td>
                                     <a href="{{ route('product', $product->slug) }}" target="_blank" class="text-reset">
-                                        {{ $product->getTranslation('name') }}
+                                        {{ $product->prefix() }} {{ $product->getTranslation('name') }}
                                     </a>
                                 </td>
                                 {{-- <td>

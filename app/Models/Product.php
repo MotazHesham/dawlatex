@@ -26,6 +26,10 @@ class Product extends Model
         return $product_translations != null ? $product_translations->$field : $this->$field;
     }
 
+    public function prefix(){
+        return '#' . $this->id;
+    }
+
     public function product_translations()
     {
         return $this->hasMany(ProductTranslation::class);

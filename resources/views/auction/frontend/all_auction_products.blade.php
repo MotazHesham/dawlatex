@@ -75,7 +75,7 @@
                             <div class="p-md-3 p-2 text-center">
                                 <h3 class="fw-400 fs-14 text-truncate-2 lh-1-4 mb-0 h-35px mb-2">
                                     <a href="{{ route('auction-product', $product->slug) }}" class="d-block text-reset hov-text-primary"
-                                        title="{{  $product->getTranslation('name')  }}">{{  $product->getTranslation('name')  }}</a>
+                                        title="{{  $product->getTranslation('name')  }}">{{ $product->prefix() }} {{  $product->getTranslation('name')  }}</a>
                                 </h3>
                                 <div class="fs-14">
                                     <span class="fw-700 text-primary">{{ single_price($product->starting_bid) }}</span>

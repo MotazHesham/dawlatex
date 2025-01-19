@@ -402,6 +402,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin', 'prevent-ba
 
         Route::get('/orders/destroy/{id}', 'destroy')->name('orders.destroy');
         Route::post('/orders/details', 'order_details')->name('orders.details');
+        Route::get('/orders/delete_order_detail/{id}', 'delete_order_detail')->name('orders.delete_order_detail');
+        Route::post('/orders/store_order_detail', 'store_order_detail')->name('orders.store_order_detail');
+        Route::post('/orders/update_order_detail', 'update_order_detail')->name('orders.update_order_detail');
         Route::post('/orders/update_delivery_status', 'update_delivery_status')->name('orders.update_delivery_status');
         Route::post('/orders/update_payment_status', 'update_payment_status')->name('orders.update_payment_status');
         Route::post('/orders/update_tracking_code', 'update_tracking_code')->name('orders.update_tracking_code');

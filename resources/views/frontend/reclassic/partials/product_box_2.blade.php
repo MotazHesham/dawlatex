@@ -89,7 +89,7 @@
         <!-- Product name -->
         <h3 class="fw-400 fs-13 text-truncate-2 lh-1-4 mb-0 h-40px text-center pt-1">
             <a href="{{ $product_url }}" class="d-block text-reset hov-text-primary"
-                title="{{ $product->getTranslation('name') }}">{{ $product->getTranslation('name') }}</a>
+                title="{{ $product->getTranslation('name') }}">{{ $product->prefix() }} {{ $product->getTranslation('name') }}</a>
         </h3>
         <div class="fs-14 d-flex justify-content-center mt-2">
             @if ($product->auction_product == 0)

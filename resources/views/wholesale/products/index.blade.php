@@ -77,6 +77,7 @@
                             </div>
                         </th>
                         <!--<th data-breakpoints="lg">#</th>-->
+                        <th>{{translate('Id')}}</th>
                         <th>{{translate('Name')}}</th>
                         @if($type != 'In House')
                             <th data-breakpoints="lg">{{translate('Added By')}}</th>
@@ -104,13 +105,14 @@
                                 </label>
                             </div>
                         </td>
+                        <td>{{ $product->id }}</td>
                         <td>
                             <div class="row gutters-5 w-200px w-md-300px mw-100">
                                 <div class="col-auto">
                                     <img src="{{ uploaded_asset($product->thumbnail_img)}}" alt="Image" class="size-50px img-fit">
                                 </div>
                                 <div class="col">
-                                    <span class="text-muted text-truncate-2">{{ $product->getTranslation('name') }}</span>
+                                    <span class="text-muted text-truncate-2">{{ $product->prefix() }} {{ $product->getTranslation('name') }}</span>
                                 </div>
                             </div>
                         </td>

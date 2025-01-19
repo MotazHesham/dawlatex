@@ -21,7 +21,7 @@
                         </td>
                         <td style="vertical-align: middle;">
                             <p class="d-block fs-13 fw-700 hov-text-primary mb-1 text-dark" title="{{ translate('Product Name') }}">
-                                {{ $product->getTranslation('name') }}
+                                {{ $product->prefix() }} {{ $product->getTranslation('name') }}
                             </p>
                         </td>
                         <td style="vertical-align: middle;">{{ $product->main_category->name ?? translate('Category Not Found') }}</td>
