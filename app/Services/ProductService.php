@@ -55,6 +55,9 @@ class ProductService
             $collection['meta_img'] = $collection['thumbnail_img'];
         }
 
+        if(get_setting('category_in_sequance') == 1){ 
+            $collection['category_id'] = $data['category_ids'][0];
+        }
 
         $shipping_cost = 0;
         if (isset($collection['shipping_type'])) {
@@ -205,6 +208,10 @@ class ProductService
 
         if ($collection['meta_img'] == null) {
             $collection['meta_img'] = $collection['thumbnail_img'];
+        }
+        
+        if(get_setting('category_in_sequance') == 1){ 
+            $collection['category_id'] = $data['category_ids'][0];
         }
 
         if ($collection['lang'] != env("DEFAULT_LANGUAGE")) {

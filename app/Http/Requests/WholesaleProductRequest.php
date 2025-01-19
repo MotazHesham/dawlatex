@@ -64,8 +64,13 @@ class WholesaleProductRequest extends FormRequest
 
         $rules['name']                = 'required|max:255';
         $rules['slug']                = ['required', 'max:255', Rule::unique('products')->ignore($this->id)];
-        $rules['category_ids']        = 'required';
-        $rules['category_id']         = ['required', Rule::in($this->category_ids)];
+        
+        if(get_setting('category_in_sequance') == 1){ 
+            $rules['category_ids']        = 'required';
+        }else{
+            $rules['category_ids']        = 'required';
+            $rules['category_id']         = ['required', Rule::in($this->category_ids)];
+        }
         $rules['unit']                = 'required';
         $rules['min_qty']             = 'required|numeric';
         $rules['unit_price']          = 'required|numeric|gt:0';

@@ -29,9 +29,13 @@ class ProductRequest extends FormRequest
     {
         $rules = [];
 
-        $rules['name']          = 'required|max:255';
-        $rules['category_ids']  = 'required';
-        $rules['category_id']   = ['required', Rule::in($this->category_ids)];
+        $rules['name']          = 'required|max:255'; 
+        if(get_setting('category_in_sequance') == 1){ 
+            $rules['category_ids']        = 'required';
+        }else{
+            $rules['category_ids']        = 'required';
+            $rules['category_id']         = ['required', Rule::in($this->category_ids)];
+        }
         $rules['unit']         = 'sometimes|required';
         $rules['min_qty']      = 'sometimes|required|numeric';
         $rules['unit_price']    = 'sometimes|required|numeric|gt:0';

@@ -66,6 +66,11 @@ class HomeController extends Controller
         return view('frontend.' . get_setting('homepage_select') . '.partials.newest_products_section', compact('newest_products'));
     }
 
+    public function child_categories($category_id){
+        $categories = Category::where('parent_id', $category_id)->get();
+        return response()->json($categories,200);
+    }
+
     public function load_featured_section()
     {
         return view('frontend.' . get_setting('homepage_select') . '.partials.featured_products_section');

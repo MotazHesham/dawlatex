@@ -179,6 +179,64 @@
             });
         }
 
+        function getSequanceCategory(element,level){
+            var nextLevel = level + 1;
+            var category_id = $(element).find(':selected').val(); 
+            $.ajax({
+                url: '{{ route("categories.childrens", ":id") }}'.replace(':id', category_id), // Adjust the endpoint as necessary
+                method: 'GET',
+                success: function(response) {
+                    if (response.length > 0) { // Check if there is data
+                        // Assuming response is an array of children categories
+                        var nest = `<div data-level="${level}" class="mt-3">
+                                        <select name="category_ids[${level}]" class="form-control" onchange="getSequanceCategory(this,${nextLevel})" required>
+                                            <option value="">{{ translate('Select Category') }}</option>`; 
+                                            response.forEach(child => {
+                                                nest += `<option value="${child.id}">${child.name}</option>`;
+                                            });
+                        nest += `</select>
+                                </div>`;
+
+                        if (level == 1) {
+                            $('#sequance-categories').html(nest); // Completely replace for level 1
+                        } else if (level > 1) {
+                            const target = $('#sequance-categories').find(`[data-level="${level}"]`);
+                            
+                            if (target.length > 0) {
+                                target.nextAll().remove(); // Remove all elements after the target
+                                target.replaceWith(nest); // Replace if data-level exists
+                            } else {
+                                $('#sequance-categories').append(nest); // Append if data-level does not exist
+                            }
+                        }
+                    } else {
+                        console.info('No child categories found.');
+                        if (level == 1) {
+                            $('#sequance-categories').html(null);
+                        } else if (level > 1) {
+                            const target = $('#sequance-categories').find(`[data-level="${level}"]`); 
+                            if (target.length > 0) {
+                                target.nextAll().remove(); // Remove all elements after the target
+                                target.replaceWith(null);
+                            }
+                        }
+                    }
+                },
+                error: function(error) {
+                    if (level == 1) {
+                        $('#sequance-categories').html(null);
+                    } else if (level > 1) {
+                        const target = $('#sequance-categories').find(`[data-level="${level}"]`); 
+                        if (target.length > 0) {
+                            target.nextAll().remove(); // Remove all elements after the target
+                            target.replaceWith(null);
+                        }
+                    }
+                    console.info('Error fetching child categories:', error);
+                }
+            });
+        }
+
         function menuSearch() {
             var filter, item;
             filter = $("#menu-search").val().toUpperCase();

@@ -531,36 +531,59 @@
 
             </div>
 
-            <div class="col-lg-4">
-
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="mb-0 h6">{{ translate('Product Category') }}</h5>
-                        <h6 class="float-right fs-13 mb-0">
-                            {{ translate('Select Main') }}
-                            <span class="position-relative main-category-info-icon">
-                                <i class="las la-question-circle fs-18 text-info"></i>
-                                <span class="main-category-info bg-soft-info p-2 position-absolute d-none border">{{ translate('This will be used for commission based calculations and homepage category wise product Show.') }}</span>
-                            </span>
-                        </h6>
-                    </div>
-                    <div class="card-body ">
-                        <div class="h-300px overflow-auto c-scrollbar-light">
-                            @php
-                                $old_categories = $product->categories()->pluck('category_id')->toArray();
-                            @endphp
-                            <ul class="hummingbird-treeview-converter list-unstyled" data-checkbox-name="category_ids[]" data-radio-name="category_id">
-                                @foreach ($categories as $category)
-                                <li id="{{ $category->id }}">{{ $category->getTranslation('name') }}</li>
-                                    @foreach ($category->childrenCategories as $childCategory)
-                                        @include('backend.product.products.child_category', ['child_category' => $childCategory])
+            <div class="col-lg-4"> 
+                @php
+                    $old_categories = $product->categories()->pluck('category_id')->toArray();
+                @endphp
+                @if(get_setting('category_in_sequance') == 1)
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0 h6">{{ translate('Product Category') }} <span class="text-danger">*</span></h5> 
+                        </div>
+                        <div class="card-body">
+                            <div class="h-300px overflow-auto c-scrollbar-light">
+                                <select name="category_ids[0]" class="form-control" onchange="getSequanceCategory(this,1)" required>
+                                    <option value="">{{ translate('Select Category') }}</option>
+                                    @foreach ($categories as $category)
+                                        <option value="{{ $category->id }}" @if(in_array($category->id,$old_categories)) selected @endif>{{ $category->getTranslation('name') }}</option> 
                                     @endforeach
-                                @endforeach
-                            </ul>
+                                </select>
+                                <div id="sequance-categories" class="mt-3">
+                                    @foreach ($categories as $category) 
+                                        @if(in_array($category->id,$old_categories))
+                                            @include('backend.product.products.sequance_child_category', ['child_category' => $category,'old_categories' => $old_categories])
+                                        @endif 
+                                    @endforeach
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-
+                @else
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0 h6">{{ translate('Product Category') }}</h5>
+                            <h6 class="float-right fs-13 mb-0">
+                                {{ translate('Select Main') }}
+                                <span class="position-relative main-category-info-icon">
+                                    <i class="las la-question-circle fs-18 text-info"></i>
+                                    <span class="main-category-info bg-soft-info p-2 position-absolute d-none border">{{ translate('This will be used for commission based calculations and homepage category wise product Show.') }}</span>
+                                </span>
+                            </h6>
+                        </div>
+                        <div class="card-body ">
+                            <div class="h-300px overflow-auto c-scrollbar-light">
+                                <ul class="hummingbird-treeview-converter list-unstyled" data-checkbox-name="category_ids[]" data-radio-name="category_id">
+                                    @foreach ($categories as $category)
+                                    <li id="{{ $category->id }}">{{ $category->getTranslation('name') }}</li>
+                                        @foreach ($category->childrenCategories as $childCategory)
+                                            @include('backend.product.products.child_category', ['child_category' => $childCategory])
+                                        @endforeach
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                @endif
                 <div class="card">
                     <div class="card-header">
                         <h5 class="mb-0 h6" class="dropdown-toggle" data-toggle="collapse" data-target="#collapse_2">

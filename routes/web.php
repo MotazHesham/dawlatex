@@ -108,6 +108,9 @@ Route::controller(VerificationController::class)->group(function () {
 });
 
 Route::controller(HomeController::class)->group(function () {
+    Route::get('/categories/childrens/{category_id}', 'child_categories')->name('categories.childrens');
+
+
     Route::get('/email-change/callback', 'email_change_callback')->name('email_change.callback');
     Route::post('/password/reset/email/submit', 'reset_password_with_code')->name('password.update');
 

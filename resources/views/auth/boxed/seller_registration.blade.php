@@ -23,6 +23,7 @@
                                     <!-- Titles -->
                                     <div class="text-center text-lg-left">
                                         <h1 class="fs-20 fs-md-24 fw-700 text-primary" style="text-transform: uppercase;">{{ translate('Register your shop')}}</h1>
+                                        <small>{{ translate('Contract Us') }} : <a href="tel:{{ get_setting('contact_phone') }}">{{ get_setting('contact_phone') }}</a></small>
                                     </div>
                                     <!-- Register form -->
                                     <div class="pt-3 pt-lg-4">

@@ -40,6 +40,10 @@ class WholesaleService
 
         $collection['has_warranty'] = isset($collection['has_warranty']) ? 1 : 0;
         
+        if(get_setting('category_in_sequance') == 1){ 
+            $collection['category_id'] = $data['category_ids'][0];
+        }
+        
         $data = $collection->toArray();
 
         $product = Product::create($data);
@@ -70,7 +74,7 @@ class WholesaleService
     public function update(Request $request , $id)
     {
         $product                    = Product::findOrFail($id);
-        $product->category_id       = $request->category_id;
+        $product->category_id       = get_setting('category_in_sequance') == 1 ? $request->category_ids[0] :$request->category_id;
         $product->brand_id          = $request->brand_id;
         $product->barcode           = $request->barcode;
         $product->cash_on_delivery = 0;
