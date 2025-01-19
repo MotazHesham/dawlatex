@@ -45,25 +45,28 @@
                             </a>
                         </li>
 
-                        <li class="aiz-side-nav-item">
+                        {{-- <li class="aiz-side-nav-item">
                             <a href="{{ route('seller.categories_wise_product_discount') }}"
                                 class="aiz-side-nav-link">
                                 <span class="aiz-side-nav-text">{{ translate('Category-Wise Discount') }}</span>
                             </a>
-                        </li>
+                        </li> --}}
 
-                        <li class="aiz-side-nav-item">
+                        {{-- <li class="aiz-side-nav-item">
                             <a href="{{ route('seller.product_bulk_upload.index') }}"
                                 class="aiz-side-nav-link {{ areActiveRoutes(['product_bulk_upload.index']) }}">
                                 <span class="aiz-side-nav-text">{{ translate('Product Bulk Upload') }}</span>
                             </a>
-                        </li>
-                        <li class="aiz-side-nav-item">
-                            <a href="{{ route('seller.digitalproducts') }}"
-                                class="aiz-side-nav-link {{ areActiveRoutes(['seller.digitalproducts', 'seller.digitalproducts.create', 'seller.digitalproducts.edit']) }}">
-                                <span class="aiz-side-nav-text">{{ translate('Digital Products') }}</span>
-                            </a>
-                        </li>
+                        </li> --}}
+                        
+                        @if(get_setting('active_digital_product') == 1)
+                            <li class="aiz-side-nav-item">
+                                <a href="{{ route('seller.digitalproducts') }}"
+                                    class="aiz-side-nav-link {{ areActiveRoutes(['seller.digitalproducts', 'seller.digitalproducts.create', 'seller.digitalproducts.edit']) }}">
+                                    <span class="aiz-side-nav-text">{{ translate('Digital Products') }}</span>
+                                </a>
+                            </li>
+                        @endif
                         <li class="aiz-side-nav-item">
                             <a href="{{ route('seller.product-reviews') }}"
                                 class="aiz-side-nav-link {{ areActiveRoutes(['seller.product-reviews', 'seller.detail-reviews']) }}">

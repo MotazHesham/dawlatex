@@ -131,6 +131,21 @@
                 </form>
             </div>
         </div>
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="mb-0 h6 text-center">{{ translate('Digital Product') }}</h3>
+                </div>
+                <div class="card-body text-center">
+                    <label class="aiz-switch aiz-switch-success mb-0">
+                        <input type="checkbox" onchange="updateSettings(this, 'active_digital_product')" <?php if (get_setting('active_digital_product') == 1) {
+                            echo 'checked';
+                        } ?>>
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
         <div class="col-lg-6">
             <div class="card">
                 <div class="card-header">

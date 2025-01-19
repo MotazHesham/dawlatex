@@ -116,48 +116,58 @@
                                 </li>
                             @endcan
                             @can('show_digital_products')
-                                <li class="aiz-side-nav-item">
-                                    <a href="{{route('digitalproducts.index')}}" class="aiz-side-nav-link {{ areActiveRoutes(['digitalproducts.index', 'digitalproducts.create', 'digitalproducts.edit']) }}">
-                                        <span class="aiz-side-nav-text">{{ translate('Digital Products') }}</span>
-                                    </a>
-                                </li>
+                                @if(get_setting('active_digital_product') == 1)
+                                    <li class="aiz-side-nav-item">
+                                        <a href="{{route('digitalproducts.index')}}" class="aiz-side-nav-link {{ areActiveRoutes(['digitalproducts.index', 'digitalproducts.create', 'digitalproducts.edit']) }}">
+                                            <span class="aiz-side-nav-text">{{ translate('Digital Products') }}</span>
+                                        </a>
+                                    </li>
+                                @endif
                             @endcan
                             @if(get_setting('vendor_system_activation') == 1)
-                                @can('show_seller_products')
-                                    <li class="aiz-side-nav-item">
-                                        <a href="javascript:void(0);" class="aiz-side-nav-link">
-                                            <span class="aiz-side-nav-text">{{translate('Seller Product')}}</span>
-                                            <span class="aiz-side-nav-arrow"></span>
-                                        </a>
-                                        <ul class="aiz-side-nav-list level-3">
-                                            <li class="aiz-side-nav-item">
-                                                <a href="{{ route('products.seller','physical') }}" class="aiz-side-nav-link">
-                                                    <span class="aiz-side-nav-text">{{translate('Physical Products')}}</span>
-                                                </a>
-                                            </li>
-                                            <li class="aiz-side-nav-item">
-                                                <a href="{{ route('products.seller','digital') }}" class="aiz-side-nav-link">
-                                                    <span class="aiz-side-nav-text">{{translate('Digital Products')}}</span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </li>
+                                @can('show_seller_products') 
+                                    @if(get_setting('active_digital_product') == 1)
+                                        <li class="aiz-side-nav-item">
+                                            <a href="javascript:void(0);" class="aiz-side-nav-link">
+                                                <span class="aiz-side-nav-text">{{translate('Seller Product')}}</span>
+                                                <span class="aiz-side-nav-arrow"></span>
+                                            </a>
+                                            <ul class="aiz-side-nav-list level-3">
+                                                <li class="aiz-side-nav-item">
+                                                    <a href="{{ route('products.seller','physical') }}" class="aiz-side-nav-link">
+                                                        <span class="aiz-side-nav-text">{{translate('Physical Products')}}</span>
+                                                    </a>
+                                                </li>
+                                                <li class="aiz-side-nav-item">
+                                                    <a href="{{ route('products.seller','digital') }}" class="aiz-side-nav-link">
+                                                        <span class="aiz-side-nav-text">{{translate('Digital Products')}}</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    @else 
+                                        <li class="aiz-side-nav-item">
+                                            <a href="{{ route('products.seller','physical') }}" class="aiz-side-nav-link">
+                                                <span class="aiz-side-nav-text">{{translate('Sellers Product')}}</span>
+                                            </a>
+                                        </li>
+                                    @endif
                                 @endcan
                             @endif
 
                             @can('product_bulk_import')
-                                <li class="aiz-side-nav-item">
+                                {{-- <li class="aiz-side-nav-item">
                                     <a href="{{ route('product_bulk_upload.index') }}" class="aiz-side-nav-link" >
                                         <span class="aiz-side-nav-text">{{ translate('Bulk Import') }}</span>
                                     </a>
-                                </li>
+                                </li> --}}
                             @endcan
                             @can('product_bulk_export')
-                                <li class="aiz-side-nav-item">
+                                {{-- <li class="aiz-side-nav-item">
                                     <a href="{{route('product_bulk_export.index')}}" class="aiz-side-nav-link">
                                         <span class="aiz-side-nav-text">{{translate('Bulk Export')}}</span>
                                     </a>
-                                </li>
+                                </li> --}}
                             @endcan
                             @can('view_product_categories')
                                 <li class="aiz-side-nav-item">
