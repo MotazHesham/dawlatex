@@ -102,7 +102,8 @@ class InvoiceController extends Controller
             'font_family' => $font_family,
             'direction' => $direction,
             'text_align' => $text_align,
-            'not_text_align' => $not_text_align
+            'not_text_align' => $not_text_align,
+            'language_code' => $language_code
         ], [], $config)->download('order-' . $order->code . '.pdf');
     }
 }

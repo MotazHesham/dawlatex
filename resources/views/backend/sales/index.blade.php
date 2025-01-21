@@ -120,7 +120,8 @@
                             @if (addon_is_activated('refund_request'))
                                 <th>{{ translate('Refund') }}</th>
                             @endif
-                            <th class="text-right" width="15%">{{ translate('options') }}</th>
+                            <th class="text-right">{{ translate('options') }}</th>
+                            <th> </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -217,11 +218,6 @@
                                             <i class="las la-eye"></i>
                                         </a>
                                     @endcan
-                                    <a class="btn btn-soft-info btn-icon btn-circle btn-sm"
-                                        href="{{ route('invoice.download', $order->id) }}"
-                                        title="{{ translate('Download Invoice') }}">
-                                        <i class="las la-download"></i>
-                                    </a>
                                     @if(auth()->user()->can('unpaid_order_payment_notification_send') && $order->payment_status == 'unpaid' && $unpaid_order_payment_notification->status == 1)
                                         <a class="btn btn-soft-warning btn-icon btn-circle btn-sm"
                                             href="javascript:void();" onclick="unpaid_order_payment_notification('{{ $order->id }}');"
@@ -237,6 +233,24 @@
                                             <i class="las la-trash"></i>
                                         </a>
                                     @endcan
+                                </td>
+                                <td> 
+                                    <div class="dropdown" style="display: inline">
+                                        <button type="button" class="btn btn-sm btn-circle btn-soft-primary btn-icon dropdown-toggle no-arrow" data-toggle="dropdown" href="javascript:void(0);" role="button" aria-haspopup="false" aria-expanded="false">
+                                            <i class="las la-download"></i>
+                                        </button>
+                                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-xs"> 
+                                            <a class="dropdown-item" href="{{ route('invoice.download', $order->id) }}" >
+                                                فاتورة مشتري
+                                            </a>
+                                            <a class="dropdown-item" href="{{ route('invoice.download', $order->id) }}?vendor=true" >
+                                                فاتورة مورد
+                                            </a>
+                                            <a class="dropdown-item" href="{{ route('receive_money.download', $order->id) }}" >
+                                                إيصال استلام
+                                            </a>
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach

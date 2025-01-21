@@ -24,6 +24,10 @@ class Order extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function seller()
+    {
+        return $this->hasOne(User::class, 'id','seller_id');
+    }
 
     public function shop()
     {
