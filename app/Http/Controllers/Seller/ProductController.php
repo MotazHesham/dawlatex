@@ -167,10 +167,9 @@ class ProductController extends Controller
         //Product categories
         $product->categories()->sync($request->category_ids);
 
-        //Product Stock
-        $product->stocks()->delete();
+        //Product Stock 
         $this->productStockService->store($request->only([
-            'colors_active', 'colors', 'choice_no', 'unit_price', 'sku', 'current_stock', 'product_id','purchase_price'
+            'colors_active', 'colors', 'choice_no', 'unit_price', 'sku', 'current_stock', 'product_id'
         ]), $product);
 
         //VAT & Tax

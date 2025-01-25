@@ -229,6 +229,7 @@ class OrderController extends Controller
                 $order_detail->product_id = $product->id;
                 $order_detail->variation = $product_variation;
                 $order_detail->price = cart_product_price($cartItem, $product, false, false) * $cartItem['quantity'];
+                $order_detail->purchase_price = cart_product_purchase_price($cartItem, $product, false, false) * $cartItem['quantity'];
                 $order_detail->tax = cart_product_tax($cartItem, $product, false) * $cartItem['quantity'];
                 $order_detail->shipping_type = $cartItem['shipping_type'];
                 $order_detail->product_referral_code = $cartItem['product_referral_code'];
@@ -368,7 +369,7 @@ class OrderController extends Controller
     public function store_order_detail(Request $request)
     { 
         $order = Order::findOrFail($request->order_id);
-        if(!in_array($order->delivery_status,orderStatusRestrictions())){ 
+        if(orderStatusRestrictions($order)){ 
             $product = Product::findOrFail($request->product_id);
             
             $orderDetail = new OrderDetail();
@@ -377,6 +378,7 @@ class OrderController extends Controller
             $orderDetail->product_id = $request->product_id;
             $orderDetail->variation = $request->variation;
             $orderDetail->price = $request->price;
+            $orderDetail->purchase_price = $request->purchase_price;
             $orderDetail->tax = $request->tax;
             $orderDetail->shipping_cost = $request->shipping_cost;
             $orderDetail->quantity = $request->quantity;
@@ -394,13 +396,14 @@ class OrderController extends Controller
     public function update_order_detail(Request $request)
     { 
         $order = Order::findOrFail($request->order_id);
-        if(!in_array($order->delivery_status,orderStatusRestrictions())){ 
+        if(orderStatusRestrictions($order)){ 
             foreach($request->order_detail as $id => $newOrderDetail){
                 $orderDetail = OrderDetail::findOrFail($id);
                 $orderDetail->quantity = $newOrderDetail['quantity'];
                 $orderDetail->shipping_cost = $newOrderDetail['shipping_cost'];
                 $orderDetail->tax = $newOrderDetail['tax'];
                 $orderDetail->price = $newOrderDetail['price'] * $newOrderDetail['quantity'];
+                $orderDetail->purchase_price = $newOrderDetail['purchase_price'] * $newOrderDetail['quantity'];
                 $orderDetail->save();
             } 
             $order->grand_total = $order->orderDetails->sum('price')
@@ -416,7 +419,7 @@ class OrderController extends Controller
     public function delete_order_detail($id){
         $orderDetail = OrderDetail::findOrFail($id);
         $order = Order::findOrFail($orderDetail->order_id);
-        if(!in_array($order->delivery_status,orderStatusRestrictions())){ 
+        if(orderStatusRestrictions($order)){ 
 
             $orderDetail->delete(); 
 

@@ -88,14 +88,14 @@
             </div>
         @endif
         
-        <div class="row">
+        {{-- <div class="row">
             <div class="col-md-2">
                 <label>{{ translate('Postal code')}}</label>
             </div>
             <div class="col-md-10">
                 <input type="text" class="form-control mb-3" placeholder="{{ translate('Your Postal Code')}}" value="{{ $address_data->postal_code }}" name="postal_code" value="" required>
             </div>
-        </div>
+        </div> --}}
         <div class="row">
             <div class="col-md-2">
                 <label>{{ translate('Phone')}}</label>

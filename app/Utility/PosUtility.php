@@ -29,7 +29,7 @@ class PosUtility
             // $product_query->where('products.added_by', 'admin');
         }
         $products = $product_query->where('products.auction_product', 0)
-            ->where('products.wholesale_product', 0)
+            // ->where('products.wholesale_product', 0)
             ->where('products.published', 1)
             ->where('products.approved', 1)
             ->select('products.*', 'product_stocks.id as stock_id', 'product_stocks.variant', 'product_stocks.price as stock_price', 'product_stocks.qty as stock_qty', 'product_stocks.image as stock_image')
@@ -50,7 +50,11 @@ class PosUtility
         }
 
         if ($request_data['keyword'] != null) {
-            $products = $products->where('products.name', 'like', '%' . $request_data['keyword'] . '%')->orWhere('products.barcode', $request_data['keyword']);
+            $products = $products->where(function($q)use($request_data){
+                $q->where('products.name', 'like', '%' . $request_data['keyword'] . '%')
+                ->orWhere('products.barcode', $request_data['keyword'])
+                ->orWhere('products.id', $request_data['keyword']);
+            });
         }
 
         return $products->paginate(16);
@@ -134,8 +138,9 @@ class PosUtility
             $response['success'] = 0;
             $response['message'] = translate("This product doesn't have more stock.");
         } else {
-            $cart->quantity = $data['quantity'];
-            $cart->save();
+            $price = CartUtility::get_price($product, $product_stock, $data['quantity']);
+            $tax = CartUtility::tax_calculation($product, $price);
+            CartUtility::save_cart_data($cart, $product, $price, $tax, $data['quantity']); 
             $response['success'] = 1;
             $response['message'] = translate("Updated the item successfully.");
         }
@@ -277,6 +282,7 @@ class PosUtility
                             $order_detail->payment_status   = $data['payment_type'] != 'cash_on_delivery' ? 'paid' : 'unpaid';
                             $order_detail->variation        = $product_variation;
                             $order_detail->price            = $cartItem['price'] * $cartItem['quantity'];
+                            $order_detail->purchase_price   = $product_stock->purchase_price * $cartItem['quantity'];
                             $order_detail->tax              = $cartItem['tax'] * $cartItem['quantity'];
                             $order_detail->quantity         = $cartItem['quantity'];
                             $order_detail->shipping_type    = null;

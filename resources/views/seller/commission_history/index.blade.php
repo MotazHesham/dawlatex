@@ -24,8 +24,7 @@
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th data-breakpoints="lg">{{ translate('Order Code') }}</th>
-                        <th>{{ translate('Admin Commission') }}</th>
+                        <th data-breakpoints="lg">{{ translate('Order Code') }}</th> 
                         <th>{{ translate('Earning') }}</th>
                         <th data-breakpoints="lg">{{ translate('Created At') }}</th>
                     </tr>
@@ -42,8 +41,7 @@
                                     {{ translate('Order Deleted') }}
                                 </span>
                             @endif
-                        </td>
-                        <td>{{ $history->admin_commission }}</td>
+                        </td> 
                         <td>{{ $history->seller_earning }}</td>
                         <td>{{ $history->created_at }}</td>
                     </tr>

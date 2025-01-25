@@ -128,20 +128,36 @@ class CommissionController extends Controller
                     elseif(get_setting('seller_commission_type') == 'category_based'){
                         $commission_percentage = $orderDetail->product->main_category->commision_rate;
                     }
+                    elseif(get_setting('seller_commission_type') == 'purchase_price_based'){
+                        $commission_percentage = $orderDetail->price - $orderDetail->purchase_price;
+                    }
                 }
                 // calculate commission
                 if($commission_percentage > 0){
-                    $admin_commission = ($orderDetail->price * $commission_percentage) / 100;
-
-                    if (get_setting('product_manage_by_admin') == 1) {
-                        $seller_earning = ($orderDetail->tax + $orderDetail->price) - $admin_commission;
-                        $seller->admin_to_pay += $seller_earning;
-                    } else {
-                        $seller_earning = ($orderDetail->tax + $orderDetail->shipping_cost + $orderDetail->price) - $admin_commission;
-                        $seller->admin_to_pay = ($order->payment_type == 'cash_on_delivery') ?
-                                                ($seller->admin_to_pay - $admin_commission) :
-                                                ($seller->admin_to_pay += $seller_earning);
+                    if(get_setting('seller_commission_type') != 'purchase_price_based'){ 
+                        $admin_commission = ($orderDetail->price * $commission_percentage) / 100;
+                        if (get_setting('product_manage_by_admin') == 1) {
+                            $seller_earning = ($orderDetail->tax + $orderDetail->price) - $admin_commission;
+                            $seller->admin_to_pay += $seller_earning;
+                        } else {
+                            $seller_earning = ($orderDetail->tax + $orderDetail->shipping_cost + $orderDetail->price) - $admin_commission;
+                            $seller->admin_to_pay = ($order->payment_type == 'cash_on_delivery') ?
+                                                    ($seller->admin_to_pay - $admin_commission) :
+                                                    ($seller->admin_to_pay += $seller_earning);
+                        }
+                    }else{
+                        $admin_commission = $commission_percentage;
+                        if (get_setting('product_manage_by_admin') == 1) { 
+                            $seller_earning = $orderDetail->purchase_price;
+                            $seller->admin_to_pay += $seller_earning;
+                        } else {
+                            $seller_earning = ($orderDetail->shipping_cost + $orderDetail->price) - $admin_commission;
+                            $seller->admin_to_pay = ($order->payment_type == 'cash_on_delivery') ?
+                                                    ($seller->admin_to_pay - $admin_commission) :
+                                                    ($seller->admin_to_pay += $seller_earning);
+                        }
                     }
+
 
                     $seller->save();
 

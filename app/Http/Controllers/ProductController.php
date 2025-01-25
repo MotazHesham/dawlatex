@@ -238,7 +238,7 @@ class ProductController extends Controller
         $this->frequentlyBoughtProductService->store($request->only([
             'product_id', 'frequently_bought_selection_type', 'fq_bought_product_ids', 'fq_bought_product_category_id'
         ]));
-       
+        
         // Product Translations
         $request->merge(['lang' => env('DEFAULT_LANGUAGE')]);
         ProductTranslation::create($request->only([
@@ -332,10 +332,9 @@ class ProductController extends Controller
         $product->categories()->sync($request->category_ids);
 
 
-        //Product Stock
-        $product->stocks()->delete();
+        //Product Stock 
         $this->productStockService->store($request->only([
-            'colors_active', 'colors', 'choice_no', 'unit_price', 'sku', 'current_stock', 'product_id'
+            'colors_active', 'colors', 'choice_no', 'unit_price', 'sku', 'current_stock', 'product_id','purchase_price'
         ]), $product);
 
         //Flash Deal

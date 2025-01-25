@@ -81,10 +81,10 @@
 							<span class="">{{translate('City')}}:</span>
 							<span class="fw-600">{{ Session::get('pos.shipping_info')['city'] }}</span>
 						</div>
-						<div class="d-flex justify-content-between  mb-2">
+						{{-- <div class="d-flex justify-content-between  mb-2">
 							<span class="">{{translate('Postal Code')}}:</span>
 							<span class="fw-600">{{ Session::get('pos.shipping_info')['postal_code'] }}</span>
-						</div>
+						</div> --}}
 					@else
 						<div class="text-center p-4">
 							{{ translate('No customer information selected.') }}

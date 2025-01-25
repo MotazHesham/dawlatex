@@ -35,24 +35,36 @@ class DashboardController extends Controller
                                     ->whereMonth('created_at', Carbon::now()->month)
                                     ->count();
                                     
-        $data['this_month_sold_amount'] = Order::where('seller_id', Auth::user()->id)
-                                    ->wherePaymentStatus('paid')
-                                    ->whereYear('created_at', Carbon::now()->year)
-                                    ->whereMonth('created_at', Carbon::now()->month)
-                                    ->sum('grand_total');
-        $data['previous_month_sold_amount'] = Order::where('seller_id', Auth::user()->id)
-                                    ->wherePaymentStatus('paid')
-                                    ->whereYear('created_at', Carbon::now()->year)
-                                    ->whereMonth('created_at', (Carbon::now()->month-1))
-                                    ->sum('grand_total');
+        $data['this_month_sold_amount'] = DB::table('orders')
+                                            ->join('order_details', 'orders.id', '=', 'order_details.order_id')
+                                            ->whereNull('orders.deleted_at')
+                                            ->where('orders.seller_id', Auth::user()->id)
+                                            ->where('orders.payment_status', 'paid')
+                                            ->whereYear('orders.created_at', Carbon::now()->year)
+                                            ->whereMonth('orders.created_at', Carbon::now()->month)
+                                            ->sum('order_details.purchase_price');
+        $data['previous_month_sold_amount'] = DB::table('orders')
+                                                ->join('order_details', 'orders.id', '=', 'order_details.order_id')
+                                                ->whereNull('orders.deleted_at')
+                                                ->where('orders.seller_id', Auth::user()->id)
+                                                ->where('orders.payment_status', 'paid')
+                                                ->whereYear('orders.created_at', Carbon::now()->year)
+                                                ->whereMonth('orders.created_at', Carbon::now()->subMonth()->month)
+                                                ->sum('order_details.purchase_price');
         
         $data['products'] = filter_products(Product::where('user_id', Auth::user()->id)->orderBy('num_of_sale', 'desc'))->limit(12)->get();
-        $data['last_7_days_sales'] = Order::where('created_at', '>=', Carbon::now()->subDays(7))
-                                ->where('seller_id', '=', Auth::user()->id)
-                                ->where('delivery_status', '=', 'delivered')
-                                ->select(DB::raw("sum(grand_total) as total, DATE_FORMAT(created_at, '%d %b') as date"))
-                                ->groupBy(DB::raw("DATE_FORMAT(created_at, '%Y-%m-%d')"))
-                                ->get()->pluck('total', 'date');  
+        $data['last_7_days_sales'] = DB::table('orders')
+                                    ->join('order_details', 'orders.id', '=', 'order_details.order_id')
+                                    ->whereNull('orders.deleted_at')
+                                    ->where('orders.created_at', '>=', Carbon::now()->subDays(7))
+                                    ->where('orders.seller_id', '=', Auth::user()->id)
+                                    ->where('orders.delivery_status', '=', 'delivered')
+                                    ->select(
+                                        DB::raw("sum(order_details.purchase_price) as total"),
+                                        DB::raw("DATE_FORMAT(orders.created_at, '%d %b') as date")
+                                    )
+                                    ->groupBy(DB::raw("DATE_FORMAT(orders.created_at, '%Y-%m-%d')"))
+                                    ->pluck('total', 'date');  
 
         return view('seller.dashboard', $data);
     }

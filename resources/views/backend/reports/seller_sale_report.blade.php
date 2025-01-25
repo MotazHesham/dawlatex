@@ -52,7 +52,7 @@
                                         {{ $num_of_sale }}
                                     </td>
                                     <td>
-                                        {{ single_price(\App\Models\OrderDetail::where('seller_id', $seller->user->id)->where('delivery_status', '!=', 'cancelled')->sum('price')) }}
+                                        {{ single_price(\App\Models\OrderDetail::where('seller_id', $seller->user->id)->where('delivery_status', '!=', 'cancelled')->sum('purchase_price')) }}
                                     </td>
                                 </tr>
                             @endif

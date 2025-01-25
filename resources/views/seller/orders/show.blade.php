@@ -115,6 +115,10 @@
                                 <th data-breakpoints="lg" class="min-col text-uppercase text-center">
                                     {{ translate('Qty') }}
                                 </th>  
+                                <th data-breakpoints="lg" class="min-col text-uppercase text-center">
+                                    {{ translate('Price') }}</th>
+                                <th data-breakpoints="lg" class="min-col text-uppercase text-right">
+                                    {{ translate('Total') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -169,6 +173,9 @@
                                         @endif
                                     </td>
                                     <td class="text-center">{{ $orderDetail->quantity }}</td>  
+                                    <td class="text-center">
+                                        {{ single_price($orderDetail->purchase_price / $orderDetail->quantity) }}</td>
+                                    <td class="text-center">{{ single_price($orderDetail->purchase_price) }}</td>
                                 </tr>
                             @endforeach
                         </tbody>

@@ -61,14 +61,23 @@ use App\Utility\EmailUtility;
 
 //Order Status Resterictions
 if (!function_exists('orderStatusRestrictions')) {
-    function orderStatusRestrictions()
+    function orderStatusRestrictions($order)
     {
-        return [
+        $restricted = false;
+        if(in_array($order->delivery_status,[
             'picked_up',
             'on_the_way',
             'delivered',
             'cancelled', 
-        ];
+        ])){
+            $restricted = true;
+        }
+
+        if($order->payment_status == 'paid'){
+            $restricted = true;
+        }
+
+        return !$restricted;
     }
 }
 
@@ -343,6 +352,39 @@ if (!function_exists('cart_product_price')) {
             }
             $price += $taxAmount;
         }
+
+        if ($formatted) {
+            return format_price(convert_price($price));
+        } else {
+            return $price;
+        }
+    }
+}
+
+//Shows Price on page based on carts
+if (!function_exists('cart_product_purchase_price')) {
+    function cart_product_purchase_price($cart_product, $product, $formatted = true, $tax = true)
+    {
+        if ($product->auction_product == 0) {
+            $str = '';
+            if ($cart_product['variation'] != null) {
+                $str = $cart_product['variation'];
+            }
+            $price = 0;
+            $product_stock = $product->stocks->where('variant', $str)->first();
+            if ($product_stock) {
+                $price = $product_stock->purchase_price;
+            }
+
+            if ($product->wholesale_product) {
+                $wholesalePrice = $product_stock->wholesalePrices->where('min_qty', '<=', $cart_product['quantity'])->where('max_qty', '>=', $cart_product['quantity'])->first();
+                if ($wholesalePrice) {
+                    $price = $wholesalePrice->purchase_price;
+                }
+            } 
+        } else {
+            $price = $product->bids->max('amount');
+        } 
 
         if ($formatted) {
             return format_price(convert_price($price));

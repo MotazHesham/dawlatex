@@ -217,6 +217,12 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
+                                    <label class="col-xxl-3 col-from-label fs-13">{{translate('Seller Price')}}</label>
+                                    <div class="col-xxl-9">
+                                        <input type="number" class="form-control" name="purchase_price" value="{{ old('purchase_price') ?? 0.00 }}" min="1"  step="0.01" placeholder="0.00" required>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
                                     <label class="col-xxl-3 col-from-label fs-13">{{translate('Quantity')}}</label>
                                     <div class="col-xxl-9">
                                         <input type="number" class="form-control" name="quantity" value="{{ old('quantity') ?? 0.00 }}" min="1"  step="0.01" placeholder="0.00" required>
@@ -244,7 +250,7 @@
             
             <div class="row">
                 <div class="col-lg-12 table-responsive">
-                    @if(!in_array($order->delivery_status,orderStatusRestrictions()))
+                    @if(orderStatusRestrictions($order))
                         <button class="btn btn-success mb-2" style="float: right;" data-toggle="modal" data-target="#exampleModal">{{ translate('Add New') }}</button>
                     @endif
                     <form action="{{ route('orders.update_order_detail') }}" method="POST">
@@ -258,6 +264,9 @@
                                     <th width="10%">{{ translate('Photo') }}</th>
                                     <th class="text-uppercase">{{ translate('Description') }}</th>
                                     <th data-breakpoints="lg" class="text-uppercase">{{ translate('Delivery Type') }}</th>
+                                    <th data-breakpoints="lg" class="min-col text-uppercase text-center">
+                                        {{ translate('Seller Price') }}
+                                    </th>
                                     <th data-breakpoints="lg" class="min-col text-uppercase text-center">
                                         {{ translate('Qty') }}
                                     </th>
@@ -294,7 +303,7 @@
                                                 <strong>
                                                     <a href="{{ route('product', $orderDetail->product->slug) }}" target="_blank"
                                                         class="text-muted">
-                                                        {{ $orderDetail->product->getTranslation('name') }}
+                                                        {{ $orderDetail->product->prefix() }} {{ $orderDetail->product->getTranslation('name') }}
                                                     </a>
                                                 </strong>
                                                 <small>
@@ -342,6 +351,10 @@
                                             @endif
                                         </td>
                                         <td class="text-center">
+                                            {{-- {{ single_price($orderDetail->price / $orderDetail->quantity) }} --}}
+                                            <input type="number" name="order_detail[{{$orderDetail->id}}][purchase_price]" value="{{$orderDetail->purchase_price / $orderDetail->quantity}}" class="form-control" id="">
+                                        </td>
+                                        <td class="text-center">
                                             {{-- {{ $orderDetail->quantity }} --}}
                                             <input type="number" name="order_detail[{{$orderDetail->id}}][quantity]" value="{{$orderDetail->quantity}}" class="form-control" id="">
                                         </td>
@@ -359,7 +372,7 @@
                                             {{ single_price($orderDetail->price + $orderDetail->tax + $orderDetail->shipping_cost ) }}
                                         </td>
                                         <td> 
-                                            @if(!in_array($order->delivery_status,orderStatusRestrictions()))
+                                            @if(orderStatusRestrictions($order))
                                                 <a class="btn btn-danger" onclick="return confirm('هل انت متأكد من حذف المنتج')" href="{{ route('orders.delete_order_detail',$orderDetail->id) }}">{{ translate('Delete') }}</a>
                                             @endif
                                         </td>
@@ -367,7 +380,7 @@
                                 @endforeach
                             </tbody>
                         </table> 
-                        @if(!in_array($order->delivery_status,orderStatusRestrictions()))
+                        @if(orderStatusRestrictions($order))
                             <button class="btn btn-info mb-2" style="float: right;" type="submit">{{ translate('Update') }}</button>
                             <div style="clear: both"></div>
                         @endif

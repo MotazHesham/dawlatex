@@ -9,6 +9,7 @@ use App\Http\Resources\PosProductCollection;
 use App\Models\Cart;
 use App\Utility\FontUtility;
 use App\Utility\PosUtility;
+use Illuminate\Support\Facades\Log;
 use Session;
 use Mpdf\Mpdf;
 
@@ -30,7 +31,6 @@ class PosController extends Controller
     public function search(Request $request)
     {
         $products = PosUtility::product_search($request->only('category', 'brand', 'keyword'));
-
         $stocks = new PosProductCollection($products);
         $stocks->appends(['keyword' =>  $request->keyword, 'category' => $request->category, 'brand' => $request->brand]);
         return $stocks;

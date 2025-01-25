@@ -162,7 +162,7 @@
                                     $total = 0;
                                     foreach ($orderDetails as $key => $orderDetail) {
                                         if ($orderDetail->order != null && $orderDetail->order->payment_status == 'paid') {
-                                            $total += $orderDetail->price;
+                                            $total += $orderDetail->purchase_price;
                                         }
                                     }
                                 @endphp

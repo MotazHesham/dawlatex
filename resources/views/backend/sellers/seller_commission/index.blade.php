@@ -59,6 +59,10 @@
                             <input id="category_based_commission" class="magic-radio" type="radio" name="seller_commission_type" value="category_based" @if(get_setting('seller_commission_type') == 'category_based') checked @endif>
                             <label for="category_based_commission" class="fs-13">{{translate('Category Based Commission Rate')}}</label>
                         </div>
+                        <div class="radio mar-btm">
+                            <input id="purchase_price_based_commission" class="magic-radio" type="radio" name="seller_commission_type" value="purchase_price_based" @if(get_setting('seller_commission_type') == 'purchase_price_based') checked @endif>
+                            <label for="purchase_price_based_commission" class="fs-13">{{translate('Seller Price Based Commission Rate')}}</label>
+                        </div>
                         <div class="form-group mb-0 text-right">
                             <button type="submit" class="btn btn-sm btn-primary">{{translate('Save')}}</button>
                         </div>

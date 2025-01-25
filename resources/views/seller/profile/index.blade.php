@@ -156,10 +156,10 @@
                                 <span class="w-50 fw-600">{{ translate('Address') }}:</span>
                                 <span class="ml-2">{{ $address->address }}</span>
                             </div>
-                            <div>
+                            {{-- <div>
                                 <span class="w-50 fw-600">{{ translate('Postal Code') }}:</span>
                                 <span class="ml-2">{{ $address->postal_code }}</span>
-                            </div>
+                            </div> --}}
                             <div>
                                 <span class="w-50 fw-600">{{ translate('City') }}:</span>
                                 <span class="ml-2">{{ optional($address->city)->name }}</span>
@@ -335,14 +335,14 @@
                                 </div>
                             @endif
 
-                            <div class="row">
+                            {{-- <div class="row">
                                 <div class="col-md-2">
                                     <label>{{ translate('Postal code')}}</label>
                                 </div>
                                 <div class="col-md-10">
                                     <input type="text" class="form-control mb-3" placeholder="{{ translate('Your Postal Code')}}" name="postal_code" value="" required>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="row">
                                 <div class="col-md-2">
                                     <label>{{ translate('Phone')}}</label>
