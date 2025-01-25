@@ -62,39 +62,7 @@
                 @endif
             </div>
             <div class="row gutters-5 mt-2">
-                <div class="col text-md-left text-center">
-                    @if(json_decode($order->shipping_address))
-                        <address>
-                            <strong class="text-main">
-                                {{ json_decode($order->shipping_address)->name }}
-                            </strong><br>
-                            {{ json_decode($order->shipping_address)->email }}<br>
-                            {{ json_decode($order->shipping_address)->phone }}<br>
-                            {{ json_decode($order->shipping_address)->address }}, {{ json_decode($order->shipping_address)->city }}, @if(isset(json_decode($order->shipping_address)->state)) {{ json_decode($order->shipping_address)->state }} - @endif {{ json_decode($order->shipping_address)->postal_code }}<br>
-                            {{ json_decode($order->shipping_address)->country }}
-                        </address>
-                    @else
-                        <address>
-                            <strong class="text-main">
-                                {{ $order->user->name }}
-                            </strong><br>
-                            {{ $order->user->email }}<br>
-                            {{ $order->user->phone }}<br>
-                        </address>
-                    @endif
-                    @if ($order->manual_payment && is_array(json_decode($order->manual_payment_data, true)))
-                        <br>
-                        <strong class="text-main">{{ translate('Payment Information') }}</strong><br>
-                        {{ translate('Name') }}: {{ json_decode($order->manual_payment_data)->name }},
-                        {{ translate('Amount') }}:
-                        {{ single_price(json_decode($order->manual_payment_data)->amount) }},
-                        {{ translate('TRX ID') }}: {{ json_decode($order->manual_payment_data)->trx_id }}
-                        <br>
-                        <a href="{{ uploaded_asset(json_decode($order->manual_payment_data)->photo) }}"
-                            target="_blank"><img
-                                src="{{ uploaded_asset(json_decode($order->manual_payment_data)->photo) }}" alt=""
-                                height="100"></a>
-                    @endif
+                <div class="col text-md-left text-center"> 
                 </div>
                 <div class="col-md-4">
                     <table class="ml-auto">
@@ -118,13 +86,7 @@
                             <tr>
                                 <td class="text-main text-bold">{{ translate('Order Date') }}</td>
                                 <td class="text-right">{{ date('d-m-Y h:i A', $order->date) }}</td>
-                            </tr>
-                            <tr>
-                                <td class="text-main text-bold">{{ translate('Total amount') }}</td>
-                                <td class="text-right">
-                                    {{ single_price($order->grand_total) }}
-                                </td>
-                            </tr>
+                            </tr> 
                             <tr>
                                 <td class="text-main text-bold">{{ translate('Payment method') }}</td>
                                 <td class="text-right">
@@ -152,11 +114,7 @@
                                 <th data-breakpoints="lg" class="text-uppercase">{{ translate('Delivery Type') }}</th>
                                 <th data-breakpoints="lg" class="min-col text-uppercase text-center">
                                     {{ translate('Qty') }}
-                                </th>
-                                <th data-breakpoints="lg" class="min-col text-uppercase text-center">
-                                    {{ translate('Price') }}</th>
-                                <th data-breakpoints="lg" class="min-col text-uppercase text-right">
-                                    {{ translate('Total') }}</th>
+                                </th>  
                             </tr>
                         </thead>
                         <tbody>
@@ -210,65 +168,14 @@
                                             @endif
                                         @endif
                                     </td>
-                                    <td class="text-center">{{ $orderDetail->quantity }}</td>
-                                    <td class="text-center">
-                                        {{ single_price($orderDetail->price / $orderDetail->quantity) }}</td>
-                                    <td class="text-center">{{ single_price($orderDetail->price) }}</td>
+                                    <td class="text-center">{{ $orderDetail->quantity }}</td>  
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
                 </div>
             </div>
-            <div class="clearfix float-right">
-                <table class="table">
-                    <tbody>
-                        <tr>
-                            <td>
-                                <strong class="text-muted">{{ translate('Sub Total') }} :</strong>
-                            </td>
-                            <td>
-                                {{ single_price($order->orderDetails->sum('price')) }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <strong class="text-muted">{{ translate('Tax') }} :</strong>
-                            </td>
-                            <td>
-                                {{ single_price($order->orderDetails->sum('tax')) }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <strong class="text-muted">{{ translate('Shipping') }} :</strong>
-                            </td>
-                            <td>
-                                {{ single_price($order->orderDetails->sum('shipping_cost')) }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <strong class="text-muted">{{ translate('Coupon') }} :</strong>
-                            </td>
-                            <td>
-                                {{ single_price($order->coupon_discount) }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <strong class="text-muted">{{ translate('TOTAL') }} :</strong>
-                            </td>
-                            <td class="text-muted h5">
-                                {{ single_price($order->grand_total) }}
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div class="no-print text-right">
-                    <a href="{{ route('seller.invoice.download', $order->id) }}" type="button"
-                        class="btn btn-icon btn-light"><i class="las la-print"></i></a>
-                </div>
+            <div class="clearfix float-right"> 
             </div>
 
         </div>

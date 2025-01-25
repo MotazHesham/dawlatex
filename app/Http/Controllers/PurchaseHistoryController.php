@@ -29,6 +29,7 @@ class PurchaseHistoryController extends Controller
     public function digital_index()
     {
         $orders = DB::table('orders')
+            ->whereNull('deleted_at')
             ->orderBy('code', 'desc')
             ->join('order_details', 'orders.id', '=', 'order_details.order_id')
             ->join('products', 'order_details.product_id', '=', 'products.id')

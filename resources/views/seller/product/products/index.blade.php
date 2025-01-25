@@ -116,8 +116,8 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <a href="{{ route('product', $product->slug) }}" target="_blank" class="text-reset">
-                                        {{ $product->prefix() }} {{ $product->getTranslation('name') }}
+                                    <a href="#"  class="text-reset">
+                                        {{ $product->getTranslation('name') }}
                                     </a>
                                 </td>
                                 {{-- <td>
@@ -134,7 +134,7 @@
                                         echo $qty;
                                     @endphp
                                 </td>
-                                <td>{{ $product->unit_price }}</td>
+                                <td>{{ $product->purchase_price }}</td>
                                 @if(get_setting('product_approve_by_admin') == 1)
                                     <td>
                                         @if ($product->approved == 1)

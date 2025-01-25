@@ -213,13 +213,13 @@
                                 <div class="form-group row">
                                     <label class="col-xxl-3 col-from-label fs-13">{{translate('Price')}}</label>
                                     <div class="col-xxl-9">
-                                        <input type="number" class="form-control" name="price" value="{{ old('price') ?? 0.00 }}"  step="0.01" placeholder="0.00" required>
+                                        <input type="number" class="form-control" name="price" value="{{ old('price') ?? 0.00 }}" min="1"  step="0.01" placeholder="0.00" required>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-xxl-3 col-from-label fs-13">{{translate('Quantity')}}</label>
                                     <div class="col-xxl-9">
-                                        <input type="number" class="form-control" name="quantity" value="{{ old('quantity') ?? 0.00 }}"  step="0.01" placeholder="0.00" required>
+                                        <input type="number" class="form-control" name="quantity" value="{{ old('quantity') ?? 0.00 }}" min="1"  step="0.01" placeholder="0.00" required>
                                     </div>
                                 </div>
                                 <div class="form-group row">

@@ -2413,8 +2413,13 @@ if (!function_exists('get_pos_user_cart')) {
         if ($sessionTemUserId == null) {
             $sessionTemUserId = Session::has('pos.temp_user_id') ? Session::get('pos.temp_user_id') : null;
         }
+        $cart = Cart::where('user_id', $sessionUserID)->where('temp_user_id', $sessionTemUserId);
 
-        $cart = Cart::where('owner_id', $owner_id)->where('user_id', $sessionUserID)->where('temp_user_id', $sessionTemUserId)->get();
+        if($authUser->user_type == 'seller'){
+            $cart = $cart->where('owner_id', $owner_id)->get();
+        }else{
+            $cart = $cart->get();
+        }
         return $cart;
     }
 }

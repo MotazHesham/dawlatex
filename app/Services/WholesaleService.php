@@ -51,12 +51,13 @@ class WholesaleService
 
         $product = Product::create($data);
 
-        $product_stock              = new ProductStock;
-        $product_stock->product_id  = $product->id;
-        $product_stock->variant     = '';
-        $product_stock->price       = $collection['unit_price'];
-        $product_stock->sku         = $collection['sku'];
-        $product_stock->qty         = $collection['current_stock'];
+        $product_stock                       = new ProductStock;
+        $product_stock->product_id           = $product->id;
+        $product_stock->variant              = '';
+        $product_stock->price                = $collection['unit_price'];
+        $product_stock->purchase_price       = $collection['purchase_price'];
+        $product_stock->sku                  = $collection['sku'];
+        $product_stock->qty                  = $collection['current_stock'];
         $product_stock->save();
 
         if(request()->has('wholesale_price')){
@@ -66,6 +67,7 @@ class WholesaleService
                 $wholesale_price->min_qty = request()->wholesale_min_qty[$key];
                 $wholesale_price->max_qty = request()->wholesale_max_qty[$key];
                 $wholesale_price->price = $price;
+                $wholesale_price->purchase_price = $price;
                 $wholesale_price->save();
             }
         }
@@ -133,6 +135,7 @@ class WholesaleService
 
         $product->video_provider = $request->video_provider;
         $product->video_link     = $request->video_link;
+        $product->purchase_price     = $request->purchase_price;
         $product->unit_price     = $request->unit_price;
         $product->discount       = $request->discount;
         $product->discount_type     = $request->discount_type;
@@ -206,6 +209,7 @@ class WholesaleService
 
         $product_stock              = $product->stocks->first();
         $product_stock->price       = $request->unit_price;
+        $product_stock->purchase_price       = $request->purchase_price;
         $product_stock->sku         = $request->sku;
         $product_stock->qty         = $request->current_stock;
         $product_stock->save();
@@ -275,6 +279,7 @@ class WholesaleService
                 $wholesale_price->min_qty = $request->wholesale_min_qty[$key];
                 $wholesale_price->max_qty = $request->wholesale_max_qty[$key];
                 $wholesale_price->price = $price;
+                $wholesale_price->purchase_price = $request->wholesale_purchase_price[$key];
                 $wholesale_price->save();
             }
         }

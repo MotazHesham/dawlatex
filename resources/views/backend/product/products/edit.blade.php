@@ -561,9 +561,13 @@
 
                                 <!-- Unit price -->
                                 <div class="form-group row">
-                                    <label class="col-md-3 col-from-label">{{translate('Unit price')}} <span class="text-danger">*</span></label>
-                                    <div class="col-md-6">
+                                    <label class="col-md-2 col-from-label">{{translate('Unit price')}} <span class="text-danger">*</span></label>
+                                    <div class="col-md-4">
                                         <input type="text" placeholder="{{translate('Unit price')}}" name="unit_price" class="form-control @error('unit_price') is-invalid @enderror" value="{{$product->unit_price}}">
+                                    </div>
+                                    <label class="col-md-2 col-from-label">{{translate('Seller price')}} <span class="text-danger">*</span></label>
+                                    <div class="col-md-4">
+                                        <input type="text" placeholder="{{translate('Seller price')}}" name="purchase_price" class="form-control @error('purchase_price') is-invalid @enderror" value="{{$product->purchase_price}}">
                                     </div>
                                 </div>
 
@@ -575,7 +579,7 @@
                                 <div class="form-group row">
                                     <label class="col-sm-3 control-label" for="start_date">{{translate('Discount Date Range')}}</label>
                                     <div class="col-sm-9">
-                                      <input type="text" class="form-control aiz-date-range" @if($product->discount_start_date && $product->discount_end_date) value="{{ $start_date.' to '.$end_date }}" @endif name="date_range" placeholder="{{translate('Select Date')}}" data-time-picker="true" data-format="DD-MM-Y HH:mm:ss" data-separator=" to " autocomplete="off">
+                                        <input type="text" class="form-control aiz-date-range" @if($product->discount_start_date && $product->discount_end_date) value="{{ $start_date.' to '.$end_date }}" @endif name="date_range" placeholder="{{translate('Select Date')}}" data-time-picker="true" data-format="DD-MM-Y HH:mm:ss" data-separator=" to " autocomplete="off">
                                     </div>
                                 </div>
                                 <!-- Discount -->

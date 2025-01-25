@@ -272,7 +272,7 @@
                         <label class="col-lg-3 col-from-label">{{translate('Unit price')}}</label>
                         <div class="col-lg-6">
                             <input type="text" placeholder="{{translate('Unit price')}}" name="unit_price" class="form-control"
-                                value="{{$product->unit_price}}" required> 
+                                value="{{$product->purchase_price}}" required> 
                             <small class="text-muted">{{ translate(get_setting('product_edit_price_text')) }}</small>
                         </div>
                     </div>

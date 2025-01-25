@@ -214,7 +214,7 @@ class ProductService
             $collection['category_id'] = $data['category_ids'][0];
         }
 
-        if($product->unit_price != $collection['unit_price']){
+        if(isset($collection['unit_price']) && $product->unit_price != $collection['unit_price']){
             $collection['price_change_count'] = $product->price_change_count + 1; 
             if($collection['price_change_count'] > (int) get_setting('product_num_edit_price',1)){
                 if(auth()->user()->user_type == 'seller'){

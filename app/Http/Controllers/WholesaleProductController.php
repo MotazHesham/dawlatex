@@ -242,7 +242,8 @@ class WholesaleProductController extends Controller
                 return back();
             }
         }
-       
+        
+        $request->merge(['purchase_price' => $request->unit_price]);
         $product = (new WholesaleService)->store($request->except([
             '_token', 'tax_id', 'tax', 'tax_type', 'flash_deal_id', 'flash_discount', 'flash_discount_type'
         ]));

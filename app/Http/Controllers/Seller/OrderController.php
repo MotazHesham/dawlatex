@@ -28,6 +28,7 @@ class OrderController extends Controller
         $delivery_status = null;
         $sort_search = null;
         $orders = DB::table('orders')
+            ->whereNull('deleted_at')
             ->orderBy('id', 'desc')
             ->where('seller_id', Auth::user()->id)
             ->select('orders.id')

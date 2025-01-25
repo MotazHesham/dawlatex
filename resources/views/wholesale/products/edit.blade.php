@@ -53,7 +53,7 @@
                         </div>
                         <div class="form-group row" @if(get_setting('product_view_unit') != 1) style="display: none" @endif>
                             <label class="col-lg-3 col-from-label">{{translate('Unit')}} <i class="las la-language text-danger" title="{{translate('Translatable')}}"></i> </label>
-                            <div class="col-lg-8">
+                            <div class="col-lg-3">
                                 <input type="text" class="form-control" name="unit" placeholder="{{ translate('Unit (e.g. KG, Pc etc)') }}" value="{{$product->getTranslation('unit', $lang)}}" required>
                             </div>
                         </div>
@@ -159,8 +159,12 @@
                     <div class="card-body">
                         <div class="form-group row">
                             <label class="col-lg-3 col-from-label">{{translate('Unit price')}}</label>
-                            <div class="col-lg-6">
+                            <div class="col-lg-3">
                                 <input type="text" placeholder="{{translate('Unit price')}}" name="unit_price" class="form-control" value="{{$product->unit_price}}" required>
+                            </div>
+                            <label class="col-lg-3 col-from-label">{{translate('Seller price')}}</label>
+                            <div class="col-lg-3">
+                                <input type="text" placeholder="{{translate('Seller price')}}" name="purchase_price" class="form-control" value="{{$product->purchase_price}}" required>
                             </div>
                         </div>
 
@@ -214,6 +218,11 @@
                                                     <input type="text" class="form-control" placeholder="{{ translate('Price per piece') }}" name="wholesale_price[]" value="{{ $wholesalePrice->price }}" required>
                                                 </div>
                                             </div>
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control" placeholder="{{ translate('Price per piece 2') }}" name="wholesale_purchase_price[]" value="{{ $wholesalePrice->purchase_price }}" required>
+                                                </div>
+                                            </div>
                                             <div class="col-auto">
                                                 <button type="button" class="mt-1 btn btn-icon btn-circle btn-sm btn-soft-danger" data-toggle="remove-parent" data-parent=".row">
                                                     <i class="las la-times"></i>
@@ -240,6 +249,11 @@
                                         <div class="col">
                                             <div class="form-group">
                                                 <input type="text" class="form-control" placeholder="{{ translate('Price per piece') }}" name="wholesale_price[]" required>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" placeholder="{{ translate('Price per piece 2') }}" name="wholesale_purchase_price[]" required>
                                             </div>
                                         </div>
                                         <div class="col-auto">

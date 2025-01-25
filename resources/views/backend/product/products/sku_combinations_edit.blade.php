@@ -5,6 +5,11 @@
             <td class="text-center">
                 {{translate('Variant')}}
             </td>
+            @if(auth()->user()->user_type != 'seller')
+                <td class="text-center">
+                    {{translate('Seller Price')}}
+                </td>
+            @endif
             <td class="text-center">
                 {{translate('Variant Price')}}
             </td>
@@ -58,19 +63,38 @@
                     <label for="" class="control-label">{{ $str }}</label>
                 </td>
                 <td>
+                    <input type="number" lang="en" name="purchase_price_{{ $str }}" value="@php 
+                            if($stock != null){
+                                echo $stock->purchase_price;
+                            }
+                            else {
+                                echo $product->purchase_price;
+                            }  
+                            @endphp" min="0" step="0.01" class="form-control" required>
+                </td>
+                <td>
                     <input type="number" lang="en" name="price_{{ $str }}" value="@php
-                            if ($product->unit_price == $unit_price) {
+                            if(auth()->user()->user_type == 'seller'){ 
                                 if($stock != null){
-                                    echo $stock->price;
+                                    echo $stock->purchase_price;
                                 }
                                 else {
+                                    echo $product->purchase_price;
+                                } 
+                            }else{ 
+                                if ($product->unit_price == $unit_price) {
+                                    if($stock != null){
+                                        echo $stock->price;
+                                    }
+                                    else {
+                                        echo $unit_price;
+                                    }
+                                }
+                                else{
                                     echo $unit_price;
                                 }
                             }
-                            else{
-                                echo $unit_price;
-                            }
-                           @endphp" min="0" step="0.01" class="form-control" required>
+                            @endphp" min="0" step="0.01" class="form-control" required>
                 </td>
                 <td>
                     <input type="text" name="sku_{{ $str }}" value="@php

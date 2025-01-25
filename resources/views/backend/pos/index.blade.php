@@ -56,7 +56,7 @@
 									@endforeach
                                 </select>
                             </div>
-                            <button type="button" class="btn btn-icon btn-soft-dark ml-3 mr-0" data-target="#new-customer" data-toggle="modal">
+                            <button type="button" class="btn btn-icon btn-soft-default ml-3 mr-0" data-target="#new-customer" data-toggle="modal">
 								<i class="las la-truck"></i>
 							</button>
                         </div>

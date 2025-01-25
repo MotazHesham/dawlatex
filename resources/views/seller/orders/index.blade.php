@@ -76,9 +76,7 @@
                                     </div>
                                 </th>
                                 <th>{{ translate('Order Code') }}</th>
-                                <th data-breakpoints="lg">{{ translate('Num. of Products') }}</th>
-                                <th data-breakpoints="lg">{{ translate('Customer') }}</th>
-                                <th data-breakpoints="md">{{ translate('Amount') }}</th>
+                                <th data-breakpoints="lg">{{ translate('Num. of Products') }}</th> 
                                 <th data-breakpoints="lg">{{ translate('Delivery Status') }}</th>
                                 <th>{{ translate('Payment Status') }}</th>
                                 <th class="text-right">{{ translate('Options') }}</th>
@@ -111,17 +109,7 @@
                                         </td>
                                         <td>
                                             {{ count($order->orderDetails->where('seller_id', Auth::user()->id)) }}
-                                        </td>
-                                        <td>
-                                            @if ($order->user_id != null)
-                                                {{ optional($order->user)->name }}
-                                            @else
-                                                {{ translate('Guest') }} ({{ $order->guest_id }})
-                                            @endif
-                                        </td>
-                                        <td>
-                                            {{ single_price($order->grand_total) }}
-                                        </td>
+                                        </td> 
                                         <td>
                                             @php
                                                 $status = $order->delivery_status;
@@ -137,22 +125,17 @@
                                         </td>
                                         <td class="text-right">
                                             @if (addon_is_activated('pos_system') && $order->order_from == 'pos')
-                                                <a class="btn btn-soft-success btn-icon btn-circle btn-sm"
+                                                {{-- <a class="btn btn-soft-success btn-icon btn-circle btn-sm"
                                                     href="{{ route('seller.invoice.thermal_printer', $order->id) }}"
                                                     target="_blank" title="{{ translate('Thermal Printer') }}">
                                                     <i class="las la-print"></i>
-                                                </a>
+                                                </a> --}}
                                             @endif
                                             <a href="{{ route('seller.orders.show', encrypt($order->id)) }}"
                                                 class="btn btn-soft-info btn-icon btn-circle btn-sm"
                                                 title="{{ translate('Order Details') }}">
                                                 <i class="las la-eye"></i>
-                                            </a>
-                                            <a href="{{ route('seller.invoice.download', $order->id) }}"
-                                                class="btn btn-soft-warning btn-icon btn-circle btn-sm"
-                                                title="{{ translate('Download Invoice') }}">
-                                                <i class="las la-download"></i>
-                                            </a>
+                                            </a> 
                                         </td>
                                     </tr>
                                 @endif

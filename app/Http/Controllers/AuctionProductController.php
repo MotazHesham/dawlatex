@@ -304,6 +304,7 @@ class AuctionProductController extends Controller
     public function purchase_history_user()
     {
         $orders = DB::table('orders')
+            ->whereNull('deleted_at')
             ->orderBy('code', 'desc')
             ->join('order_details', 'orders.id', '=', 'order_details.order_id')
             ->join('products', 'order_details.product_id', '=', 'products.id')
@@ -321,6 +322,7 @@ class AuctionProductController extends Controller
         $sort_search = null;
         $date = $request->date;
         $orders = DB::table('orders')
+            ->whereNull('deleted_at')
             ->orderBy('code', 'desc')
             ->join('order_details', 'orders.id', '=', 'order_details.order_id')
             ->join('products', 'order_details.product_id', '=', 'products.id')
@@ -372,6 +374,7 @@ class AuctionProductController extends Controller
         $delivery_status = null;
         $sort_search = null;
         $orders = DB::table('orders')
+            ->whereNull('deleted_at')
             ->orderBy('code', 'desc')
             ->where('orders.seller_id', Auth::user()->id)
             ->join('order_details', 'orders.id', '=', 'order_details.order_id')

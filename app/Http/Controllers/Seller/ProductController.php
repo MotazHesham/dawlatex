@@ -84,6 +84,7 @@ class ProductController extends Controller
             }
         }
 
+        $request->merge(['purchase_price' => $request->unit_price]);
         $product = $this->productService->store($request->except([
             '_token', 'sku', 'choice', 'tax_id', 'tax', 'tax_type', 'flash_deal_id', 'flash_discount', 'flash_discount_type'
         ]));
@@ -156,8 +157,9 @@ class ProductController extends Controller
     public function update(ProductRequest $request, Product $product)
     {
         //Product
+        $request->merge(['purchase_price' => $request->unit_price]);
         $product = $this->productService->update($request->except([
-            '_token', 'sku', 'choice', 'tax_id', 'tax', 'tax_type', 'flash_deal_id', 'flash_discount', 'flash_discount_type'
+            '_token', 'sku', 'choice', 'tax_id', 'tax', 'tax_type', 'flash_deal_id', 'flash_discount', 'flash_discount_type', 'unit_price'
         ]), $product);
 
         $request->merge(['product_id' => $product->id]);
@@ -168,7 +170,7 @@ class ProductController extends Controller
         //Product Stock
         $product->stocks()->delete();
         $this->productStockService->store($request->only([
-            'colors_active', 'colors', 'choice_no', 'unit_price', 'sku', 'current_stock', 'product_id'
+            'colors_active', 'colors', 'choice_no', 'unit_price', 'sku', 'current_stock', 'product_id','purchase_price'
         ]), $product);
 
         //VAT & Tax

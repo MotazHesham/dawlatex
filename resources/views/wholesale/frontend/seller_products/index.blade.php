@@ -60,8 +60,8 @@
                     <option value="rating,asc" @isset($col_name , $query) @if($col_name == 'rating' && $query == 'asc') selected @endif @endisset>{{translate('Rating (Low > High)')}}</option>
                     <option value="num_of_sale,desc"@isset($col_name , $query) @if($col_name == 'num_of_sale' && $query == 'desc') selected @endif @endisset>{{translate('Num of Sale (High > Low)')}}</option>
                     <option value="num_of_sale,asc"@isset($col_name , $query) @if($col_name == 'num_of_sale' && $query == 'asc') selected @endif @endisset>{{translate('Num of Sale (Low > High)')}}</option>
-                    <option value="unit_price,desc"@isset($col_name , $query) @if($col_name == 'unit_price' && $query == 'desc') selected @endif @endisset>{{translate('Base Price (High > Low)')}}</option>
-                    <option value="unit_price,asc"@isset($col_name , $query) @if($col_name == 'unit_price' && $query == 'asc') selected @endif @endisset>{{translate('Base Price (Low > High)')}}</option>
+                    <option value="purchase_price,desc"@isset($col_name , $query) @if($col_name == 'purchase_price' && $query == 'desc') selected @endif @endisset>{{translate('Base Price (High > Low)')}}</option>
+                    <option value="purchase_price,asc"@isset($col_name , $query) @if($col_name == 'purchase_price' && $query == 'asc') selected @endif @endisset>{{translate('Base Price (Low > High)')}}</option>
                 </select>
             </div>
             <div class="col-md-2">
@@ -97,13 +97,13 @@
                                     <img src="{{ uploaded_asset($product->thumbnail_img)}}" alt="Image" class="size-50px img-fit">
                                 </div>
                                 <div class="col">
-                                    <span class="text-muted text-truncate-2">{{ $product->prefix() }} {{ $product->getTranslation('name') }}</span>
+                                    <span class="text-muted text-truncate-2"> {{ $product->getTranslation('name') }}</span>
                                 </div>
                             </div>
                         </td>
                         <td>
                             <strong>{{translate('Num of Sale')}}:</strong> {{ $product->num_of_sale }} {{translate('times')}} </br>
-                            <strong>{{translate('Base Price')}}:</strong> {{ single_price($product->unit_price) }} </br>
+                            <strong>{{translate('Base Price')}}:</strong> {{ single_price($product->purchase_price) }} </br>
                             <strong>{{translate('Rating')}}:</strong> {{ $product->rating }} </br>
                         </td>
                         <td>
@@ -145,10 +145,7 @@
                                 <span class="slider round"></span>
                             </label>
                         </td>
-                        <td class="text-right">
-                            <a class="btn btn-soft-success btn-icon btn-circle btn-sm"  href="{{ route('product', $product->slug) }}" target="_blank" title="{{ translate('View') }}">
-                                <i class="las la-eye"></i>
-                            </a>
+                        <td class="text-right"> 
                             <a class="btn btn-soft-info btn-icon btn-circle btn-sm" href="{{route('wholesale_product_edit.seller', ['id'=>$product->id, 'lang'=>env('DEFAULT_LANGUAGE')] )}}" title="{{ translate('Edit') }}">
                                 <i class="las la-edit"></i>
                             </a>
