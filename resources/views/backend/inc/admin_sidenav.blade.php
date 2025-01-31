@@ -78,192 +78,7 @@
                 @endif
 
                 <!-- Product -->
-                @canany(['add_new_product', 'show_all_products','show_in_house_products','show_seller_products','show_digital_products','product_bulk_import','product_bulk_export','view_product_categories', 'view_all_brands', 'brand_bulk_upload','view_product_attributes','view_colors','view_product_warranties','view_product_reviews'])
-                    <li class="aiz-side-nav-item">
-                        <a href="#" class="aiz-side-nav-link">
-                            <div class="aiz-side-nav-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="13.714" viewBox="0 0 16 13.714">
-                                    <g id="Layer_2" data-name="Layer 2" transform="translate(-2 -4)">
-                                      <path id="Path_40719" data-name="Path 40719" d="M17.429,4H2.571A.571.571,0,0,0,2,4.571V8a.571.571,0,0,0,.571.571h.571v8.571a.571.571,0,0,0,.571.571H16.286a.571.571,0,0,0,.571-.571V8.571h.571A.571.571,0,0,0,18,8V4.571A.571.571,0,0,0,17.429,4ZM15.714,16.571H4.286v-8H15.714Zm1.143-9.143H3.143V5.143H16.857Z" fill="#575b6a"/>
-                                      <path id="Path_40720" data-name="Path 40720" d="M12.571,15.143H16A.571.571,0,0,0,16,14H12.571a.571.571,0,0,0,0,1.143Z" transform="translate(-4.286 -4.286)" fill="#575b6a"/>
-                                    </g>
-                                </svg>
-                            </div>
-                            <span class="aiz-side-nav-text">{{translate('Products')}}</span>
-                            <span class="aiz-side-nav-arrow"></span>
-                        </a>
-                        <!--Submenu-->
-                        <ul class="aiz-side-nav-list level-2">
-                            @can('add_new_product')
-                                <li class="aiz-side-nav-item">
-                                    <a class="aiz-side-nav-link" href="{{route('products.create')}}">
-                                        <span class="aiz-side-nav-text">{{translate('Add New product')}}</span>
-                                    </a>
-                                </li>
-                            @endcan
-                            @can('show_all_products')
-                                <li class="aiz-side-nav-item">
-                                    <a href="{{route('products.all')}}" class="aiz-side-nav-link">
-                                        <span class="aiz-side-nav-text">{{ translate('All Products') }}</span>
-                                    </a>
-                                </li>
-                            @endcan
-                            @can('show_in_house_products')
-                                <li class="aiz-side-nav-item">
-                                    <a href="{{route('products.admin')}}" class="aiz-side-nav-link {{ areActiveRoutes(['products.admin', 'products.admin.edit']) }}" >
-                                        <span class="aiz-side-nav-text">{{ translate('In House Products') }}</span>
-                                    </a>
-                                </li>
-                            @endcan
-                            @can('show_digital_products')
-                                @if(get_setting('active_digital_product') == 1)
-                                    <li class="aiz-side-nav-item">
-                                        <a href="{{route('digitalproducts.index')}}" class="aiz-side-nav-link {{ areActiveRoutes(['digitalproducts.index', 'digitalproducts.create', 'digitalproducts.edit']) }}">
-                                            <span class="aiz-side-nav-text">{{ translate('Digital Products') }}</span>
-                                        </a>
-                                    </li>
-                                @endif
-                            @endcan
-                            @if(get_setting('vendor_system_activation') == 1)
-                                @can('show_seller_products') 
-                                    @if(get_setting('active_digital_product') == 1)
-                                        <li class="aiz-side-nav-item">
-                                            <a href="javascript:void(0);" class="aiz-side-nav-link">
-                                                <span class="aiz-side-nav-text">{{translate('Seller Product')}}</span>
-                                                <span class="aiz-side-nav-arrow"></span>
-                                            </a>
-                                            <ul class="aiz-side-nav-list level-3">
-                                                <li class="aiz-side-nav-item">
-                                                    <a href="{{ route('products.seller','physical') }}" class="aiz-side-nav-link">
-                                                        <span class="aiz-side-nav-text">{{translate('Physical Products')}}</span>
-                                                    </a>
-                                                </li>
-                                                <li class="aiz-side-nav-item">
-                                                    <a href="{{ route('products.seller','digital') }}" class="aiz-side-nav-link">
-                                                        <span class="aiz-side-nav-text">{{translate('Digital Products')}}</span>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                    @else 
-                                        <li class="aiz-side-nav-item">
-                                            <a href="{{ route('products.seller','physical') }}" class="aiz-side-nav-link">
-                                                <span class="aiz-side-nav-text">{{translate('Sellers Product')}}</span>
-                                            </a>
-                                        </li>
-                                    @endif
-                                @endcan
-                            @endif
-
-                            @can('product_bulk_import')
-                                {{-- <li class="aiz-side-nav-item">
-                                    <a href="{{ route('product_bulk_upload.index') }}" class="aiz-side-nav-link" >
-                                        <span class="aiz-side-nav-text">{{ translate('Bulk Import') }}</span>
-                                    </a>
-                                </li> --}}
-                            @endcan
-                            @can('product_bulk_export')
-                                {{-- <li class="aiz-side-nav-item">
-                                    <a href="{{route('product_bulk_export.index')}}" class="aiz-side-nav-link">
-                                        <span class="aiz-side-nav-text">{{translate('Bulk Export')}}</span>
-                                    </a>
-                                </li> --}}
-                            @endcan
-                            @can('view_product_categories')
-                                <li class="aiz-side-nav-item">
-                                    <a href="{{route('categories.index')}}" class="aiz-side-nav-link {{ areActiveRoutes(['categories.index', 'categories.create', 'categories.edit'])}}">
-                                        <span class="aiz-side-nav-text">{{translate('Category')}}</span>
-                                    </a>
-                                </li>
-                            @endcan
-                            @can('set_category_wise_discount')
-                                <li class="aiz-side-nav-item">
-                                    <a href="{{route('categories_wise_product_discount')}}" class="aiz-side-nav-link">
-                                        <span class="aiz-side-nav-text">{{translate('Category Based Discount')}}</span>
-                                    </a>
-                                </li>
-                            @endcan
-                            @canany(['view_all_brands', 'brand_bulk_upload'])
-                                <li class="aiz-side-nav-item">
-                                    <a href="javascript:void(0);" class="aiz-side-nav-link">
-                                        <span class="aiz-side-nav-text">{{translate('Brand')}}</span>
-                                        <span class="aiz-side-nav-arrow"></span>
-                                    </a>
-                                    <ul class="aiz-side-nav-list level-3">
-                                        @can('view_all_brands')
-                                            <li class="aiz-side-nav-item">
-                                                <a href="{{ route('brands.index') }}" class="aiz-side-nav-link {{ areActiveRoutes(['brands.index', 'brands.create', 'brands.edit'])}}">
-                                                    <span class="aiz-side-nav-text">{{translate('All Brands')}}</span>
-                                                </a>
-                                            </li>
-                                        @endcan
-                                        @can('brand_bulk_upload')
-                                            <li class="aiz-side-nav-item">
-                                                <a href="{{ route('brand_bulk_upload.index') }}" class="aiz-side-nav-link">
-                                                    <span class="aiz-side-nav-text">{{translate('Brand Bulk Import')}}</span>
-                                                </a>
-                                            </li>
-                                        @endcan
-                                    </ul>
-                                </li>
-                            @endcan
-
-                            @can('view_product_attributes')
-                                <li class="aiz-side-nav-item">
-                                    <a href="{{route('attributes.index')}}" class="aiz-side-nav-link {{ areActiveRoutes(['attributes.index','attributes.create','attributes.edit','attributes.show','edit-attribute-value'.''])}}">
-                                        <span class="aiz-side-nav-text">{{translate('Attribute')}}</span>
-                                    </a>
-                                </li>
-                            @endcan
-                            @can('view_colors')
-                                <li class="aiz-side-nav-item">
-                                    <a href="{{route('colors')}}" class="aiz-side-nav-link {{ areActiveRoutes(['colors','colors.edit'])}}">
-                                        <span class="aiz-side-nav-text">{{translate('Colors')}}</span>
-                                    </a>
-                                </li>
-                            @endcan
-                            @canany(['view_size_charts', 'view_measurement_points'])
-                                <li class="aiz-side-nav-item">
-                                    <a href="javascript:void(0);" class="aiz-side-nav-link">
-                                        <span class="aiz-side-nav-text">{{translate('Size Guide')}}</span>
-                                        <span class="aiz-side-nav-arrow"></span>
-                                    </a>
-                                    <ul class="aiz-side-nav-list level-3">
-                                        @can('view_size_charts')
-                                        <li class="aiz-side-nav-item">
-                                            <a href="{{ route('size-charts.index') }}" class="aiz-side-nav-link {{ areActiveRoutes(['size-charts.index', 'size-charts.create', 'size-charts.edit'])}}">
-                                                <span class="aiz-side-nav-text">{{translate('Size Chart')}}</span>
-                                            </a>
-                                        </li>
-                                        @endcan
-                                        @can('view_measurement_points')
-                                        <li class="aiz-side-nav-item">
-                                            <a href="{{ route('measurement-points.index') }}" class="aiz-side-nav-link">
-                                                <span class="aiz-side-nav-text">{{translate('Measurement Points')}}</span>
-                                            </a>
-                                        </li>
-                                        @endcan
-                                    </ul>
-                                </li>
-                            @endcan
-                            @can('view_product_warranties')
-                                <li class="aiz-side-nav-item">
-                                    <a href="{{route('warranties.index')}}" class="aiz-side-nav-link {{ areActiveRoutes(['warranties.edit'])}}">
-                                        <span class="aiz-side-nav-text">{{translate('Warranty')}}</span>
-                                    </a>
-                                </li>
-                            @endcan
-                            
-                            @can('view_product_reviews')
-                                <li class="aiz-side-nav-item">
-                                    <a href="{{route('reviews.index')}}" class="aiz-side-nav-link {{ areActiveRoutes(['detail-reviews', 'custom-review.edit']) }}">
-                                        <span class="aiz-side-nav-text">{{translate('Product Reviews')}}</span>
-                                    </a>
-                                </li>
-                            @endcan
-                        </ul>
-                    </li>
-                @endcanany
+                
 
                 <!-- Note  -->
                 @canany(['view_notes', 'add_note'])
@@ -416,6 +231,59 @@
                                         </li>
                                     @endcan
                                 @endif
+                                @can('view_product_categories')
+                                    <li class="aiz-side-nav-item">
+                                        <a href="{{route('categories.index')}}" class="aiz-side-nav-link {{ areActiveRoutes(['categories.index', 'categories.create', 'categories.edit'])}}">
+                                            <span class="aiz-side-nav-text">{{translate('Category')}}</span>
+                                        </a>
+                                    </li>
+                                @endcan
+                                @can('set_category_wise_discount')
+                                    <li class="aiz-side-nav-item">
+                                        <a href="{{route('categories_wise_product_discount')}}" class="aiz-side-nav-link">
+                                            <span class="aiz-side-nav-text">{{translate('Category Based Discount')}}</span>
+                                        </a>
+                                    </li>
+                                @endcan
+                                @canany(['view_all_brands', 'brand_bulk_upload'])
+                                    <li class="aiz-side-nav-item">
+                                        <a href="javascript:void(0);" class="aiz-side-nav-link">
+                                            <span class="aiz-side-nav-text">{{translate('Brand')}}</span>
+                                            <span class="aiz-side-nav-arrow"></span>
+                                        </a>
+                                        <ul class="aiz-side-nav-list level-3">
+                                            @can('view_all_brands')
+                                                <li class="aiz-side-nav-item">
+                                                    <a href="{{ route('brands.index') }}" class="aiz-side-nav-link {{ areActiveRoutes(['brands.index', 'brands.create', 'brands.edit'])}}">
+                                                        <span class="aiz-side-nav-text">{{translate('All Brands')}}</span>
+                                                    </a>
+                                                </li>
+                                            @endcan
+                                            @can('brand_bulk_upload')
+                                                <li class="aiz-side-nav-item">
+                                                    <a href="{{ route('brand_bulk_upload.index') }}" class="aiz-side-nav-link">
+                                                        <span class="aiz-side-nav-text">{{translate('Brand Bulk Import')}}</span>
+                                                    </a>
+                                                </li>
+                                            @endcan
+                                        </ul>
+                                    </li>
+                                @endcan
+                                @can('view_product_warranties')
+                                    <li class="aiz-side-nav-item">
+                                        <a href="{{route('warranties.index')}}" class="aiz-side-nav-link {{ areActiveRoutes(['warranties.edit'])}}">
+                                            <span class="aiz-side-nav-text">{{translate('Warranty')}}</span>
+                                        </a>
+                                    </li>
+                                @endcan
+                                
+                                @can('view_product_reviews')
+                                    <li class="aiz-side-nav-item">
+                                        <a href="{{route('reviews.index')}}" class="aiz-side-nav-link {{ areActiveRoutes(['detail-reviews', 'custom-review.edit']) }}">
+                                            <span class="aiz-side-nav-text">{{translate('Product Reviews')}}</span>
+                                        </a>
+                                    </li>
+                                @endcan
                             </ul>
                         </li>
                     @endcanany

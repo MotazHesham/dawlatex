@@ -89,7 +89,7 @@
 
                         <div class="dropdown-menu dropdown-menu-left dropdown-menu-animated dropdown-menu-md" style="top: 15px !important;">
                             @can('add_new_product')
-                                <a href="{{ route('products.create') }}" class="dropdown-item">
+                                <a href="{{ route('wholesale_product_create.admin') }}" class="dropdown-item">
                                     <i class="las la-plus"></i>
                                     <span>{{ translate('New Product') }}</span>
                                 </a>
