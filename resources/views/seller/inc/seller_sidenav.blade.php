@@ -28,80 +28,25 @@
                         <span class="aiz-side-nav-text">{{ translate('Dashboard') }}</span>
                     </a>
                 </li>
+                {{-- Wholesale Products --}}
+                @if (addon_is_activated('wholesale') && get_setting('seller_wholesale_product') == 1)
+                    <li class="aiz-side-nav-item">
+                        <a href="{{ route('seller.wholesale_products_list') }}"
+                            class="aiz-side-nav-link {{ areActiveRoutes(['wholesale_product_create.seller', 'wholesale_product_edit.seller']) }}">
+                            <i class="las la-luggage-cart aiz-side-nav-icon"></i>
+                            <span class="aiz-side-nav-text">{{ translate('Wholesale Products') }}</span>
+                        </a>
+                    </li>
+                @endif
 
-                {{-- Products --}}
+
+                {{-- Orders --}}
                 <li class="aiz-side-nav-item">
-                    <a href="#" class="aiz-side-nav-link">
-                        <i class="las la-shopping-cart aiz-side-nav-icon"></i>
-                        <span class="aiz-side-nav-text">{{ translate('Products') }}</span>
-                        <span class="aiz-side-nav-arrow"></span>
+                    <a href="{{ route('seller.orders.index') }}"
+                        class="aiz-side-nav-link {{ areActiveRoutes(['seller.orders.index', 'seller.orders.show']) }}">
+                        <i class="las la-money-bill aiz-side-nav-icon"></i>
+                        <span class="aiz-side-nav-text">{{ translate('Orders') }}</span>
                     </a>
-                    <!--Submenu-->
-                    <ul class="aiz-side-nav-list level-2">
-                        <li class="aiz-side-nav-item">
-                            <a href="{{ route('seller.products') }}"
-                                class="aiz-side-nav-link {{ areActiveRoutes(['seller.products', 'seller.products.create', 'seller.products.edit']) }}">
-                                <span class="aiz-side-nav-text">{{ translate('Products') }}</span>
-                            </a>
-                        </li>
-
-                        {{-- <li class="aiz-side-nav-item">
-                            <a href="{{ route('seller.categories_wise_product_discount') }}"
-                                class="aiz-side-nav-link">
-                                <span class="aiz-side-nav-text">{{ translate('Category-Wise Discount') }}</span>
-                            </a>
-                        </li> --}}
-
-                        {{-- <li class="aiz-side-nav-item">
-                            <a href="{{ route('seller.product_bulk_upload.index') }}"
-                                class="aiz-side-nav-link {{ areActiveRoutes(['product_bulk_upload.index']) }}">
-                                <span class="aiz-side-nav-text">{{ translate('Product Bulk Upload') }}</span>
-                            </a>
-                        </li> --}}
-                        
-                        @if(get_setting('active_digital_product') == 1)
-                            <li class="aiz-side-nav-item">
-                                <a href="{{ route('seller.digitalproducts') }}"
-                                    class="aiz-side-nav-link {{ areActiveRoutes(['seller.digitalproducts', 'seller.digitalproducts.create', 'seller.digitalproducts.edit']) }}">
-                                    <span class="aiz-side-nav-text">{{ translate('Digital Products') }}</span>
-                                </a>
-                            </li>
-                        @endif
-                        <li class="aiz-side-nav-item">
-                            <a href="{{ route('seller.product-reviews') }}"
-                                class="aiz-side-nav-link {{ areActiveRoutes(['seller.product-reviews', 'seller.detail-reviews']) }}">
-                                <span class="aiz-side-nav-text">{{ translate('Product Reviews') }}</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-                {{-- Note --}}
-                <li class="aiz-side-nav-item">
-                    <a href="#" class="aiz-side-nav-link">
-                        <div class="aiz-side-nav-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="16.001" viewBox="0 0 16 16.001">
-                                <path id="Union_64" data-name="Union 64" d="M.333,16A.315.315,0,0,1,0,15.668V.335A.315.315,0,0,1,.333,0h9.31a.285.285,0,0,1,.123.014A.318.318,0,0,1,9.9.1l2.667,2.667.009.01a.293.293,0,0,1,.079.132.274.274,0,0,1,.012.112V5.835l1.267-1.267a.322.322,0,0,1,.466,0l1.5,1.5a.322.322,0,0,1,0,.466L12.667,9.768v5.9a.315.315,0,0,1-.333.333Zm.334-.666H12v-4.9L9.133,13.3a.3.3,0,0,1-.233.1H8.882L6.4,14.468a.2.2,0,0,1-.133.033.332.332,0,0,1-.3-.466l.589-1.368H2.667a.333.333,0,0,1,0-.667H6.843l.258-.6a.321.321,0,0,1,.176-.177L8.5,10H2.667a.333.333,0,0,1,0-.667h6.5L12,6.5V3.335H9.667A.315.315,0,0,1,9.333,3V.668H.667Zm6.233-1.8,1.4-.6-.8-.8-.1.239a.323.323,0,0,1-.074.172Zm2-.967,6.3-6.3-.283-.283-6.3,6.3ZM7.867,11.534l.284.284,6.3-6.3-.283-.283L12.624,6.777a.291.291,0,0,1-.115.115L9.558,9.844a.291.291,0,0,1-.115.115ZM10,2.668h1.533L10.767,1.9,10,1.135ZM2.667,7.335a.333.333,0,0,1,0-.667H10a.333.333,0,1,1,0,.667Zm0-2.668a.333.333,0,1,1,0-.666H10a.333.333,0,1,1,0,.666Z" fill="#575b6a"/>
-                            </svg>
-                        </div>
-                        <span class="aiz-side-nav-text">{{translate('Notes')}}</span>
-                        <span class="aiz-side-nav-arrow"></span>
-                    </a>
-                    <!--Submenu-->
-                    <ul class="aiz-side-nav-list level-2">
-                        @if(get_setting('seller_can_add_note'))
-                            <li class="aiz-side-nav-item">
-                                <a class="aiz-side-nav-link" href="{{route('seller.note.create')}}">
-                                    <span class="aiz-side-nav-text">{{translate('Add New Note')}}</span>
-                                </a>
-                            </li>
-                        @endif
-                        <li class="aiz-side-nav-item">
-                            <a href="{{route('seller.note.index')}}" class="aiz-side-nav-link {{ areActiveRoutes(['seller.note.edit']) }}">
-                                <span class="aiz-side-nav-text">{{translate('Note List')}}</span>
-                            </a>
-                        </li>
-                    </ul>
                 </li>
 
                 {{-- Uploaded Files --}}
@@ -137,27 +82,6 @@
                     </li>
                 @endif
 
-                {{-- Coupon --}}
-                @if (get_setting('coupon_system') == 1)
-                    <li class="aiz-side-nav-item">
-                        <a href="{{ route('seller.coupon.index') }}"
-                            class="aiz-side-nav-link {{ areActiveRoutes(['seller.coupon.index', 'seller.coupon.create', 'seller.coupon.edit']) }}">
-                            <i class="las la-bullhorn aiz-side-nav-icon"></i>
-                            <span class="aiz-side-nav-text">{{ translate('Coupon') }}</span>
-                        </a>
-                    </li>
-                @endif
-
-                {{-- Wholesale Products --}}
-                @if (addon_is_activated('wholesale') && get_setting('seller_wholesale_product') == 1)
-                    <li class="aiz-side-nav-item">
-                        <a href="{{ route('seller.wholesale_products_list') }}"
-                            class="aiz-side-nav-link {{ areActiveRoutes(['wholesale_product_create.seller', 'wholesale_product_edit.seller']) }}">
-                            <i class="las la-luggage-cart aiz-side-nav-icon"></i>
-                            <span class="aiz-side-nav-text">{{ translate('Wholesale Products') }}</span>
-                        </a>
-                    </li>
-                @endif
 
                 {{-- Auction --}}
                 @if (addon_is_activated('auction') && get_setting('seller_auction_product') == 1)
@@ -214,14 +138,6 @@
                     </li>
                 @endif
 
-                {{-- Orders --}}
-                <li class="aiz-side-nav-item">
-                    <a href="{{ route('seller.orders.index') }}"
-                        class="aiz-side-nav-link {{ areActiveRoutes(['seller.orders.index', 'seller.orders.show']) }}">
-                        <i class="las la-money-bill aiz-side-nav-icon"></i>
-                        <span class="aiz-side-nav-text">{{ translate('Orders') }}</span>
-                    </a>
-                </li>
 
                 {{-- Refund Request --}}
                 @if (addon_is_activated('refund_request'))
@@ -229,7 +145,7 @@
                         <a href="{{ route('seller.vendor_refund_request') }}"
                             class="aiz-side-nav-link {{ areActiveRoutes(['seller.vendor_refund_request', 'seller.reason_show']) }}">
                             <i class="las la-backward aiz-side-nav-icon"></i>
-                            <span class="aiz-side-nav-text">{{ translate('Received Refund Request') }}</span>
+                            <span class="aiz-side-nav-text">{{ translate('Refund Requests') }}</span>
                         </a>
                     </li>
                 @endif
@@ -316,6 +232,91 @@
                         @endif
                     </a>
                 </li>
+
+                {{-- Note --}}
+                <li class="aiz-side-nav-item">
+                    <a href="#" class="aiz-side-nav-link">
+                        <div class="aiz-side-nav-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="16.001" viewBox="0 0 16 16.001">
+                                <path id="Union_64" data-name="Union 64" d="M.333,16A.315.315,0,0,1,0,15.668V.335A.315.315,0,0,1,.333,0h9.31a.285.285,0,0,1,.123.014A.318.318,0,0,1,9.9.1l2.667,2.667.009.01a.293.293,0,0,1,.079.132.274.274,0,0,1,.012.112V5.835l1.267-1.267a.322.322,0,0,1,.466,0l1.5,1.5a.322.322,0,0,1,0,.466L12.667,9.768v5.9a.315.315,0,0,1-.333.333Zm.334-.666H12v-4.9L9.133,13.3a.3.3,0,0,1-.233.1H8.882L6.4,14.468a.2.2,0,0,1-.133.033.332.332,0,0,1-.3-.466l.589-1.368H2.667a.333.333,0,0,1,0-.667H6.843l.258-.6a.321.321,0,0,1,.176-.177L8.5,10H2.667a.333.333,0,0,1,0-.667h6.5L12,6.5V3.335H9.667A.315.315,0,0,1,9.333,3V.668H.667Zm6.233-1.8,1.4-.6-.8-.8-.1.239a.323.323,0,0,1-.074.172Zm2-.967,6.3-6.3-.283-.283-6.3,6.3ZM7.867,11.534l.284.284,6.3-6.3-.283-.283L12.624,6.777a.291.291,0,0,1-.115.115L9.558,9.844a.291.291,0,0,1-.115.115ZM10,2.668h1.533L10.767,1.9,10,1.135ZM2.667,7.335a.333.333,0,0,1,0-.667H10a.333.333,0,1,1,0,.667Zm0-2.668a.333.333,0,1,1,0-.666H10a.333.333,0,1,1,0,.666Z" fill="#575b6a"/>
+                            </svg>
+                        </div>
+                        <span class="aiz-side-nav-text">{{translate('Notes')}}</span>
+                        <span class="aiz-side-nav-arrow"></span>
+                    </a>
+                    <!--Submenu-->
+                    <ul class="aiz-side-nav-list level-2">
+                        @if(get_setting('seller_can_add_note'))
+                            <li class="aiz-side-nav-item">
+                                <a class="aiz-side-nav-link" href="{{route('seller.note.create')}}">
+                                    <span class="aiz-side-nav-text">{{translate('Add New Note')}}</span>
+                                </a>
+                            </li>
+                        @endif
+                        <li class="aiz-side-nav-item">
+                            <a href="{{route('seller.note.index')}}" class="aiz-side-nav-link {{ areActiveRoutes(['seller.note.edit']) }}">
+                                <span class="aiz-side-nav-text">{{translate('Note List')}}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                {{-- Coupon --}}
+                @if (get_setting('coupon_system') == 1)
+                    <li class="aiz-side-nav-item">
+                        <a href="{{ route('seller.coupon.index') }}"
+                            class="aiz-side-nav-link {{ areActiveRoutes(['seller.coupon.index', 'seller.coupon.create', 'seller.coupon.edit']) }}">
+                            <i class="las la-bullhorn aiz-side-nav-icon"></i>
+                            <span class="aiz-side-nav-text">{{ translate('Coupon') }}</span>
+                        </a>
+                    </li>
+                @endif
+                {{-- Products --}}
+                {{-- <li class="aiz-side-nav-item"> --}}
+                    {{-- <a href="#" class="aiz-side-nav-link">
+                        <i class="las la-shopping-cart aiz-side-nav-icon"></i>
+                        <span class="aiz-side-nav-text">{{ translate('Products') }}</span>
+                        <span class="aiz-side-nav-arrow"></span>
+                    </a> --}}
+                    <!--Submenu-->
+                    {{-- <ul class="aiz-side-nav-list level-2"> --}}
+                        {{-- <li class="aiz-side-nav-item">
+                            <a href="{{ route('seller.products') }}"
+                                class="aiz-side-nav-link {{ areActiveRoutes(['seller.products', 'seller.products.create', 'seller.products.edit']) }}">
+                                <span class="aiz-side-nav-text">{{ translate('Products') }}</span>
+                            </a>
+                        </li> --}}
+
+                        {{-- <li class="aiz-side-nav-item">
+                            <a href="{{ route('seller.categories_wise_product_discount') }}"
+                                class="aiz-side-nav-link">
+                                <span class="aiz-side-nav-text">{{ translate('Category-Wise Discount') }}</span>
+                            </a>
+                        </li> --}}
+
+                        {{-- <li class="aiz-side-nav-item">
+                            <a href="{{ route('seller.product_bulk_upload.index') }}"
+                                class="aiz-side-nav-link {{ areActiveRoutes(['product_bulk_upload.index']) }}">
+                                <span class="aiz-side-nav-text">{{ translate('Product Bulk Upload') }}</span>
+                            </a>
+                        </li> --}}
+                        
+                        @if(get_setting('active_digital_product') == 1)
+                            {{-- <li class="aiz-side-nav-item">
+                                <a href="{{ route('seller.digitalproducts') }}"
+                                    class="aiz-side-nav-link {{ areActiveRoutes(['seller.digitalproducts', 'seller.digitalproducts.create', 'seller.digitalproducts.edit']) }}">
+                                    <span class="aiz-side-nav-text">{{ translate('Digital Products') }}</span>
+                                </a>
+                            </li> --}}
+                        @endif
+                        {{-- <li class="aiz-side-nav-item">
+                            <a href="{{ route('seller.product-reviews') }}"
+                                class="aiz-side-nav-link {{ areActiveRoutes(['seller.product-reviews', 'seller.detail-reviews']) }}">
+                                <span class="aiz-side-nav-text">{{ translate('Product Reviews') }}</span>
+                            </a>
+                        </li> --}}
+                    {{-- </ul> --}}
+                {{-- </li> --}}
 
             </ul><!-- .aiz-side-nav -->
         </div><!-- .aiz-side-nav-wrap -->

@@ -326,7 +326,7 @@ class WholesaleProductController extends Controller
     }
 
     public function product_update_seller(WholesaleProductRequest $request, $id)
-    {
+    { 
         (new WholesaleService)->update($request, $id);
         flash(translate('Product has been updated successfully'))->success();
 

@@ -42,11 +42,11 @@ class AuctionProductController extends Controller
 
     public function user_purchase_history(Request $request)
     {
-        $orders = DB::table('orders')
-            ->whereNull('deleted_at')
+        $orders = DB::table('orders') 
             ->orderBy('code', 'desc')
             ->join('order_details', 'orders.id', '=', 'order_details.order_id')
             ->join('products', 'order_details.product_id', '=', 'products.id')
+            ->whereNull('orders.deleted_at')
             ->where('orders.user_id', auth()->user()->id)
             ->where('products.auction_product', '1');
         if ($request->payment_status != "" || $request->payment_status != null) {

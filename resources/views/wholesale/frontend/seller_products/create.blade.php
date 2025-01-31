@@ -88,12 +88,12 @@
                             </div>
     
                             @if (addon_is_activated('pos_system'))
-                            <div class="form-group row">
+                            {{-- <div class="form-group row">
                                 <label class="col-md-3 col-from-label">{{translate('Barcode')}}</label>
                                 <div class="col-md-8">
                                     <input type="text" class="form-control" name="barcode" placeholder="{{ translate('Barcode') }}">
                                 </div>
-                            </div>
+                            </div> --}}
                             @endif
                         </div>
                     </div>
@@ -103,7 +103,11 @@
                         </div>
                         <div class="card-body">
                             <div class="form-group row">
-                                <label class="col-md-3 col-form-label" for="signinSrEmail">{{translate('Gallery Images')}} <small>(600x600)</small></label>
+                                <label class="col-md-3 col-form-label" for="signinSrEmail">
+                                    {{translate('Gallery Images')}} <small>(600x600)</small> 
+                                    <br>
+                                    <small class="text-muted">صور عامة عن المنتج بدون اضافة لوجو واسم الشركة في حاله المنتج المحلي</small>
+                                </label>
                                 <div class="col-md-8">
                                     <div class="input-group" data-toggle="aizuploader" data-type="image" data-multiple="true">
                                         <div class="input-group-prepend">
@@ -118,7 +122,9 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-md-3 col-form-label" for="signinSrEmail">{{translate('Thumbnail Image')}} <small>(300x300)</small></label>
+                                <label class="col-md-3 col-form-label" for="signinSrEmail">{{translate('Thumbnail Image')}} <small>(300x300)</small>
+                                    <br>
+                                    <small class="text-muted">صور عامة عن المنتج بدون اضافة لوجو واسم الشركة في حاله المنتج المحلي</small></label>
                                 <div class="col-md-8">
                                     <div class="input-group" data-toggle="aizuploader" data-type="image">
                                         <div class="input-group-prepend">
@@ -308,8 +314,9 @@
                                             <div class="input-group-text bg-soft-secondary font-weight-medium">{{ translate('Browse')}}</div>
                                         </div>
                                         <div class="form-control file-amount">{{ translate('Choose File') }}</div>
-                                        <input type="hidden" name="meta_img" class="selected-files">
+                                        <input type="hidden" name="meta_img" class="selected-files">  
                                     </div>
+                                    <small class="text-muted">صور عامة عن المنتج بدون اضافة لوجو واسم الشركة في حاله المنتج المحلي</small>
                                     <div class="file-preview box sm">
                                     </div>
                                 </div>
@@ -516,7 +523,7 @@
                         </div>
                     @endif
     
-                    <div class="card">
+                    {{-- <div class="card">
                         <div class="card-header">
                             <h5 class="mb-0 h6">
                                 {{translate('Shipping Configuration')}}
@@ -572,7 +579,7 @@
                             </p>
                             @endif
                         </div>
-                    </div>
+                    </div> --}}
     
                     <div class="card">
                         <div class="card-header">
@@ -588,7 +595,7 @@
                         </div>
                     </div>
     
-                    <div class="card">
+                    {{-- <div class="card">
                         <div class="card-header">
                             <h5 class="mb-0 h6">
                                 {{translate('Stock Visibility State')}}
@@ -628,9 +635,11 @@
                             </div>
     
                         </div>
-                    </div>
-    
-                    <div class="card">
+                    </div> --}}
+                    
+
+                    <input type="hidden" name="cash_on_delivery" value="1" id="">
+                    {{-- <div class="card">
                         <div class="card-header">
                             <h5 class="mb-0 h6">{{translate('Cash On Delivery')}}</h5>
                         </div>
@@ -654,9 +663,9 @@
                                 </p>
                             @endif
                         </div>
-                    </div>
+                    </div> --}}
     
-                    <div class="card">
+                    {{-- <div class="card">
                         <div class="card-header">
                             <h5 class="mb-0 h6">{{translate('Estimate Shipping Time')}}</h5>
                         </div>
@@ -673,7 +682,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
     
                     <div class="card">
                         <div class="card-header">
@@ -692,8 +701,8 @@
                                 </div>
                                 <div class="form-group col-md-6">
                                     <select class="form-control aiz-selectpicker" name="tax_type[]">
-                                        <option value="amount">{{translate('Flat')}}</option>
-                                        <option value="percent">{{translate('Percent')}}</option>
+                                        <option value="amount">{{translate('Flat')}} (ج.م)</option>
+                                        {{-- <option value="percent">{{translate('Percent')}}</option> --}}
                                     </select>
                                 </div>
                             </div>

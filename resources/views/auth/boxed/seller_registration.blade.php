@@ -53,6 +53,21 @@
                                                     @endif
                                                 </div>
 
+                                                <div class="form-group">
+                                                    <label>{{ translate('Client Identity')}}</label>
+                                                    <select name="client_identity" id="client_identity" class="form-control rounded-0" required>
+                                                        <option value >أختر الهوية</option>
+                                                        <option value="مصنع">مصنع</option>
+                                                        <option value="تاجر">تاجر</option>
+                                                        <option value="وسيط">وسيط</option>
+                                                    </select>
+                                                    @if ($errors->has('client_identity'))
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $errors->first('client_identity') }}</strong>
+                                                        </span>
+                                                    @endif
+                                                </div>
+
                                                 <!-- password -->
                                                 <div class="form-group mb-0">
                                                     <label for="password" class="fs-12 fw-700 text-soft-dark">{{  translate('Password') }}</label>
@@ -112,6 +127,14 @@
                                                     @endif
                                                 </div>
 
+                                                <!-- Terms and Conditions -->
+                                                <div class="mb-3">
+                                                    <label class="aiz-checkbox">
+                                                        <input type="checkbox" name="checkbox_example_1" required>
+                                                        <span class="">{{ translate('By signing up you agree to our ')}} <a href="{{ route('sellerpolicy') }}" class="fw-500">{{ translate('terms and conditions.') }}</a></span>
+                                                        <span class="aiz-square-check"></span>
+                                                    </label>
+                                                </div>
                                                 <!-- Recaptcha -->
                                                 @if(get_setting('google_recaptcha') == 1)
                                                     <div class="form-group">

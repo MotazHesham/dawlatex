@@ -83,7 +83,7 @@
                 </li>
 
                 <!-- Downloads -->
-                <li class="aiz-side-nav-item">
+                {{-- <li class="aiz-side-nav-item">
                     <a href="{{ route('digital_purchase_history.index') }}"
                         class="aiz-side-nav-link {{ areActiveRoutes(['digital_purchase_history.index']) }}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16.001" height="16" viewBox="0 0 16.001 16">
@@ -94,7 +94,7 @@
                         </svg>
                         <span class="aiz-side-nav-text ml-3">{{ translate('Downloads') }}</span>
                     </a>
-                </li>
+                </li> --}}
 
                 <!-- Refund Requests -->
                 @if (addon_is_activated('refund_request'))

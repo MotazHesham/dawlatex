@@ -34,6 +34,17 @@
                         <input type="password" placeholder="{{translate('Password')}}" id="password" name="password" class="form-control">
                     </div>
                 </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-from-label" for="client_identity">{{ translate('Client Identity')}}</label>
+                    <div class="col-sm-9">
+                        <select name="client_identity" id="client_identity" class="form-control rounded-0" required>
+                            <option value >أختر الهوية</option>
+                            <option value="مصنع" @if($shop->user->client_identity == 'مصنع') selected @endif>مصنع</option>
+                            <option value="تاجر" @if($shop->user->client_identity == 'تاجر') selected @endif>تاجر</option>
+                            <option value="وسيط" @if($shop->user->client_identity == 'وسيط') selected @endif>وسيط</option>
+                        </select> 
+                    </div>
+                </div>
                 <div class="form-group mb-0 text-right">
                     <button type="submit" class="btn btn-primary">{{translate('Save')}}</button>
                 </div>

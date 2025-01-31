@@ -48,6 +48,7 @@ class WholesaleProductRequest extends FormRequest
             'approved'          => $approved,
             'wholesale_product' => 1,
             'added_by'          => $added_by,
+            'purchase_price'    => $this->unit_price,
             'shipping_cost'     => $shipping_cost,
             'published'         => ($this->button == 'unpublish') ? 0 : 1,
         ]);
@@ -63,7 +64,9 @@ class WholesaleProductRequest extends FormRequest
         $rules = [];
 
         $rules['name']                = 'required|max:255';
-        $rules['slug']                = ['required', 'max:255', Rule::unique('products')->ignore($this->id)];
+        if($this->has('id')){ // on update
+            $rules['slug']                = ['required', 'max:255', Rule::unique('products')->ignore($this->id)];
+        }
         
         if(get_setting('category_in_sequance') == 1){ 
             $rules['category_ids']        = 'required';

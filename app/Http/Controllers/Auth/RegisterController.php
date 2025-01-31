@@ -77,6 +77,7 @@ class RegisterController extends Controller
         if (filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
             $user = User::create([
                 'name' => $data['name'],
+                'client_identity' => $data['client_identity'],
                 'email' => $data['email'],
                 'password' => Hash::make($data['password']),
             ]);
@@ -85,6 +86,7 @@ class RegisterController extends Controller
             if (addon_is_activated('otp_system')){
                 $user = User::create([
                     'name' => $data['name'],
+                    'client_identity' => $data['client_identity'],
                     'phone' => '+'.$data['country_code'].$data['phone'],
                     'password' => Hash::make($data['password']),
                     'verification_code' => rand(100000, 999999)

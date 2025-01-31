@@ -62,6 +62,7 @@
                         </th>
                         <th>{{translate('Name')}}</th>
                         <th data-breakpoints="lg">{{translate('Email Address')}}</th>
+                        <th data-breakpoints="lg">{{translate('Client Identity')}}</th>
                         <th data-breakpoints="lg">{{translate('Phone')}}</th>
                         <th data-breakpoints="lg">{{translate('Package')}}</th>
                         <th data-breakpoints="lg">{{translate('Wallet Balance')}}</th>
@@ -86,6 +87,7 @@
                                 </td>
                                 <td>@if($user->banned == 1) <i class="fa fa-ban text-danger" aria-hidden="true"></i> @endif {{$user->name}}</td>
                                 <td>{{$user->email}}</td>
+                                <td>{{$user->client_identity}}</td>
                                 <td>{{$user->phone}}</td>
                                 <td>
                                     @if ($user->customer_package != null)

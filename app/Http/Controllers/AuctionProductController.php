@@ -304,11 +304,11 @@ class AuctionProductController extends Controller
     public function purchase_history_user()
     {
         $orders = DB::table('orders')
-            ->whereNull('deleted_at')
             ->orderBy('code', 'desc')
             ->join('order_details', 'orders.id', '=', 'order_details.order_id')
             ->join('products', 'order_details.product_id', '=', 'products.id')
             ->where('orders.user_id', Auth::user()->id)
+            ->whereNull('orders.deleted_at')
             ->where('products.auction_product', '1')
             ->select('order_details.order_id as id')
             ->paginate(15);
@@ -322,11 +322,11 @@ class AuctionProductController extends Controller
         $sort_search = null;
         $date = $request->date;
         $orders = DB::table('orders')
-            ->whereNull('deleted_at')
             ->orderBy('code', 'desc')
             ->join('order_details', 'orders.id', '=', 'order_details.order_id')
             ->join('products', 'order_details.product_id', '=', 'products.id')
             ->where('products.auction_product', '1')
+            ->whereNull('orders.deleted_at')
             ->select('orders.id');
 
         if ($request->payment_status != null) {
@@ -373,12 +373,12 @@ class AuctionProductController extends Controller
         $payment_status = null;
         $delivery_status = null;
         $sort_search = null;
-        $orders = DB::table('orders')
-            ->whereNull('deleted_at')
+        $orders = DB::table('orders') 
             ->orderBy('code', 'desc')
             ->where('orders.seller_id', Auth::user()->id)
             ->join('order_details', 'orders.id', '=', 'order_details.order_id')
             ->join('products', 'order_details.product_id', '=', 'products.id')
+            ->whereNull('orders.deleted_at')
             ->where('products.auction_product', '1')
             ->select('orders.id');
 

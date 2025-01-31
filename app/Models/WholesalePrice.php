@@ -10,4 +10,9 @@ class WholesalePrice extends Model
 {
     use HasFactory, PreventDemoModeChanges;
 
+    protected $fillable  = [
+        'product_stock_id',
+        'min_qty',
+        'max_qty',
+    ];
 }

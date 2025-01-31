@@ -84,6 +84,7 @@
                     <th>{{translate('Name')}}</th>
                     <th data-breakpoints="lg">{{translate('Phone')}}</th>
                     <th data-breakpoints="lg">{{translate('Email Address')}}</th>
+                    <th data-breakpoints="lg">{{translate('Client Identity')}}</th>
                     @if($route == 'all_seller_route')
                         <th data-breakpoints="lg">{{translate('Verification Info')}}</th>
                         <th data-breakpoints="lg">{{translate('Approval')}}</th>
@@ -131,6 +132,7 @@
                         </td>
                         <td>{{$shop->user->phone}}</td>
                         <td>{{$shop->user->email}}</td>
+                        <td>{{$shop->user->client_identity}}</td>
                         @if($route == 'all_seller_route')
                             <td>
                                 @if ($shop->verification_status != 1 && $shop->verification_info != null)

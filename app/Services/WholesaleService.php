@@ -9,6 +9,7 @@ use App\Models\Product;
 use App\Models\WholesalePrice;
 use App\Models\Wishlist;
 use Illuminate\Http\Request;
+use Str;
 
 class WholesaleService
 {
@@ -39,6 +40,12 @@ class WholesaleService
         $collection['choice_options'] = json_encode($choice_options, JSON_UNESCAPED_UNICODE);
 
         $collection['has_warranty'] = isset($collection['has_warranty']) ? 1 : 0;
+        
+        $slug = Str::slug($collection['name']);
+        $same_slug_count = Product::where('slug', 'LIKE', $slug . '%')->count();
+        $slug_suffix = $same_slug_count ? '-' . $same_slug_count + 1 : '';
+        $slug .= $slug_suffix;
+        $collection['slug'] = $slug;
         
         if(get_setting('category_in_sequance') == 1){ 
             $collection['category_id'] = $data['category_ids'][0];
@@ -90,7 +97,7 @@ class WholesaleService
         $product->cash_on_delivery = 0;
         $product->featured = 0;
         $product->todays_deal = 0;
-        $product->is_quantity_multiplied = 0;
+        $product->is_quantity_multiplied = 0; 
         
         if($product->unit_price != $request->unit_price){
             $priceChanged = true; 
@@ -136,7 +143,7 @@ class WholesaleService
         $product->video_provider = $request->video_provider;
         $product->video_link     = $request->video_link;
         $product->purchase_price     = $request->purchase_price;
-        $product->unit_price     = $request->unit_price;
+        // $product->unit_price     = $request->unit_price;
         $product->discount       = $request->discount;
         $product->discount_type     = $request->discount_type;
         
@@ -208,7 +215,7 @@ class WholesaleService
         $product->choice_options = json_encode($choice_options, JSON_UNESCAPED_UNICODE);
 
         $product_stock              = $product->stocks->first();
-        $product_stock->price       = $request->unit_price;
+        // $product_stock->price       = $request->unit_price;
         $product_stock->purchase_price       = $request->purchase_price;
         $product_stock->sku         = $request->sku;
         $product_stock->qty         = $request->current_stock;
@@ -221,7 +228,9 @@ class WholesaleService
         $product->warranty_note_id = $request->warranty_note_id;
 
 
-        $existingWholesalePrices = $product->stocks->first()->wholesalePrices;
+        $existingWholesalePrices = $product->stocks->first()->wholesalePrices->keyBy(function ($item) {
+            return $item->min_qty . '-' . $item->max_qty;
+        });
         // Prepare the old and new arrays
         $oldData = [];
         $newData = [];
@@ -268,21 +277,43 @@ class WholesaleService
         
         $product->save();
 
-        foreach ($existingWholesalePrices as $key => $wholesalePrice) {
-            $wholesalePrice->delete();
-        }
+        // Track processed records
+        $processedKeys = [];
 
-        if($request->has('wholesale_price')){
-            foreach($request->wholesale_price as $key => $price){
-                $wholesale_price = new WholesalePrice;
-                $wholesale_price->product_stock_id = $product_stock->id;
-                $wholesale_price->min_qty = $request->wholesale_min_qty[$key];
-                $wholesale_price->max_qty = $request->wholesale_max_qty[$key];
-                $wholesale_price->price = $price;
-                $wholesale_price->purchase_price = $request->wholesale_purchase_price[$key];
-                $wholesale_price->save();
+        if ($request->has('wholesale_price')) {
+            foreach ($request->wholesale_price as $key => $price) {
+                $min_qty = $request->wholesale_min_qty[$key];
+                $max_qty = $request->wholesale_max_qty[$key];
+                $identifier = $min_qty . '-' . $max_qty;
+
+                // Try to find the existing record
+                $wholesalePrice = WholesalePrice::firstOrNew([
+                    'product_stock_id' => $product_stock->id,
+                    'min_qty' => $min_qty,
+                    'max_qty' => $max_qty,
+                ]);
+
+                if ($wholesalePrice->exists) {
+                    // If record exists, update only purchase_price
+                    $wholesalePrice->purchase_price = $price;
+                } else {
+                    // If new record, set price and purchase_price
+                    $wholesalePrice->price = $price;
+                    $wholesalePrice->purchase_price = $price;
+                }
+                $wholesalePrice->save();
+
+                $processedKeys[] = $identifier;
             }
         }
+
+        // Delete any existing records that were not updated
+        foreach ($existingWholesalePrices as $identifier => $wholesalePrice) {
+            if (!in_array($identifier, $processedKeys)) {
+                $wholesalePrice->delete();
+            }
+        }
+
         $request->merge(['product_id' => $product->id]);
         
 
