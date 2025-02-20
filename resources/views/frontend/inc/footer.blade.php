@@ -52,7 +52,7 @@
     <div class="container px-xs-0">
         <div class="row no-gutters border-left border-soft-light">
             <!-- Terms & conditions -->
-            <div class="col-lg-3 col-6 policy-file">
+            <div class="col-lg-4 col-6 policy-file">
                 <a class="text-reset h-100  border-right border-bottom border-soft-light text-center p-2 p-md-4 d-block hov-ls-1" href="{{ route('terms') }}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="26.004" height="32" viewBox="0 0 26.004 32">
                         <path id="Union_8" data-name="Union 8" d="M-14508,18932v-.01a6.01,6.01,0,0,1-5.975-5.492h-.021v-14h1v13.5h0a4.961,4.961,0,0,0,4.908,4.994h.091v0h14v1Zm17-4v-1a2,2,0,0,0,2-2h1a3,3,0,0,1-2.927,3Zm-16,0a3,3,0,0,1-3-3h1a2,2,0,0,0,2,2h16v1Zm18-3v-16.994h-4v-1h3.6l-5.6-5.6v3.6h-.01a2.01,2.01,0,0,0,2,2v1a3.009,3.009,0,0,1-3-3h.01v-4h.6l0,0H-14507a2,2,0,0,0-2,2v22h-1v-22a3,3,0,0,1,3-3v0h12l0,0,7,7-.01.01V18925Zm-16-4.992v-1h12v1Zm0-4.006v-1h12v1Zm0-4v-1h12v1Z" transform="translate(14513.998 -18900.002)" fill="#919199"/>
@@ -62,7 +62,7 @@
             </div>
 
             <!-- Return Policy -->
-            <div class="col-lg-3 col-6 policy-file">
+            <div class="col-lg-4 col-6 policy-file">
                 <a class="text-reset h-100  border-right border-bottom border-soft-light text-center p-2 p-md-4 d-block hov-ls-1" href="{{ route('returnpolicy') }}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="32.001" height="23.971" viewBox="0 0 32.001 23.971">
                         <path id="Union_7" data-name="Union 7" d="M-14490,18922.967a6.972,6.972,0,0,0,4.949-2.051,6.944,6.944,0,0,0,2.052-4.943,7.008,7.008,0,0,0-7-7v0h-22.1l7.295,7.295-.707.707-7.779-7.779-.708-.707.708-.7,7.774-7.779.712.707-7.261,7.258H-14490v0a8.01,8.01,0,0,1,8,8,8.008,8.008,0,0,1-8,8Z" transform="translate(14514.001 -18900)" fill="#919199"/>
@@ -72,7 +72,7 @@
             </div>
 
             <!-- Support Policy -->
-            <div class="col-lg-3 col-6 policy-file">
+            {{-- <div class="col-lg-3 col-6 policy-file">
                 <a class="text-reset h-100  border-right border-bottom border-soft-light text-center p-2 p-md-4 d-block hov-ls-1" href="{{ route('supportpolicy') }}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="32.002" height="32.002" viewBox="0 0 32.002 32.002">
                         <g id="Group_24198" data-name="Group 24198" transform="translate(-1113.999 -2398)">
@@ -86,10 +86,10 @@
                     </svg>
                     <h4 class="text-dark fs-14 fw-700 mt-3">{{ translate('Support Policy') }}</h4>
                 </a>
-            </div>
+            </div> --}}
 
             <!-- Privacy Policy -->
-            <div class="col-lg-3 col-6 policy-file">
+            <div class="col-lg-4 col-6 policy-file">
                 <a class="text-reset h-100 border-right border-bottom border-soft-light text-center p-2 p-md-4 d-block hov-ls-1" href="{{ route('privacypolicy') }}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
                         <g id="Group_24236" data-name="Group 24236" transform="translate(-1454.002 -2430.002)">
@@ -181,6 +181,12 @@
                             <li class="list-inline-item ml-2 mr-2">
                                 <a href="{{ get_setting('linkedin_link') }}" target="_blank"
                                     class="linkedin"><i class="lab la-linkedin-in"></i></a>
+                            </li>
+                        @endif
+                        @if (!empty(get_setting('whatsapp_link')))
+                            <li class="list-inline-item ml-2 mr-2" >
+                                <a href="{{ get_setting('whatsapp_link') }}" target="_blank"
+                                    class="whatsapp" style="background: green"><i class="lab la-whatsapp"></i></a>
                             </li>
                         @endif
                     </ul>

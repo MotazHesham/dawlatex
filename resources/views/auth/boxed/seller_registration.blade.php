@@ -55,7 +55,7 @@
 
                                                 <div class="form-group">
                                                     <label>{{ translate('Client Identity')}}</label>
-                                                    <select name="client_identity" id="client_identity" class="form-control rounded-0" required>
+                                                    <select name="client_identity" id="client_identity" class="form-control rounded-0" required onchange="changeClientIdentity(this)">
                                                         <option value >أختر الهوية</option>
                                                         <option value="مصنع">مصنع</option>
                                                         <option value="تاجر">تاجر</option>
@@ -97,7 +97,7 @@
 
                                                 <div class="fs-15 fw-600 py-2">{{ translate('Basic Info')}}</div>
                                                 
-                                                <div class="form-group">
+                                                <div class="form-group" id="shop_name_div">
                                                     <label for="shop_name" class="fs-12 fw-700 text-soft-dark">{{  translate('Shop Name') }}</label>
                                                     <input type="text" class="form-control rounded-0{{ $errors->has('shop_name') ? ' is-invalid' : '' }}" value="{{ old('shop_name') }}" placeholder="{{  translate('Shop Name') }}" name="shop_name" required>
                                                     @if ($errors->has('shop_name'))
@@ -200,5 +200,16 @@
             });
         });
         @endif
+
+        function changeClientIdentity(element){
+            var selectedValue = $(element).val();
+            if(selectedValue == 'وسيط'){
+                $('#shop_name_div').css('display','none');
+                $('#shop_name_div input').prop('required',false);
+            }else{
+                $('#shop_name_div').css('display','block');
+                $('#shop_name_div input').prop('required',true);
+            }
+        }
     </script>
 @endsection

@@ -317,6 +317,14 @@
                             <input type="hidden" name="types[]" value="linkedin_link">
                             <input type="text" class="form-control" placeholder="http://" name="linkedin_link" value="{{ get_setting('linkedin_link')}}">
                         </div>
+						<!-- Whatsapp Link -->
+                        <div class="input-group form-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="lab la-whatsapp"></i></span>
+                            </div>
+                            <input type="hidden" name="types[]" value="whatsapp_link">
+                            <input type="text" class="form-control" placeholder="http://" name="whatsapp_link" value="{{ get_setting('whatsapp_link')}}">
+                        </div>
                     </div>
                   </div>
                 </div>

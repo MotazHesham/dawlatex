@@ -44,9 +44,9 @@
                                 </div>
                             </div>
                             <div class="form-group row" id="brand">
-                                <label class="col-md-3 col-from-label">{{translate('Brand')}}</label>
+                                <label class="col-md-3 col-from-label">{{translate('Brand')}} <span class="text-danger">*</span></label>
                                 <div class="col-md-8">
-                                    <select class="form-control aiz-selectpicker" name="brand_id" id="brand_id" data-live-search="true">
+                                    <select class="form-control aiz-selectpicker" name="brand_id" id="brand_id" data-live-search="true" required>
                                         <option value="">{{ translate('Select Brand') }}</option>
                                         @foreach (get_all_brands() as $brand)
                                         <option value="{{ $brand->id }}">{{ $brand->getTranslation('name') }}</option>
@@ -73,6 +73,17 @@
                                     </div>
                                 </div>
                             @endif
+                            <div class="form-group row" id="filling">
+                                <label class="col-md-3 col-from-label">{{translate('Filling')}} <span class="text-danger">*</span></label>
+                                <div class="col-md-8">
+                                    <select class="form-control aiz-selectpicker" name="filling" id="filling" required>
+                                        <option value="">{{ translate('Select Filling Type') }}</option> 
+                                        <option value="شكاير">شكاير</option>
+                                        <option value="بلتات">بلتات</option>
+                                        <option value="كراتين">كراتين</option>
+                                    </select>
+                                </div>
+                            </div>
                             <div class="form-group row">
                                 <label class="col-md-3 col-from-label">{{translate('Minimum Purchase Qty')}} <span class="text-danger">*</span></label>
                                 <div class="col-md-8">
@@ -80,7 +91,7 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-md-3 col-from-label">{{translate('Tags')}} <span class="text-danger">*</span></label>
+                                <label class="col-md-3 col-from-label">{{translate('Tags')}} </label>
                                 <div class="col-md-8">
                                     <input type="text" class="form-control aiz-tag-input" name="tags[]" placeholder="{{ translate('Type and hit enter to add a tag') }}">
                                     <small class="text-muted">{{translate('This is used for search. Input those words by which cutomer can find this product.')}}</small>

@@ -48,7 +48,6 @@ class WholesaleProductRequest extends FormRequest
             'approved'          => $approved,
             'wholesale_product' => 1,
             'added_by'          => $added_by,
-            'purchase_price'    => $this->unit_price,
             'shipping_cost'     => $shipping_cost,
             'published'         => ($this->button == 'unpublish') ? 0 : 1,
         ]);

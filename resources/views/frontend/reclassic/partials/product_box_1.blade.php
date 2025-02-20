@@ -25,7 +25,7 @@
         @if ($product->wholesale_product)
             <span class="absolute-top-left fs-11 text-white fw-700 px-2 lh-1-8 ml-1 mt-1"
                 style="background-color: #455a64; @if (discount_in_percentage($product) > 0) top:25px; @endif">
-                {{ translate('Wholesale') }}
+                {{-- {{ translate('Wholesale') }} --}}
             </span>
         @endif
         @if ($product->auction_product == 0)

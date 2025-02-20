@@ -94,6 +94,7 @@ class WholesaleService
         }
         $product->brand_id          = $request->brand_id;
         $product->barcode           = $request->barcode;
+        $product->filling           = $request->filling;
         $product->cash_on_delivery = 0;
         $product->featured = 0;
         $product->todays_deal = 0;
@@ -142,8 +143,15 @@ class WholesaleService
 
         $product->video_provider = $request->video_provider;
         $product->video_link     = $request->video_link;
-        $product->purchase_price     = $request->purchase_price;
-        // $product->unit_price     = $request->unit_price;
+
+
+        if(auth()->user()->user_type == 'seller'){ 
+            $product->purchase_price     = $request->unit_price; 
+        }else{
+            $product->purchase_price     = $request->purchase_price; 
+            $product->unit_price     = $request->unit_price; 
+        }
+
         $product->discount       = $request->discount;
         $product->discount_type     = $request->discount_type;
         
@@ -215,8 +223,12 @@ class WholesaleService
         $product->choice_options = json_encode($choice_options, JSON_UNESCAPED_UNICODE);
 
         $product_stock              = $product->stocks->first();
-        // $product_stock->price       = $request->unit_price;
-        $product_stock->purchase_price       = $request->purchase_price;
+        if(auth()->user()->user_type == 'seller'){  
+            $product_stock->purchase_price       = $request->unit_price;
+        }else{
+            $product_stock->price       = $request->unit_price;
+            $product_stock->purchase_price       = $request->purchase_price;
+        }
         $product_stock->sku         = $request->sku;
         $product_stock->qty         = $request->current_stock;
         $product_stock->save();
@@ -293,13 +305,12 @@ class WholesaleService
                     'max_qty' => $max_qty,
                 ]);
 
-                if ($wholesalePrice->exists) {
-                    // If record exists, update only purchase_price
+                if(auth()->user()->user_type == 'seller'){   
                     $wholesalePrice->purchase_price = $price;
-                } else {
-                    // If new record, set price and purchase_price
+                }else{
+                    $purchase_price = $request->wholesale_purchase_price[$key];
                     $wholesalePrice->price = $price;
-                    $wholesalePrice->purchase_price = $price;
+                    $wholesalePrice->purchase_price = $purchase_price; 
                 }
                 $wholesalePrice->save();
 

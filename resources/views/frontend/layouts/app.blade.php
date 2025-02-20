@@ -72,7 +72,11 @@
     @endif
     <link rel="stylesheet" href="{{ static_asset('assets/css/aiz-core.css?v=') }}{{ rand(1000, 9999) }}">
     <link rel="stylesheet" href="{{ static_asset('assets/css/custom-style.css') }}">
-
+    <style>
+        body{
+            font-weight: bolder !important
+        }
+    </style>
 
     <script>
         var AIZ = AIZ || {};

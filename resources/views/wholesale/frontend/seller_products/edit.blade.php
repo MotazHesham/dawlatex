@@ -41,9 +41,9 @@
                             </div>
                         </div>
                         <div class="form-group row" id="brand">
-                            <label class="col-lg-3 col-from-label">{{translate('Brand')}}</label>
+                            <label class="col-lg-3 col-from-label">{{translate('Brand')}} <span class="text-danger">*</span></label>
                             <div class="col-lg-8">
-                                <select class="form-control aiz-selectpicker" name="brand_id" id="brand_id" data-live-search="true">
+                                <select class="form-control aiz-selectpicker" name="brand_id" id="brand_id" data-live-search="true" required>
                                     <option value="">{{ translate('Select Brand') }}</option>
                                     @foreach (get_all_brands() as $brand)
                                     <option value="{{ $brand->id }}" @if($product->brand_id == $brand->id) selected @endif>{{ $brand->getTranslation('name') }}</option>
@@ -70,6 +70,17 @@
                                 </div>
                             </div>
                         @endif
+                        <div class="form-group row" id="filling">
+                            <label class="col-md-3 col-from-label">{{translate('Filling')}} <span class="text-danger">*</span></label>
+                            <div class="col-md-8">
+                                <select class="form-control aiz-selectpicker" name="filling" id="filling" required>
+                                    <option value="">{{ translate('Select Filling Type') }}</option> 
+                                    <option value="شكاير" @if($product->filling == 'شكاير') selected @endif>شكاير</option>
+                                    <option value="بلتات" @if($product->filling == 'بلتات') selected @endif>بلتات</option>
+                                    <option value="كراتين" @if($product->filling == 'كراتين') selected @endif>كراتين</option>
+                                </select>
+                            </div>
+                        </div>
                         <div class="form-group row">
                             <label class="col-lg-3 col-from-label">{{translate('Minimum Purchase Qty')}}</label>
                             <div class="col-lg-8">
@@ -205,7 +216,7 @@
                                             </div>
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <input type="text" class="form-control" placeholder="{{ translate('Price per piece') }}" name="wholesale_price[]" value="{{ $wholesalePrice->price }}" required>
+                                                    <input type="text" class="form-control" placeholder="{{ translate('Price per piece') }}" name="wholesale_price[]" value="{{ $wholesalePrice->purchase_price }}" required>
                                                 </div>
                                             </div>
                                             <div class="col-auto">
