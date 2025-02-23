@@ -45,9 +45,9 @@
                                 </div>
                             </div>
                             <div class="form-group row" id="brand">
-                                <label class="col-md-3 col-from-label">{{translate('Brand')}} <span class="text-danger">*</span></label>
+                                <label class="col-md-3 col-from-label">{{translate('Brand')}} </label>
                                 <div class="col-md-8">
-                                    <select class="form-control aiz-selectpicker" name="brand_id" id="brand_id" data-live-search="true" required>
+                                    <select class="form-control aiz-selectpicker" name="brand_id" id="brand_id" data-live-search="true">
                                         <option value="">{{ translate('Select Brand') }}</option>
                                         @foreach (get_all_brands() as $brand)
                                         <option value="{{ $brand->id }}">{{ $brand->getTranslation('name') }}</option>

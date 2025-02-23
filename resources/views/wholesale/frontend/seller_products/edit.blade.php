@@ -41,9 +41,9 @@
                             </div>
                         </div>
                         <div class="form-group row" id="brand">
-                            <label class="col-lg-3 col-from-label">{{translate('Brand')}} <span class="text-danger">*</span></label>
+                            <label class="col-lg-3 col-from-label">{{translate('Brand')}} </label>
                             <div class="col-lg-8">
-                                <select class="form-control aiz-selectpicker" name="brand_id" id="brand_id" data-live-search="true" required>
+                                <select class="form-control aiz-selectpicker" name="brand_id" id="brand_id" data-live-search="true">
                                     <option value="">{{ translate('Select Brand') }}</option>
                                     @foreach (get_all_brands() as $brand)
                                     <option value="{{ $brand->id }}" @if($product->brand_id == $brand->id) selected @endif>{{ $brand->getTranslation('name') }}</option>
@@ -81,7 +81,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group row">
+                        <div class="form-group row" style="display: none">
                             <label class="col-lg-3 col-from-label">{{translate('Minimum Purchase Qty')}}</label>
                             <div class="col-lg-8">
                                 <input type="number" lang="en" class="form-control" name="min_qty" value="@if($product->min_qty <= 1){{1}}@else{{$product->min_qty}}@endif" min="1" required>
@@ -144,7 +144,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card">
+                {{-- <div class="card">
                     <div class="card-header">
                         <h5 class="mb-0 h6">{{translate('Product Videos')}}</h5>
                     </div>
@@ -166,7 +166,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
                 <div class="card">
                     <div class="card-header">
                         <h5 class="mb-0 h6">{{translate('Product price + stock')}}</h5>
@@ -274,7 +274,7 @@
                     </div>
                 </div>
 
-                <div class="card">
+                {{-- <div class="card">
                     <div class="card-header">
                         <h5 class="mb-0 h6">{{translate('PDF Specification')}}</h5>
                     </div>
@@ -294,7 +294,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
                 <div class="card">
                     <div class="card-header">
                         <h5 class="mb-0 h6">{{translate('SEO Meta Tags')}}</h5>
@@ -381,7 +381,7 @@
                 @endif
 
                 {{-- Warranty --}}
-                <div class="card">
+                {{-- <div class="card">
                     <div class="card-header">
                         <h5 class="mb-0 h6">{{ translate('Warranty') }}</h5>
                     </div>
@@ -434,7 +434,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
                 {{-- Frequently Bought Products --}}
                 <div class="card">

@@ -122,6 +122,7 @@
                         <td>
                             <strong>{{translate('Num of Sale')}}:</strong> {{ $product->num_of_sale }} {{translate('times')}} </br>
                             <strong>{{translate('Base Price')}}:</strong> {{ single_price($product->unit_price) }} </br>
+                            <strong>{{translate('Seller Price')}}:</strong> {{ single_price($product->purchase) }} </br>
                             <strong>{{translate('Rating')}}:</strong> {{ $product->rating }} </br>
                         </td>
                         <td>

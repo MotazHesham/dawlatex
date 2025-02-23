@@ -44,9 +44,9 @@
                                 </div>
                             </div>
                             <div class="form-group row" id="brand">
-                                <label class="col-md-3 col-from-label">{{translate('Brand')}} <span class="text-danger">*</span></label>
+                                <label class="col-md-3 col-from-label">{{translate('Brand')}} </label>
                                 <div class="col-md-8">
-                                    <select class="form-control aiz-selectpicker" name="brand_id" id="brand_id" data-live-search="true" required>
+                                    <select class="form-control aiz-selectpicker" name="brand_id" id="brand_id" data-live-search="true">
                                         <option value="">{{ translate('Select Brand') }}</option>
                                         @foreach (get_all_brands() as $brand)
                                         <option value="{{ $brand->id }}">{{ $brand->getTranslation('name') }}</option>
@@ -84,7 +84,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="form-group row">
+                            <div class="form-group row" style="display: none">
                                 <label class="col-md-3 col-from-label">{{translate('Minimum Purchase Qty')}} <span class="text-danger">*</span></label>
                                 <div class="col-md-8">
                                     <input type="number" lang="en" class="form-control" name="min_qty" value="1" min="1" required>
@@ -151,7 +151,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card">
+                    {{-- <div class="card">
                         <div class="card-header">
                             <h5 class="mb-0 h6">{{translate('Product Videos')}}</h5>
                         </div>
@@ -174,7 +174,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="card">
                         <div class="card-header">
                             <h5 class="mb-0 h6">{{translate('Product price + stock')}}</h5>
@@ -279,7 +279,7 @@
                         </div>
                     </div>
     
-                    <div class="card">
+                    {{-- <div class="card">
                         <div class="card-header">
                             <h5 class="mb-0 h6">{{translate('PDF Specification')}}</h5>
                         </div>
@@ -299,7 +299,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="card">
                         <div class="card-header">
                             <h5 class="mb-0 h6">{{translate('SEO Meta Tags')}}</h5>
@@ -378,7 +378,7 @@
 
 
                     {{-- Warranty --}}
-                    <div class="card">
+                    {{-- <div class="card">
                         <div class="card-header">
                             <h5 class="mb-0 h6">{{ translate('Warranty') }}</h5>
                         </div>
@@ -424,7 +424,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
 
                     {{-- Frequently Bought Products --}}
                     <div class="card">
@@ -781,9 +781,7 @@
             $(".flat_rate_shipping_div").show();
         }
 
-    });
-
-     
+    }); 
     function fq_bought_product_selection_type(){
         var productSelectionType = $("input[name='frequently_bought_selection_type']:checked").val();
         if(productSelectionType == 'product'){
