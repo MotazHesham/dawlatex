@@ -2123,9 +2123,7 @@ $.fn.toggleAttr = function (attr, attr1, attr2) {
                             .siblings("[data-type='minus']")
                             .removeAttr("disabled");
                     } else {
-                        alert(
-                                "عذرا، لقد تم الوصول إلى الحد الأدنى للكمية المتاحة"
-                        );
+                        alert("عذرا، لقد تم الوصول إلى الحد الأدنى للكمية المتاحة");
                         $(this).val(minValue);
                     }
                     if (valueCurrent <= maxValue) {
@@ -2133,9 +2131,7 @@ $.fn.toggleAttr = function (attr, attr1, attr2) {
                             .siblings("[data-type='plus']")
                             .removeAttr("disabled");
                     } else {
-                        alert(
-                                "عذرا، لقد تم الوصول إلى الحد الأقصي للكمية المتاحة"
-                        );
+                        alert("نأسف قد تم الوصول للحد الأقصى للكمية المتاحة");
                         $(this).val(maxValue);
                     }
 
