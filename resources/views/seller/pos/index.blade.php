@@ -129,10 +129,12 @@
                                         <span>{{translate('Sub Total')}}</span>
                                         <span>{{ single_price($subtotal) }}</span>
                                     </div>
-                                    <div class="d-flex justify-content-between fw-600 mb-2 opacity-70">
-                                        <span>{{translate('Tax')}}</span>
-                                        <span>{{ single_price($tax) }}</span>
-                                    </div>
+                                    @if(get_setting('tax_activation'))
+                                        <div class="d-flex justify-content-between fw-600 mb-2 opacity-70">
+                                            <span>{{translate('Tax')}}</span>
+                                            <span>{{ single_price($tax) }}</span>
+                                        </div>
+                                    @endif
                                     <div class="d-flex justify-content-between fw-600 mb-2 opacity-70">
                                         <span>{{translate('Shipping')}}</span>
                                         <span>{{ single_price(Session::get('pos.shipping', 0)) }}</span>

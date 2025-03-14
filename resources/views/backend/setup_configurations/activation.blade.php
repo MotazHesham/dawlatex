@@ -508,6 +508,38 @@
                 </div>
             </div>
         </div>
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="mb-0 h6 text-center">{{ translate('Tax Activation') }}</h3>
+                </div>
+                <div class="card-body text-center">
+                    <label class="aiz-switch aiz-switch-success mb-0">
+                        <input type="checkbox" onchange="updateSettings(this, 'tax_activation')"
+                            <?php if (get_setting('tax_activation') == 1) {
+                                echo 'checked';
+                            } ?>>
+                        <span class="slider round"></span>
+                    </label> 
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="mb-0 h6 text-center">{{ translate('Delivery Type Activation') }}</h3>
+                </div>
+                <div class="card-body text-center">
+                    <label class="aiz-switch aiz-switch-success mb-0">
+                        <input type="checkbox" onchange="updateSettings(this, 'delivery_type_activation')"
+                            <?php if (get_setting('delivery_type_activation') == 1) {
+                                echo 'checked';
+                            } ?>>
+                        <span class="slider round"></span>
+                    </label> 
+                </div>
+            </div>
+        </div>
     </div>
 
     <h4 class="text-center text-muted mt-4">{{ translate('Social Media Login') }}</h4>

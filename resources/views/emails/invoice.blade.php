@@ -114,10 +114,15 @@
 				<thead>
 	                <tr class="gry-color" style="background: #eceff4;">
 	                    <th width="35%">{{ translate('Product Name') }}</th>
-						<th width="15%">{{ translate('Delivery Type') }}</th>
+						@if(get_setting('delivery_type_activation'))
+							<th width="15%">{{ translate('Delivery Type') }}</th>
+						@endif
 	                    <th width="10%">{{ translate('Qty') }}</th>
 	                    <th width="15%">{{ translate('Unit Price') }}</th>
-	                    <th width="10%">{{ translate('Tax') }}</th>
+						
+    					@if(get_setting('tax_activation'))
+	                    	<th width="10%">{{ translate('Tax') }}</th>
+						@endif
 	                    <th width="15%" class="text-right">{{ translate('Total') }}</th>
 	                </tr>
 				</thead>
@@ -126,18 +131,23 @@
 		                @if ($orderDetail->product != null)
 							<tr class="">
 								<td>{{ $orderDetail->product->getTranslation('name') }} @if($orderDetail->variation != null) ({{ $orderDetail->variation }}) @endif</td>
-								<td>
-									@if ($order->shipping_type != null && $order->shipping_type == 'home_delivery')
-										{{ translate('Home Delivery') }}
-									@elseif ($order->shipping_type == 'pickup_point')
-										@if ($order->pickup_point != null)
-											{{ $order->pickup_point->getTranslation('name') }} ({{ translate('Pickip Point') }})
+								@if(get_setting('delivery_type_activation'))
+									<td>
+										@if ($order->shipping_type != null && $order->shipping_type == 'home_delivery')
+											{{ translate('Home Delivery') }}
+										@elseif ($order->shipping_type == 'pickup_point')
+											@if ($order->pickup_point != null)
+												{{ $order->pickup_point->getTranslation('name') }} ({{ translate('Pickip Point') }})
+											@endif
 										@endif
-									@endif
-								</td>
+									</td>
+								@endif
 								<td class="gry-color">{{ $orderDetail->quantity }}</td>
 								<td class="gry-color currency">{{ single_price($orderDetail->price/$orderDetail->quantity) }}</td>
-								<td class="gry-color currency">{{ single_price($orderDetail->tax/$orderDetail->quantity) }}</td>
+								
+    							@if(get_setting('tax_activation'))
+									<td class="gry-color currency">{{ single_price($orderDetail->tax/$orderDetail->quantity) }}</td>
+								@endif
 			                    <td class="text-right currency">{{ single_price($orderDetail->price+$orderDetail->tax) }}</td>
 							</tr>
 		                @endif
@@ -157,10 +167,13 @@
 			            <th class="gry-color text-left">{{ translate('Shipping Cost') }}</th>
 			            <td class="currency">{{ single_price($order->orderDetails->sum('shipping_cost')) }}</td>
 			        </tr>
-			        <tr class="border-bottom">
-			            <th class="gry-color text-left">{{ translate('Total Tax') }}</th>
-			            <td class="currency">{{ single_price($order->orderDetails->sum('tax')) }}</td>
-			        </tr>
+					
+    				@if(get_setting('tax_activation'))
+						<tr class="border-bottom">
+							<th class="gry-color text-left">{{ translate('Total Tax') }}</th>
+							<td class="currency">{{ single_price($order->orderDetails->sum('tax')) }}</td>
+						</tr>
+					@endif
                     <tr class="border-bottom">
 			            <th class="gry-color text-left">{{ translate('Coupon') }}</th>
 			            <td class="currency">{{ single_price($order->coupon_discount) }}</td>

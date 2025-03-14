@@ -111,7 +111,9 @@
                                 <th data-breakpoints="lg" class="min-col">#</th>
                                 <th width="10%">{{ translate('Photo') }}</th>
                                 <th class="text-uppercase">{{ translate('Description') }}</th>
-                                <th data-breakpoints="lg" class="text-uppercase">{{ translate('Delivery Type') }}</th>
+                                @if(get_setting('delivery_type_activation'))
+                                    <th data-breakpoints="lg" class="text-uppercase">{{ translate('Delivery Type') }}</th>
+                                @endif
                                 <th data-breakpoints="lg" class="min-col text-uppercase text-center">
                                     {{ translate('Qty') }}
                                 </th>  
@@ -152,26 +154,28 @@
                                             <strong>{{ translate('Product Unavailable') }}</strong>
                                         @endif
                                     </td>
-                                    <td>
-                                        @if ($order->shipping_type != null && $order->shipping_type == 'home_delivery')
-                                            {{ translate('Home Delivery') }}
-                                        @elseif ($order->shipping_type == 'pickup_point')
-                                            @if ($order->pickup_point != null)
-                                                {{ $order->pickup_point->getTranslation('name') }}
-                                                ({{ translate('Pickup Point') }})
-                                            @else
-                                                {{ translate('Pickup Point') }}
+                                    @if(get_setting('delivery_type_activation'))
+                                        <td>
+                                            @if ($order->shipping_type != null && $order->shipping_type == 'home_delivery')
+                                                {{ translate('Home Delivery') }}
+                                            @elseif ($order->shipping_type == 'pickup_point')
+                                                @if ($order->pickup_point != null)
+                                                    {{ $order->pickup_point->getTranslation('name') }}
+                                                    ({{ translate('Pickup Point') }})
+                                                @else
+                                                    {{ translate('Pickup Point') }}
+                                                @endif
+                                            @elseif($order->shipping_type == 'carrier')
+                                                @if ($order->carrier != null)
+                                                    {{ $order->carrier->name }} ({{ translate('Carrier') }})
+                                                    <br>
+                                                    {{ translate('Transit Time').' - '.$order->carrier->transit_time }}
+                                                @else
+                                                    {{ translate('Carrier') }}
+                                                @endif
                                             @endif
-                                        @elseif($order->shipping_type == 'carrier')
-                                            @if ($order->carrier != null)
-                                                {{ $order->carrier->name }} ({{ translate('Carrier') }})
-                                                <br>
-                                                {{ translate('Transit Time').' - '.$order->carrier->transit_time }}
-                                            @else
-                                                {{ translate('Carrier') }}
-                                            @endif
-                                        @endif
-                                    </td>
+                                        </td>
+                                    @endif
                                     <td class="text-center">{{ $orderDetail->quantity }}</td>  
                                     <td class="text-center">
                                         {{ single_price($orderDetail->purchase_price / $orderDetail->quantity) }}</td>

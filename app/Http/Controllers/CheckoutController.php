@@ -163,10 +163,6 @@ class CheckoutController extends Controller
 
         (new OrderController)->store($request); 
 
-        if(count($carts) > 0){
-            $carts->toQuery()->delete();
-        }
-
         $request->session()->put('payment_type', 'cart_payment');
 
         $data['combined_order_id'] = $request->session()->get('combined_order_id');

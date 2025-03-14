@@ -39,8 +39,10 @@
 
     @if ($physical)
         <!-- Choose Delivery Type -->
-        <div class="col-md-6 mb-2">
-            <h6 class="fs-14 fw-700 mt-3">{{ translate('Choose Delivery Type') }}</h6>
+        <div class="col-md-6 mb-2" @if(!get_setting('delivery_type_activation')) style="display: none" @endif>
+            @if(get_setting('delivery_type_activation'))
+                <h6 class="fs-14 fw-700 mt-3">{{ translate('Choose Delivery Type') }}</h6>
+            @endif
             <div class="row gutters-16">
                 <!-- Home Delivery -->
                 @if (get_setting('shipping_type') != 'carrier_wise_shipping')

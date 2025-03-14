@@ -9,7 +9,10 @@
                             <div class="col col-md-1 fw-600">{{ translate('Qty')}}</div>
                             <div class="col-md-5 fw-600">{{ translate('Product')}}</div>
                             <div class="col fw-600">{{ translate('Price')}}</div>
-                            <div class="col fw-600">{{ translate('Tax')}}</div>
+                            
+                            @if(get_setting('tax_activation'))
+                                <div class="col fw-600">{{ translate('Tax')}}</div>
+                            @endif
                             <div class="col fw-600">{{ translate('Total')}}</div>
                             <div class="col-auto fw-600">{{ translate('Remove')}}</div>
                         </div>
@@ -73,11 +76,14 @@
                                             <span class="opacity-60 fs-12 d-block d-md-none">{{ translate('Price')}}</span>
                                             <span class="fw-700 fs-14">{{ cart_product_price($cartItem, $product, true, false) }}</span>
                                         </div>
-                                        <!-- Tax -->
-                                        <div class="col-md col-4 order-3 order-md-0 my-3 my-md-0">
-                                            <span class="opacity-60 fs-12 d-block d-md-none">{{ translate('Tax')}}</span>
-                                            <span class="fw-700 fs-14">{{ cart_product_tax($cartItem, $product) }}</span>
-                                        </div>
+                                        
+                                        @if(get_setting('tax_activation'))
+                                            <!-- Tax -->
+                                            <div class="col-md col-4 order-3 order-md-0 my-3 my-md-0">
+                                                <span class="opacity-60 fs-12 d-block d-md-none">{{ translate('Tax')}}</span>
+                                                <span class="fw-700 fs-14">{{ cart_product_tax($cartItem, $product) }}</span>
+                                            </div>
+                                        @endif
                                         <!-- Total -->
                                         <div class="col-md col-5 order-4 order-md-0 my-3 my-md-0">
                                             <span class="opacity-60 fs-12 d-block d-md-none">{{ translate('Total')}}</span>

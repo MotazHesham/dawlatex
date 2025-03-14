@@ -99,7 +99,9 @@
                                 <th width="30%">{{ translate('Product') }}</th>
                                 <th data-breakpoints="md">{{ translate('Variation') }}</th>
                                 <th>{{ translate('Quantity') }}</th>
-                                <th data-breakpoints="md">{{ translate('Delivery Type') }}</th>
+                                @if(get_setting('delivery_type_activation'))
+                                    <th data-breakpoints="md">{{ translate('Delivery Type') }}</th>
+                                @endif
                                 <th>{{ translate('Price') }}</th>
                                 @if (addon_is_activated('refund_request'))
                                     <th data-breakpoints="md">{{ translate('Refund') }}</th>
@@ -128,25 +130,27 @@
                                     <td>
                                         {{ $orderDetail->quantity }}
                                     </td>
-                                    <td>
-                                        @if ($order->shipping_type != null && $order->shipping_type == 'home_delivery')
-                                            {{ translate('Home Delivery') }}
-                                        @elseif ($order->shipping_type == 'pickup_point')
-                                            @if ($order->pickup_point != null)
-                                                {{ $order->pickup_point->name }} ({{ translate('Pickip Point') }})
-                                            @else
-                                                {{ translate('Pickup Point') }}
+                                    @if(get_setting('delivery_type_activation'))
+                                        <td>
+                                            @if ($order->shipping_type != null && $order->shipping_type == 'home_delivery')
+                                                {{ translate('Home Delivery') }}
+                                            @elseif ($order->shipping_type == 'pickup_point')
+                                                @if ($order->pickup_point != null)
+                                                    {{ $order->pickup_point->name }} ({{ translate('Pickip Point') }})
+                                                @else
+                                                    {{ translate('Pickup Point') }}
+                                                @endif
+                                            @elseif($order->shipping_type == 'carrier')
+                                                @if ($order->carrier != null)
+                                                    {{ $order->carrier->name }} ({{ translate('Carrier') }})
+                                                    <br>
+                                                    {{ translate('Transit Time').' - '.$order->carrier->transit_time }}
+                                                @else
+                                                    {{ translate('Carrier') }}
+                                                @endif
                                             @endif
-                                        @elseif($order->shipping_type == 'carrier')
-                                            @if ($order->carrier != null)
-                                                {{ $order->carrier->name }} ({{ translate('Carrier') }})
-                                                <br>
-                                                {{ translate('Transit Time').' - '.$order->carrier->transit_time }}
-                                            @else
-                                                {{ translate('Carrier') }}
-                                            @endif
-                                        @endif
-                                    </td>
+                                        </td>
+                                    @endif
                                     <td class="fw-700">{{ single_price($orderDetail->price) }}</td>
                                     @if (addon_is_activated('refund_request'))
                                         @php
@@ -208,12 +212,14 @@
                                     <span class="text-italic">{{ single_price($order->orderDetails->sum('shipping_cost')) }}</span>
                                 </td>
                             </tr>
-                            <tr>
-                                <td class="w-50 fw-600">{{ translate('Tax') }}</td>
-                                <td class="text-right">
-                                    <span class="text-italic">{{ single_price($order->orderDetails->sum('tax')) }}</span>
-                                </td>
-                            </tr>
+                            @if(get_setting('tax_activation'))
+                                <tr>
+                                    <td class="w-50 fw-600">{{ translate('Tax') }}</td>
+                                    <td class="text-right">
+                                        <span class="text-italic">{{ single_price($order->orderDetails->sum('tax')) }}</span>
+                                    </td>
+                                </tr>
+                            @endif
                             <tr>
                                 <td class="w-50 fw-600">{{ translate('Coupon') }}</td>
                                 <td class="text-right">

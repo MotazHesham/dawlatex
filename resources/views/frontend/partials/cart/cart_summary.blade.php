@@ -71,11 +71,13 @@
                         <th class="pl-0 fs-14 fw-400 pt-0 pb-2 text-dark border-top-0">{{ translate('Subtotal') }} ({{ sprintf("%02d", count($carts)) }} {{ translate('Products') }})</th>
                         <td class="text-right pr-0 fs-14 pt-0 pb-2 text-dark border-top-0">{{ single_price($subtotal) }}</td>
                     </tr>
-                    <!-- Tax -->
-                    <tr class="cart-tax">
-                        <th class="pl-0 fs-14 fw-400 pt-0 pb-2 text-dark border-top-0">{{ translate('Tax') }}</th>
-                        <td class="text-right pr-0 fs-14 pt-0 pb-2 text-dark border-top-0">{{ single_price($tax) }}</td>
-                    </tr>
+                    @if(get_setting('tax_activation'))
+                        <!-- Tax -->
+                        <tr class="cart-tax">
+                            <th class="pl-0 fs-14 fw-400 pt-0 pb-2 text-dark border-top-0">{{ translate('Tax') }}</th>
+                            <td class="text-right pr-0 fs-14 pt-0 pb-2 text-dark border-top-0">{{ single_price($tax) }}</td>
+                        </tr>
+                    @endif
                     @if ($proceed != 1)
                     <!-- Total Shipping -->
                     <tr class="cart-shipping">

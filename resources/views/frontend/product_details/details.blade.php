@@ -222,25 +222,27 @@
     @else
         <!-- Without auction product -->
         @if ($detailedProduct->wholesale_product == 1)
-            <!-- Wholesale -->
-            <table class="table mb-3">
-                <thead>
-                    <tr>
-                        <th class="border-top-0">{{ translate('Min Qty') }}</th>
-                        <th class="border-top-0">{{ translate('Max Qty') }}</th>
-                        <th class="border-top-0">{{ translate('Unit Price') }}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($detailedProduct->stocks->first()->wholesalePrices as $wholesalePrice)
+            <!-- Wholesale --> 
+            @if (!empty($detailedProduct->stocks) && $detailedProduct->stocks->isNotEmpty() && optional($detailedProduct->stocks->first()->wholesalePrices)->isNotEmpty())
+                <table class="table mb-3">
+                    <thead>
                         <tr>
-                            <td>{{ $wholesalePrice->min_qty }}</td>
-                            <td>{{ $wholesalePrice->max_qty }}</td>
-                            <td>{{ single_price($wholesalePrice->price) }}</td>
+                            <th class="border-top-0">{{ translate('Min Qty') }}</th>
+                            <th class="border-top-0">{{ translate('Max Qty') }}</th>
+                            <th class="border-top-0">{{ translate('Unit Price') }}</th>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @foreach ($detailedProduct->stocks->first()->wholesalePrices as $wholesalePrice)
+                            <tr>
+                                <td>{{ $wholesalePrice->min_qty }}</td>
+                                <td>{{ $wholesalePrice->max_qty }}</td>
+                                <td>{{ single_price($wholesalePrice->price) }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            @endif
         @else
             <!-- Without Wholesale -->
             @if (home_price($detailedProduct) != home_discounted_price($detailedProduct))
@@ -429,6 +431,10 @@
                                     <i class="las la-plus"></i>
                                 </button>
                             </div>
+                            @if ($detailedProduct->unit != null)
+                                <span class="opacity-70 ml-1">({{ $detailedProduct->getTranslation('unit') }})</span>
+                                &nbsp;&nbsp;&nbsp;
+                            @endif
                             @php
                                 $qty = 0;
                                 foreach ($detailedProduct->stocks as $key => $stock) {
@@ -442,7 +448,7 @@
                                 @elseif($detailedProduct->stock_visibility_state == 'text' && $qty >= 1)
                                     (<span id="available-quantity">{{ translate('In Stock') }}</span>)
                                 @endif
-                            </div>
+                            </div> 
                         </div>
                     </div>
                 </div>

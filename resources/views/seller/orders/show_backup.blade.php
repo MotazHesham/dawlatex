@@ -134,7 +134,9 @@ $payment_status = $order->orderDetails->where('seller_id', Auth::user()->id)->fi
                                 <th width="40%">{{ translate('Product') }}</th>
                                 <th>{{ translate('Variation') }}</th>
                                 <th>{{ translate('Quantity') }}</th>
-                                <th>{{ translate('Delivery Type') }}</th>
+                                @if(get_setting('delivery_type_activation'))
+                                    <th>{{ translate('Delivery Type') }}</th>
+                                @endif
                                 <th>{{ translate('Price') }}</th>
                                 @if (addon_is_activated('refund_request'))
                                     <th>{{ translate('Refund') }}</th>
@@ -159,16 +161,18 @@ $payment_status = $order->orderDetails->where('seller_id', Auth::user()->id)->fi
                                     <td>
                                         {{ $orderDetail->quantity }}
                                     </td>
-                                    <td>
-                                        @if ($order->shipping_type != null && $order->shipping_type == 'home_delivery')
-                                            {{ translate('Home Delivery') }}
-                                        @elseif ($order->shipping_type == 'pickup_point')
-                                            @if ($order->pickup_point != null)
-                                                {{ $order->pickup_point->getTranslation('name') }}
-                                                ({{ translate('Pickip Point') }})
+                                    @if(get_setting('delivery_type_activation'))
+                                        <td>
+                                            @if ($order->shipping_type != null && $order->shipping_type == 'home_delivery')
+                                                {{ translate('Home Delivery') }}
+                                            @elseif ($order->shipping_type == 'pickup_point')
+                                                @if ($order->pickup_point != null)
+                                                    {{ $order->pickup_point->getTranslation('name') }}
+                                                    ({{ translate('Pickip Point') }})
+                                                @endif
                                             @endif
-                                        @endif
-                                    </td>
+                                        </td>
+                                    @endif
                                     <td>{{ $orderDetail->price }}</td>
                                     @if (addon_is_activated('refund_request'))
                                         <td>
@@ -214,13 +218,15 @@ $payment_status = $order->orderDetails->where('seller_id', Auth::user()->id)->fi
                                         class="text-italic">{{ single_price($order->orderDetails->where('seller_id', Auth::user()->id)->sum('shipping_cost')) }}</span>
                                 </td>
                             </tr>
-                            <tr>
-                                <td class="w-50 fw-600">{{ translate('Tax') }}</th>
-                                <td class="text-right">
-                                    <span
-                                        class="text-italic">{{ single_price($order->orderDetails->where('seller_id', Auth::user()->id)->sum('tax')) }}</span>
-                                </td>
-                            </tr>
+                            @if(get_setting('tax_activation'))
+                                <tr>
+                                    <td class="w-50 fw-600">{{ translate('Tax') }}</th>
+                                    <td class="text-right">
+                                        <span
+                                            class="text-italic">{{ single_price($order->orderDetails->where('seller_id', Auth::user()->id)->sum('tax')) }}</span>
+                                    </td>
+                                </tr>
+                            @endif
                             <tr>
                                 <td class="w-50 fw-600">{{ translate('Coupon') }}</th>
                                 <td class="text-right">

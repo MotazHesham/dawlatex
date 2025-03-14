@@ -2124,9 +2124,7 @@ $.fn.toggleAttr = function (attr, attr1, attr2) {
                             .removeAttr("disabled");
                     } else {
                         alert(
-                            translate(
-                                "Sorry, the minimum limit has been reached"
-                            )
+                                "عذرا، لقد تم الوصول إلى الحد الأدنى"
                         );
                         $(this).val(minValue);
                     }
@@ -2136,9 +2134,7 @@ $.fn.toggleAttr = function (attr, attr1, attr2) {
                             .removeAttr("disabled");
                     } else {
                         alert(
-                            translate(
-                                "Sorry, the maximum limit has been reached"
-                            )
+                                "عذرا، لقد تم الوصول إلى الحد الأقصي"
                         );
                         $(this).val(maxValue);
                     }

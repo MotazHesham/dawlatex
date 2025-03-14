@@ -124,7 +124,7 @@
                                     </ul>
                                     <!-- Choose Delivery Type -->
                                     @if ($physical)
-                                        <div class="row pt-3">
+                                        <div class="row pt-3"  @if(!get_setting('delivery_type_activation')) style="display: none" @endif>
                                             <div class="col-md-6">
                                                 <h6 class="fs-14 fw-700 mt-3">{{ translate('Choose Delivery Type') }}</h6>
                                             </div>
@@ -285,7 +285,7 @@
                                             </ul>
                                             <!-- Choose Delivery Type -->
                                             @if ($physical)
-                                                <div class="row pt-3">
+                                                <div class="row pt-3" @if(!get_setting('delivery_type_activation')) style="display:none" @endif>
                                                     <div class="col-md-6">
                                                         <h6 class="fs-14 fw-700 mt-3">{{ translate('Choose Delivery Type') }}</h6>
                                                     </div>

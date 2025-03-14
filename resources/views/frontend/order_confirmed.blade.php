@@ -143,7 +143,9 @@
                                                     <th class="opacity-60 border-top-0" width="30%">{{ translate('Product')}}</th>
                                                     <th class="opacity-60 border-top-0">{{ translate('Variation')}}</th>
                                                     <th class="opacity-60 border-top-0">{{ translate('Quantity')}}</th>
-                                                    <th class="opacity-60 border-top-0">{{ translate('Delivery Type')}}</th>
+                                                    @if(get_setting('delivery_type_activation'))
+                                                        <th class="opacity-60 border-top-0">{{ translate('Delivery Type')}}</th>
+                                                    @endif
                                                     <th class="text-right opacity-60 border-top-0 pr-0">{{ translate('Price')}}</th>
                                                 </tr>
                                             </thead>
@@ -173,17 +175,19 @@
                                                         <td class="border-top-0 border-bottom">
                                                             {{ $orderDetail->quantity }}
                                                         </td>
-                                                        <td class="border-top-0 border-bottom">
-                                                            @if ($order->shipping_type != null && $order->shipping_type == 'home_delivery')
-                                                                {{  translate('Home Delivery') }}
-                                                            @elseif ($order->shipping_type != null && $order->shipping_type == 'carrier')
-                                                                {{  translate('Carrier') }}
-                                                            @elseif ($order->shipping_type == 'pickup_point')
-                                                                @if ($order->pickup_point != null)
-                                                                    {{ $order->pickup_point->getTranslation('name') }} ({{ translate('Pickip Point') }})
+                                                        @if(get_setting('delivery_type_activation'))
+                                                            <td class="border-top-0 border-bottom">
+                                                                @if ($order->shipping_type != null && $order->shipping_type == 'home_delivery')
+                                                                    {{  translate('Home Delivery') }}
+                                                                @elseif ($order->shipping_type != null && $order->shipping_type == 'carrier')
+                                                                    {{  translate('Carrier') }}
+                                                                @elseif ($order->shipping_type == 'pickup_point')
+                                                                    @if ($order->pickup_point != null)
+                                                                        {{ $order->pickup_point->getTranslation('name') }} ({{ translate('Pickip Point') }})
+                                                                    @endif
                                                                 @endif
-                                                            @endif
-                                                        </td>
+                                                            </td>
+                                                        @endif
                                                         <td class="border-top-0 border-bottom pr-0 text-right">{{ single_price($orderDetail->price) }}</td>
                                                     </tr>
                                                 @endforeach
@@ -210,12 +214,15 @@
                                                         </td>
                                                     </tr>
                                                     <!-- Tax -->
-                                                    <tr>
-                                                        <th class="border-top-0 py-2">{{ translate('Tax')}}</th>
-                                                        <td class="text-right border-top-0 pr-0 py-2">
-                                                            <span>{{ single_price($order->orderDetails->sum('tax')) }}</span>
-                                                        </td>
-                                                    </tr>
+                                                    
+                                                    @if(get_setting('tax_activation'))
+                                                        <tr>
+                                                            <th class="border-top-0 py-2">{{ translate('Tax')}}</th>
+                                                            <td class="text-right border-top-0 pr-0 py-2">
+                                                                <span>{{ single_price($order->orderDetails->sum('tax')) }}</span>
+                                                            </td>
+                                                        </tr>
+                                                    @endif
                                                     <!-- Coupon Discount -->
                                                     <tr>
                                                         <th class="border-top-0 py-2">{{ translate('Coupon Discount')}}</th>
