@@ -2124,7 +2124,7 @@ $.fn.toggleAttr = function (attr, attr1, attr2) {
                             .removeAttr("disabled");
                     } else {
                         alert(
-                                "عذرا، لقد تم الوصول إلى الحد الأدنى"
+                                "عذرا، لقد تم الوصول إلى الحد الأدنى للكمية المتاحة"
                         );
                         $(this).val(minValue);
                     }
@@ -2134,7 +2134,7 @@ $.fn.toggleAttr = function (attr, attr1, attr2) {
                             .removeAttr("disabled");
                     } else {
                         alert(
-                                "عذرا، لقد تم الوصول إلى الحد الأقصي"
+                                "عذرا، لقد تم الوصول إلى الحد الأقصي للكمية المتاحة"
                         );
                         $(this).val(maxValue);
                     }
