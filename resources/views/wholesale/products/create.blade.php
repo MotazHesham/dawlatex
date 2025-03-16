@@ -215,7 +215,7 @@
                                 </label>
                                 <div class="col-md-6">
                                     <div class="qunatity-price">
-                                        <div class="row gutters-5">
+                                        {{-- <div class="row gutters-5">
                                             <div class="col-3">
                                                 <div class="form-group">
                                                     <input type="text" class="form-control" placeholder="{{translate('Min QTY')}}" name="wholesale_min_qty[]" required>
@@ -236,7 +236,7 @@
                                                     <i class="las la-times"></i>
                                                 </button>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                     <button
                                         type="button"
