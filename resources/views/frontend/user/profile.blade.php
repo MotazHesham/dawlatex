@@ -85,10 +85,10 @@
                             <span class="col-md-2 text-secondary">{{ translate('Postal Code') }}:</span>
                             <span class="col-md-10 text-dark">{{ $address->postal_code }}</span>
                         </div> --}}
-                        <div class="row fs-14 mb-2 mb-md-0">
+                        {{-- <div class="row fs-14 mb-2 mb-md-0">
                             <span class="col-md-2 text-secondary">{{ translate('City') }}:</span>
                             <span class="col-md-10 text-dark">{{ optional($address->city)->name }}</span>
-                        </div>
+                        </div> --}}
                         <div class="row fs-14 mb-2 mb-md-0">
                             <span class="col-md-2 text-secondary">{{ translate('State') }}:</span>
                             <span class="col-md-10 text-dark">{{ optional($address->state)->name }}</span>

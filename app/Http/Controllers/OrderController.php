@@ -161,7 +161,7 @@ class OrderController extends Controller
             $shippingAddress['address']     = $address->address;
             $shippingAddress['country']     = $address->country->name;
             $shippingAddress['state']       = $address->state->name;
-            $shippingAddress['city']        = $address->city->name;
+            $shippingAddress['city']        = $address->city->name ?? null;
             $shippingAddress['postal_code'] = $address->postal_code;
             $shippingAddress['phone']       = $address->phone;
             if ($address->latitude || $address->longitude) {
